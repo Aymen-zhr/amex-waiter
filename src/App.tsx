@@ -16,14 +16,15 @@ import { GuestFolioModal } from './components/modals/GuestFolioModal';
 import { RunSheetModal } from './components/modals/RunSheetModal';
 import { useFloorStore } from './store/useFloorStore';
 import { useAlertStore } from './store/useAlertStore';
+import { useModalStore } from './store/useModalStore';
 import type { TableZone } from './types/table';
 import { tapSpring } from './styles/motion';
 
 export const App: React.FC = () => {
   const [activeView, setActiveView] = useState<'floor' | 'dispatch' | 'cellar'>('floor');
-  const [isRunSheetOpen, setIsRunSheetOpen] = useState(false);
   const [isAlertsModalOpen, setIsAlertsModalOpen] = useState(false);
 
+  // Floor store
   const {
     activeZone,
     selectedTableId,
@@ -32,19 +33,29 @@ export const App: React.FC = () => {
     setActiveZone,
     setSelectedTableId,
     setSearchQuery,
-    updateTableStatus,
     acknowledgeRequest,
   } = useFloorStore();
 
+  // Alerts store
   const { alerts, dismissAlert } = useAlertStore();
 
-  // Selected Table for Guest Folio Modal
-  const selectedTable = useMemo(
-    () => tables.find((t) => t.id === selectedTableId) || null,
-    [tables, selectedTableId]
+  // Modal store (Phase 03 integration)
+  const {
+    activeModal,
+    selectedTableId: modalTableId,
+    openFolio,
+    openRunSheet,
+    closeModal,
+  } = useModalStore();
+
+  // Target Table for Active Modal (Folio or Run Sheet)
+  const effectiveTableId = modalTableId || selectedTableId || 'table-02';
+  const activeTable = useMemo(
+    () => tables.find((t) => t.id === effectiveTableId) || tables[0] || null,
+    [tables, effectiveTableId]
   );
 
-  // Filtered tables based on room zone & search
+  // Filtered tables based on room zone & search query
   const filteredTables = useMemo(() => {
     return tables.filter((table) => {
       const matchesZone = activeZone === 'ALL' || table.zone === activeZone;
@@ -81,7 +92,7 @@ export const App: React.FC = () => {
       <Header
         activeView={activeView}
         setActiveView={setActiveView}
-        onOpenRunSheet={() => setIsRunSheetOpen(true)}
+        onOpenRunSheet={() => openRunSheet(effectiveTableId)}
         onOpenAlerts={() => setIsAlertsModalOpen(true)}
       />
 
@@ -113,7 +124,7 @@ export const App: React.FC = () => {
                       onClick={() => setSearchQuery('')}
                       className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-lumiere-textCaption hover:text-lumiere-textPrimary cursor-pointer"
                     >
-                      âœ•
+                      ✕
                     </button>
                   )}
                 </div>
@@ -134,12 +145,15 @@ export const App: React.FC = () => {
             {/* 3-Zone Tactile Table Card Floor Grid */}
             <FloorGrid
               tables={filteredTables}
-              selectedTableId={selectedTableId}
-              onSelectTable={(table) => setSelectedTableId(table.id)}
+              selectedTableId={effectiveTableId}
+              onSelectTable={(table) => {
+                setSelectedTableId(table.id);
+                openFolio(table.id);
+              }}
               onAcknowledgeTable={(tableId) => acknowledgeRequest(tableId)}
             />
 
-            {/* Phase 02 Architecture Status Bar */}
+            {/* Architecture Status Ribbon */}
             <div className="p-4 rounded-2xl bg-white border border-lumiere-border shadow-luxury flex flex-col md:flex-row items-center justify-between gap-4 mt-8">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-lumiere-emeraldLight flex items-center justify-center text-lumiere-emerald shrink-0">
@@ -147,10 +161,10 @@ export const App: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-serif text-lg font-medium text-lumiere-textPrimary">
-                    Phase 02: 3-Zone Tactile Table Cards & Floor Canvas Active
+                    Phase 03: Guest Folio Ledger & Table Run-Sheet Modals Active
                   </h4>
                   <p className="text-xs text-lumiere-textMuted">
-                    Display serif headers, inset rounded capsules with icon box, turnover footers, and reactive Zustand store.
+                    Framer Motion spring physics, 44px hit targets, degustation stepper, and lightweight useModalStore.
                   </p>
                 </div>
               </div>
@@ -186,22 +200,22 @@ export const App: React.FC = () => {
         )}
       </main>
 
-      {/* 3. Interactive Modals */}
+      {/* =========================================
+          3. INTERACTIVE MODALS (PHASE 03)
+          ========================================= */}
+      {/* Modal 1: Guest Folio & Degustation Ledger */}
       <GuestFolioModal
-        isOpen={Boolean(selectedTable)}
-        onClose={() => setSelectedTableId(null)}
-        table={selectedTable}
-        onUpdateStatus={(status) => {
-          if (selectedTableId) {
-            updateTableStatus(selectedTableId, status);
-          }
-        }}
-        onAcknowledge={(tableId) => acknowledgeRequest(tableId)}
+        isOpen={activeModal === 'FOLIO'}
+        onClose={closeModal}
+        table={activeTable}
       />
 
+      {/* Modal 2: Table Run-Sheet & Schedule */}
       <RunSheetModal
-        isOpen={isRunSheetOpen}
-        onClose={() => setIsRunSheetOpen(false)}
+        isOpen={activeModal === 'RUN_SHEET'}
+        onClose={closeModal}
+        table={activeTable}
+        onOpenFolio={(tableId) => openFolio(tableId)}
       />
 
       {/* Service Alerts Flyout Modal */}
@@ -212,35 +226,37 @@ export const App: React.FC = () => {
         subtitle="Waiter Tablet Dispatch Alerts"
         maxWidth="max-w-xl"
       >
-        <div className="space-y-3">
+        <div className="p-6 space-y-3">
           {/* Table Service Requests */}
-          {tables.filter((t) => t.status === 'REQUEST').map((t) => (
-            <div
-              key={t.id}
-              className="p-4 rounded-xl bg-lumiere-amberLight/50 border border-lumiere-amberBorder flex items-center justify-between gap-4"
-            >
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <Badge variant="amber" dot size="sm">
-                    TABLE {t.tableNumber}
-                  </Badge>
-                  <span className="font-semibold text-sm text-lumiere-textPrimary">
-                    {t.serviceRequest?.label}
-                  </span>
-                </div>
-                <p className="text-xs text-lumiere-textMuted font-mono">
-                  Pending for {t.serviceRequest?.pendingSinceMinutes}m â€¢ {t.zone.replace('_', ' ')}
-                </p>
-              </div>
-
-              <button
-                onClick={() => acknowledgeRequest(t.id)}
-                className="bg-lumiere-amber hover:bg-amber-700 text-white font-mono text-xs px-3.5 py-1.5 rounded-full font-semibold transition-all cursor-pointer shrink-0 shadow-sm"
+          {tables
+            .filter((t) => t.status === 'REQUEST')
+            .map((t) => (
+              <div
+                key={t.id}
+                className="p-4 rounded-xl bg-lumiere-amberLight/50 border border-lumiere-amberBorder flex items-center justify-between gap-4"
               >
-                Acknowledge
-              </button>
-            </div>
-          ))}
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="amber" dot size="sm">
+                      TABLE {t.tableNumber}
+                    </Badge>
+                    <span className="font-semibold text-sm text-lumiere-textPrimary">
+                      {t.serviceRequest?.label}
+                    </span>
+                  </div>
+                  <p className="text-xs text-lumiere-textMuted font-mono">
+                    Pending for {t.serviceRequest?.pendingSinceMinutes}m • {t.zone.replace('_', ' ')}
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => acknowledgeRequest(t.id)}
+                  className="bg-lumiere-amber hover:bg-amber-700 text-white font-mono text-xs px-3.5 py-1.5 rounded-full font-semibold transition-all cursor-pointer shrink-0 shadow-sm"
+                >
+                  Acknowledge
+                </button>
+              </div>
+            ))}
 
           {/* Sommelier & System Alerts */}
           {alerts.map((alert) => (

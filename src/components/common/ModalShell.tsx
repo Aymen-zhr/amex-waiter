@@ -10,6 +10,7 @@ interface ModalShellProps {
   subtitle?: string;
   children: React.ReactNode;
   maxWidth?: string;
+  showDefaultHeader?: boolean;
 }
 
 export const ModalShell: React.FC<ModalShellProps> = ({
@@ -19,46 +20,57 @@ export const ModalShell: React.FC<ModalShellProps> = ({
   subtitle,
   children,
   maxWidth = 'max-w-2xl',
+  showDefaultHeader = true,
 }) => {
+  // Keyboard listener for Escape dismissal and background lock
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
     if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
     }
+
     return () => {
+      window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
     };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-          {/* Backdrop */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop with 40% darkness and blur */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="fixed inset-0 bg-[#1A1815]/40 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4"
           />
 
-          {/* Dialog Container */}
+          {/* Modal Card Container */}
           <motion.div
             initial={modalMotion.initial}
             animate={modalMotion.animate}
             exit={modalMotion.exit}
             transition={modalMotion.transition}
-            className={`relative w-full ${maxWidth} bg-white rounded-2xl shadow-modal border border-lumiere-border overflow-hidden z-10 flex flex-col max-h-[90vh]`}
+            className={`relative z-50 w-full ${maxWidth} bg-lumiere-card rounded-3xl shadow-modal border border-lumiere-border overflow-hidden flex flex-col max-h-[92vh]`}
           >
-            {/* Header */}
-            {(title || subtitle) && (
-              <div className="px-6 py-5 border-b border-lumiere-borderLight flex items-center justify-between bg-lumiere-canvas/60">
+            {/* Optional Default Header */}
+            {showDefaultHeader && (title || subtitle) && (
+              <div className="px-6 py-5 border-b border-lumiere-borderLight flex items-center justify-between bg-lumiere-canvas/80">
                 <div>
                   {title && (
-                    <h2 className="font-serif text-2xl font-medium tracking-tight text-lumiere-textPrimary">
+                    <h2 className="font-serif text-2xl font-bold tracking-tight text-lumiere-textPrimary">
                       {title}
                     </h2>
                   )}
@@ -68,20 +80,22 @@ export const ModalShell: React.FC<ModalShellProps> = ({
                     </p>
                   )}
                 </div>
+
+                {/* Circular 44x44px Hit Target */}
                 <motion.button
                   whileTap={tapSpring.whileTap}
                   transition={tapSpring.transition}
                   onClick={onClose}
-                  className="w-9 h-9 rounded-full bg-lumiere-surface hover:bg-lumiere-border flex items-center justify-center text-lumiere-textMuted hover:text-lumiere-textPrimary transition-colors"
-                  aria-label="Close dialog"
+                  className="w-11 h-11 rounded-full bg-lumiere-surface border border-lumiere-border flex items-center justify-center text-lumiere-textPrimary hover:bg-lumiere-borderLight transition-colors cursor-pointer shrink-0"
+                  aria-label="Close modal (Escape)"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-5 h-5" />
                 </motion.button>
               </div>
             )}
 
-            {/* Modal Body */}
-            <div className="p-6 overflow-y-auto">{children}</div>
+            {/* Modal Body Content */}
+            <div className="overflow-y-auto no-scrollbar">{children}</div>
           </motion.div>
         </div>
       )}

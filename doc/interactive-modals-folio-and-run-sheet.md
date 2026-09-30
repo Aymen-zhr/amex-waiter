@@ -1,0 +1,26 @@
+# Phase 03: Interactive Modals — Guest Folio Ledger & Table Run-Sheet
+
+## 1. High-Level Objective
+Build and integrate the two primary Front-of-House tablet modals: the **Guest Folio & Degustation Ledger Modal** and the **Table Run-Sheet & Reservation Modal**. Implement Framer Motion backdrop and spring entrance physics, support seamless touch gestures (backdrop dismissal and 44px hit targets), and connect them to the active table state from `useFloorStore`.
+
+---
+
+## 2. Component Architecture & State Integration
+
+### Component Breakdown
+- `src/components/common/ModalShell.tsx`: Reusable accessible modal wrapper providing spring entrance physics, backdrop blur, keyboard dismissal, and a circular 44×44px close target.
+- `src/components/modals/GuestFolioModal.tsx`: Complete check breakdown, tasting menu progression tracker, seat-specific allergy flags, discretionary service calculation, and print controls.
+- `src/components/modals/RunSheetModal.tsx`: Shift timeline, past turnover history, active guest VIP notes, maître d' assignments, and table pacing details.
+
+### Zustand Modal State Interface (`src/store/useModalStore.ts`)
+```typescript
+export type ActiveModalType = 'FOLIO' | 'RUN_SHEET' | 'SERVICE_RESOLVE' | null;
+
+export interface ModalState {
+  activeModal: ActiveModalType;
+  selectedTableId: string | null;
+  openFolio: (tableId: string) => void;
+  openRunSheet: (tableId: string) => void;
+  closeModal: () => void;
+}
+3. Modal 1: Guest Folio & Degustation Ledger (GuestFolioModal.tsx)Visual & Typographic StandardsContainer: High-contrast editorial monograph sheet (bg-lumiere-card border border-lumiere-border rounded-3xl max-w-2xl w-full p-6 lg:p-8 shadow-modal).Header:Table and session metadata: TABLE 02 • 4 COUVERTS in serif display (font-serif text-2xl font-bold tracking-tight text-lumiere-textPrimary).Subline: Tabular ticket details (Ticket #4086 • Seated 45m • Server: Marcus).Top-right close button: Circular 44×44px hit target (rounded-full bg-lumiere-surface border border-lumiere-border flex items-center justify-center text-lumiere-textPrimary hover:bg-lumiere-borderLight).Degustation Course StepperHorizontal progress timeline showing course pacing:Completed courses: Muted checkmark dots with hairline connecting rule.Active course capsule: Course 3 of 5 • Plat Principal styled in deep bottle green (bg-lumiere-emeraldLight text-lumiere-emerald border border-lumiere-emeraldBorder font-mono text-xs px-3 py-1 rounded-full).Pending courses: Light gray numbered dots.Line Items & Dietary TagsItemized billing rows with quantities, descriptions, and tabular monospace pricing:4× Signature Degustation Menu ($185.00 ea $\rightarrow$ $740.00)1× 2018 Domaine de la Romanée-Conti ($1,450.00)Dietary & allergy highlight badges attached to individual items:⚠ Strict Nut Allergy • Seat 3 (bg-lumiere-amberLight text-lumiere-amber border border-lumiere-amberBorder px-2 py-0.5 rounded text-[11px] font-mono).Financial Ledger & ActionsSubtotal & Service: Clean breakdown rows for Net Food & Beverage, 12.5% Discretionary Service, and Grand Total rendered in large serif numbers (font-serif text-3xl font-bold text-lumiere-textPrimary).Action Ribbon:Secondary Ghost: Dismiss (px-5 py-3 rounded-full border border-lumiere-border text-lumiere-textMuted font-mono text-sm).Primary Dark Pill: Print Folio / Receipt with printer icon (px-6 py-3 rounded-full bg-lumiere-textPrimary text-lumiere-canvas font-mono text-sm font-semibold hover:bg-black).4. Modal 2: Table Run-Sheet & Schedule (RunSheetModal.tsx)Timeline AnatomyA vertical chronological schedule of turnovers for the selected table:Past Seating (17:30 - 19:15):Subdued opacity (opacity-60).Details: Turn 1 • M. Dupont (2G) • Completed • Folio #4071 ($380.00).Current Active Seating (19:30 - Present):Prominent elevated card with left emerald accent border (border-l-4 border-l-lumiere-emerald bg-lumiere-surface p-4 rounded-xl border border-lumiere-border).Guest notes: VIP Regular • Champagne on arrival • Anniversary.Server attribution: Lead: Marcus • Sommelier: Elena.Quick action: Open Live Folio button linking directly to the folio modal.Upcoming Booking (21:30):Clean dashed-border card (border border-dashed border-lumiere-border p-4 rounded-xl).Details: Booking: 21:30 • Mme. Laurent (4G) • Requested Window Section.5. Framer Motion Modal PhysicsBackdrop:initial={{ opacity: 0 }}animate={{ opacity: 1 }}exit={{ opacity: 0 }}className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4"Modal Card Container:initial={{ opacity: 0, scale: 0.96, y: 12 }}animate={{ opacity: 1, scale: 1, y: 0 }}exit={{ opacity: 0, scale: 0.96, y: 12 }}transition={{ type: "spring", damping: 26, stiffness: 320 }}6. Verification CriteriaTapping Actions › or the table card body on the Floor Grid opens the corresponding modal without visual latency or layout shifts.   The Degustation course tracker accurately reflects the table's current course stage (Course 3 of 5).   Modals dismiss smoothly on backdrop click, the close button, or pressing the Escape key.No broken icon text ligatures exist; all glyphs are clean inline SVGs via lucide-react.

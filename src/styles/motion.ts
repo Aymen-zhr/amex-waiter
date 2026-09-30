@@ -2,7 +2,6 @@ import type { Transition, Variants } from 'framer-motion';
 
 /**
  * Tap spring animation constants tuned for tablet ergonomics
- * 6. Framer Motion Presets (src/styles/motion.ts)
  */
 export const tapSpring = {
   whileTap: { scale: 0.985 },
@@ -10,19 +9,19 @@ export const tapSpring = {
 } as const;
 
 /**
- * Modal appearance and dismissal motion curve
+ * Modal appearance and dismissal motion curve (Phase 03 Spring Physics)
  */
 export const modalMotion = {
-  initial: { opacity: 0, scale: 0.96, y: 8 },
+  initial: { opacity: 0, scale: 0.96, y: 12 },
   animate: { opacity: 1, scale: 1, y: 0 },
-  exit: { opacity: 0, scale: 0.96, y: 8 },
+  exit: { opacity: 0, scale: 0.96, y: 12 },
   transition: { type: 'spring', damping: 26, stiffness: 320 } as Transition,
 } as const;
 
 export const modalVariants: Variants = {
-  initial: { opacity: 0, scale: 0.96, y: 8 },
+  initial: { opacity: 0, scale: 0.96, y: 12 },
   animate: { opacity: 1, scale: 1, y: 0 },
-  exit: { opacity: 0, scale: 0.96, y: 8 },
+  exit: { opacity: 0, scale: 0.96, y: 12 },
 };
 
 export const modalTransition: Transition = {
@@ -32,7 +31,7 @@ export const modalTransition: Transition = {
 };
 
 /**
- * Tab pill transition for layoutId="activePill"
+ * Tab pill transition for layoutId="activeZonePill" or "activePill"
  */
 export const tabLayoutTransition: Transition = {
   type: 'spring',

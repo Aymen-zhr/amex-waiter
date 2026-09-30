@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>amex-waiter — Complete Call Flow &amp; Architecture Documentation</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+:root {
+  --bg: #0f172a; --surface: #1e293b; --border: #334155;
+  --text: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8;
+  --warn: #fbbf24; --err: #f87171; --ok: #34d399;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+h1 { font-size: 2.4rem; margin-bottom: 8px; background: linear-gradient(135deg, var(--accent), #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+h2 { font-size: 1.7rem; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); }
+h3 { font-size: 1.25rem; margin: 32px 0 12px; color: var(--accent); }
+h4 { font-size: 1.05rem; margin: 20px 0 8px; color: var(--warn); }
+p { margin: 8px 0; color: var(--muted); }
+.subtitle { color: var(--muted); font-size: 1.1rem; margin-bottom: 32px; }
+.mermaid { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 20px 0; overflow-x: auto; position: relative; }
+.mermaid.is-enhanced { padding: 0; overflow: hidden; min-height: 260px; }
+.mermaid-viewport { padding: 54px 24px 24px; overflow: hidden; cursor: grab; touch-action: none; min-height: 260px; }
+.mermaid-viewport.is-dragging { cursor: grabbing; }
+.mermaid-viewport svg { max-width: none !important; height: auto; transform-origin: 0 0; transition: transform 120ms ease; }
+.mermaid-toolbar { position: absolute; top: 10px; right: 10px; z-index: 3; display: flex; align-items: center; gap: 6px; padding: 6px; background: rgba(15,23,42,0.92); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.28); }
+.mermaid-toolbar button, .mermaid-toolbar .zoom-level { height: 28px; min-width: 32px; border: 1px solid var(--border); border-radius: 6px; background: #1e293b; color: var(--text); font: 600 0.78rem system-ui, sans-serif; display: inline-flex; align-items: center; justify-content: center; }
+.mermaid-toolbar button { cursor: pointer; }
+.mermaid-toolbar button:hover { border-color: var(--accent); color: var(--accent); }
+.mermaid-toolbar .zoom-level { min-width: 52px; color: var(--muted); background: transparent; }
+.call-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
+.call-table th { background: #1a2744; color: var(--accent); text-align: left; padding: 10px 14px; border: 1px solid var(--border); }
+.call-table td { padding: 8px 14px; border: 1px solid var(--border); vertical-align: top; }
+.call-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+.tag-async { background: #7c3aed33; color: #a78bfa; }
+.tag-class { background: #05966933; color: var(--ok); }
+.tag-func { background: #2563eb33; color: var(--accent); }
+.tag-cmd { background: #d9770633; color: var(--warn); }
+.tag-endpoint { background: #dc262633; color: var(--err); }
+.tag-hook { background: #db277733; color: #f472b6; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin: 16px 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; margin: 16px 0; }
+.arrow-chain { font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--accent); padding: 10px; background: rgba(56,189,248,0.06); border-radius: 6px; }
+code { font-family: 'Fira Code', 'Cascadia Code', monospace; background: rgba(255,255,255,0.06); padding: 1px 6px; border-radius: 3px; font-size: 0.88em; }
+ul, ol { margin: 8px 0 8px 24px; color: var(--muted); }
+li { margin: 4px 0; }
+a { color: var(--accent); }
+hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+.nav { position: sticky; top: 0; background: var(--bg); z-index: 10; padding: 12px 0; border-bottom: 1px solid var(--border); display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.9rem; }
+.nav a { text-decoration: none; }
+.nav a:hover { text-decoration: underline; }
+@media (max-width: 768px) { .container { padding: 16px; } h1 { font-size: 1.8rem; } }
+
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>amex-waiter — Complete Call Flow &amp; Architecture Documentation</h1>
+<p class="subtitle">Generated from graphify knowledge graph: 162 nodes, 295 edges, 15 communities. Commit: 3510aaa</p>
+
+<div class="nav">
+    <a href="#overview">Architecture Overview</a>
+    <a href="#build-graph">Graph Build</a>
+    <a href="#cli-skills">CLI &amp; Skill Installers</a>
+    <a href="#tablecard-tsx">TableCard.tsx</a>
+    <a href="#ordercard-tsx">OrderCard.tsx</a>
+    <a href="#react">react</a>
+    <a href="#reservation-ts">reservation.ts</a>
+    <a href="#tailwind-config-js">tailwind.config.js</a>
+    <a href="#postcss-config-js">postcss.config.js</a>
+    <a href="#vite-env-d-ts">vite-env.d.ts</a>
+</div>
+
+<!-- ====== Architecture Overview ====== -->
+<h2 id="overview">1. Architecture Overview</h2>
+
+<div class="mermaid">
+
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    BUILD_GRAPH_321CBB04("Graph Build<br/><small>92 nodes</small>")
+    class BUILD_GRAPH_321CBB04 module;
+    CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>22 nodes</small>")
+    class CLI_SKILLS_9964CBB8 module;
+    TABLECARD_TSX_F11FDE0D("TableCard.tsx<br/><small>23 nodes</small>")
+    class TABLECARD_TSX_F11FDE0D module;
+    ORDERCARD_TSX_87783993("OrderCard.tsx<br/><small>11 nodes</small>")
+    class ORDERCARD_TSX_87783993 module;
+    REACT_6B810C90("react<br/><small>8 nodes</small>")
+    class REACT_6B810C90 module;
+    RESERVATION_TS_87AB39AA("reservation.ts<br/><small>2 nodes</small>")
+    class RESERVATION_TS_87AB39AA module;
+    TAILWIND_CONFIG_JS_3BF2B486("tailwind.config.js<br/><small>2 nodes</small>")
+    class TAILWIND_CONFIG_JS_3BF2B486 module;
+    POSTCSS_CONFIG_JS_F78865D3("postcss.config.js<br/><small>1 nodes</small>")
+    class POSTCSS_CONFIG_JS_F78865D3 module;
+    VITE_ENV_D_TS_23591423("vite-env.d.ts<br/><small>1 nodes</small>")
+    class VITE_ENV_D_TS_23591423 module;
+    CLI_SKILLS_9964CBB8 -->|imports x14| BUILD_GRAPH_321CBB04
+    CLI_SKILLS_9964CBB8 -->|imports x13| TABLECARD_TSX_F11FDE0D
+    CLI_SKILLS_9964CBB8 -->|imports x9| REACT_6B810C90
+    TABLECARD_TSX_F11FDE0D -->|contains x7| CLI_SKILLS_9964CBB8
+    TABLECARD_TSX_F11FDE0D -->|imports x7| BUILD_GRAPH_321CBB04
+    BUILD_GRAPH_321CBB04 -->|contains x5| CLI_SKILLS_9964CBB8
+    ORDERCARD_TSX_87783993 -->|imports x4| CLI_SKILLS_9964CBB8
+    CLI_SKILLS_9964CBB8 -->|calls x3| ORDERCARD_TSX_87783993
+    REACT_6B810C90 -->|calls x3| CLI_SKILLS_9964CBB8
+    TABLECARD_TSX_F11FDE0D -->|imports x3| REACT_6B810C90
+    BUILD_GRAPH_321CBB04 -->|imports x3| REACT_6B810C90
+    ORDERCARD_TSX_87783993 -->|imports x3| BUILD_GRAPH_321CBB04
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h4>Architecture Layers</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
+      <tr><td>Graph Build</td><td>92</td><td><code>2, 3, 4, 5, 7, 8, 10</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>22</td><td><code>1</code></td></tr><tr><td>TableCard.tsx</td><td>23</td><td><code>0</code></td></tr><tr><td>OrderCard.tsx</td><td>11</td><td><code>6</code></td></tr><tr><td>react</td><td>8</td><td><code>9</code></td></tr><tr><td>reservation.ts</td><td>2</td><td><code>11</code></td></tr><tr><td>tailwind.config.js</td><td>2</td><td><code>12</code></td></tr><tr><td>postcss.config.js</td><td>1</td><td><code>13</code></td></tr><tr><td>vite-env.d.ts</td><td>1</td><td><code>14</code></td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Core Flow</h4>
+    <div class="arrow-chain">reservation.ts -&gt; Graph Build -&gt; CLI &amp; Skill Installers -&gt; TableCard.tsx -&gt; react -&gt; OrderCard.tsx -&gt; tailwind.config.js</div>
+  </div>
+</div>
+<div class="grid">
+  <div class="card">
+    <h4>Graph Report Highlights</h4>
+    <ul>
+      <li>162 nodes · 295 edges · 15 communities (10 shown, 5 thin omitted)</li>
+      <li>Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS</li>
+      <li>Token cost: 0 input · 0 output</li>
+      <li>1. `compilerOptions` - 18 edges</li>
+      <li>2. `compilerOptions` - 16 edges</li>
+      <li>3. `react` - 16 edges</li>
+    </ul>
+  </div>
+</div>
+<hr>
+<!-- ====== 2. Graph Build ====== -->
+<h2 id="build-graph">2. Graph Build</h2>
+<p>Graph Build groups implementation around packagejson, tsconfigappjson, tsconfignodejson, react, mostly in package.json, tsconfig.app.json, tsconfig.node.json. This section covers 92 nodes and 93 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Graph Build (92 nodes, 93 edges)
+    subgraph build_graph_package_json_4e40bfbd["package.json"]
+        package_582681c2("package.json")
+        ref_types_react_1bb250f2("@types/react<br/><small>package.json</small>")
+        ref_typescript_d5a01309("typescript<br/><small>package.json</small>")
+        ref_vite_c95c70db("vite<br/><small>package.json</small>")
+        ref_postcss_5f5a71df("postcss<br/><small>package.json</small>")
+        ref_tailwindcss_34b78b9c("tailwindcss<br/><small>package.json</small>")
+        ref_autoprefixer_e09e26da("autoprefixer<br/><small>package.json</small>")
+        ref_vitejs_plugin_react_2811e448("@vitejs/plugin-react<br/><small>package.json</small>")
+        ref_types_react_dom_2cfa9575("@types/react-dom<br/><small>package.json</small>")
+        ref_react_dom_61ea372d("react-dom<br/><small>package.json</small>")
+        ref_tailwind_merge_fffbbea3("tailwind-merge<br/><small>package.json</small>")
+        ref_framer_motion_f377d9e2("framer-motion<br/><small>package.json</small>")
+        ref_clsx_3ea06f07("clsx<br/><small>package.json</small>")
+    end
+    subgraph build_graph_components_common_ActionButton_tsx_46147074["components/common/ActionButton.tsx"]
+        src_components_common_actionbutton_1637b64c("ActionButton.tsx")
+        src_components_common_actionbutton_actionbuttonp_f0931d03("ActionButtonProps<br/><small>components/common/ActionButton.tsx</small>")
+    end
+    src_components_common_badge_cb629c5d("Badge.tsx")
+    src_styles_motion_73fad428("motion.ts")
+    vite_config_433f92aa("vite.config.ts")
+    package_582681c2 -->|imports| ref_types_react_1bb250f2
+    package_582681c2 -->|imports| ref_typescript_d5a01309
+    package_582681c2 -->|imports| ref_vite_c95c70db
+    package_582681c2 -->|imports| ref_postcss_5f5a71df
+    package_582681c2 -->|imports| ref_tailwindcss_34b78b9c
+    package_582681c2 -->|imports| ref_autoprefixer_e09e26da
+    package_582681c2 -->|imports| ref_vitejs_plugin_react_2811e448
+    package_582681c2 -->|imports| ref_types_react_dom_2cfa9575
+    package_582681c2 -->|imports| ref_react_dom_61ea372d
+    package_582681c2 -->|imports| ref_tailwind_merge_fffbbea3
+    package_582681c2 -->|imports| ref_framer_motion_f377d9e2
+    package_582681c2 -->|imports| ref_clsx_3ea06f07
+    vite_config_433f92aa -->|imports| ref_vite_c95c70db
+    vite_config_433f92aa -->|imports| ref_vitejs_plugin_react_2811e448
+    src_components_common_actionbutton_1637b64c -->|imports| ref_framer_motion_f377d9e2
+    src_components_common_actionbutton_1637b64c -->|imports| ref_clsx_3ea06f07
+    src_components_common_actionbutton_1637b64c -->|imports| ref_tailwind_merge_fffbbea3
+    src_components_common_actionbutton_1637b64c -->|imports| src_styles_motion_73fad428
+    src_components_common_badge_cb629c5d -->|imports| ref_clsx_3ea06f07
+    src_components_common_badge_cb629c5d -->|imports| ref_tailwind_merge_fffbbea3
+    src_styles_motion_73fad428 -->|imports| ref_framer_motion_f377d9e2
+    %% Omitted for readability: 74 nodes, 0 edges
+    class package_582681c2 function;
+    class ref_types_react_1bb250f2 function;
+    class ref_typescript_d5a01309 function;
+    class ref_vite_c95c70db function;
+    class ref_postcss_5f5a71df function;
+    class ref_tailwindcss_34b78b9c function;
+    class ref_autoprefixer_e09e26da function;
+    class ref_vitejs_plugin_react_2811e448 function;
+    class ref_types_react_dom_2cfa9575 function;
+    class ref_react_dom_61ea372d function;
+    class ref_tailwind_merge_fffbbea3 function;
+    class ref_framer_motion_f377d9e2 function;
+    class ref_clsx_3ea06f07 function;
+    class src_components_common_actionbutton_1637b64c ui;
+    class src_components_common_actionbutton_actionbuttonp_f0931d03 ui;
+    class src_components_common_badge_cb629c5d ui;
+    class src_styles_motion_73fad428 module;
+    class vite_config_433f92aa module;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>@types/react</code><br><small style="color:var(--muted)">package.json</small><br><code>@types/react-dom</code><br><small style="color:var(--muted)">package.json</small><br><code>@vitejs/plugin-react</code><br><small style="color:var(--muted)">package.json</small><br>+12 more</td>
+  <td>package.json node in package.json.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>name</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>name node in package.json.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>private</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>private node in package.json.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>scripts</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>scripts node in package.json.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>build</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>build node in package.json.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>dev</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>dev node in package.json.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>lint</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>lint node in package.json.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>preview</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>preview node in package.json.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>type</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>type node in package.json.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>version</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>version node in package.json.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>vite.config.ts</code><br><small style="color:var(--muted)">vite.config.ts</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>@vitejs/plugin-react</code><br><small style="color:var(--muted)">package.json</small><br><code>vite</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>Module file in vite.config.ts.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>autoprefixer</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>No direct outbound edge</td>
+  <td>autoprefixer node in package.json.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>postcss</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>No direct outbound edge</td>
+  <td>postcss node in package.json.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>react-dom</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>main.tsx</code><br><small style="color:var(--muted)">src/main.tsx</small><br><code>package.json</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>No direct outbound edge</td>
+  <td>react-dom node in package.json.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>tailwindcss</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>No direct outbound edge</td>
+  <td>tailwindcss node in package.json.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>@types/react</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>No direct outbound edge</td>
+  <td>@types/react node in package.json.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>@types/react-dom</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>No direct outbound edge</td>
+  <td>@types/react-dom node in package.json.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>typescript</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>No direct outbound edge</td>
+  <td>typescript node in package.json.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>vite</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small><br><code>vite.config.ts</code><br><small style="color:var(--muted)">vite.config.ts</small></td>
+  <td>No direct outbound edge</td>
+  <td>vite node in package.json.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>@vitejs/plugin-react</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small><br><code>vite.config.ts</code><br><small style="color:var(--muted)">vite.config.ts</small></td>
+  <td>No direct outbound edge</td>
+  <td>@vitejs/plugin-react node in package.json.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>tsconfig.app.json</code><br><small style="color:var(--muted)">tsconfig.app.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Reads, resolves, or persists project configuration.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>compilerOptions</code><br><small style="color:var(--muted)">tsconfig.app.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>compilerOptions node in tsconfig.app.json.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>allowImportingTsExtensions</code><br><small style="color:var(--muted)">tsconfig.app.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>allowImportingTsExtensions node in tsconfig.app.json.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>isolatedModules</code><br><small style="color:var(--muted)">tsconfig.app.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>isolatedModules node in tsconfig.app.json.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>jsx</code><br><small style="color:var(--muted)">tsconfig.app.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>jsx node in tsconfig.app.json.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>lib</code><br><small style="color:var(--muted)">tsconfig.app.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>lib node in tsconfig.app.json.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>module</code><br><small style="color:var(--muted)">tsconfig.app.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>module node in tsconfig.app.json.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>moduleDetection</code><br><small style="color:var(--muted)">tsconfig.app.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>moduleDetection node in tsconfig.app.json.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>moduleResolution</code><br><small style="color:var(--muted)">tsconfig.app.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>moduleResolution node in tsconfig.app.json.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>noEmit</code><br><small style="color:var(--muted)">tsconfig.app.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>noEmit node in tsconfig.app.json.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>package.json</code></td><td>39 nodes</td></tr>
+<tr><td><code>tsconfig.app.json</code></td><td>20 nodes</td></tr>
+<tr><td><code>tsconfig.node.json</code></td><td>18 nodes</td></tr>
+<tr><td><code>src/styles/motion.ts</code></td><td>5 nodes</td></tr>
+<tr><td><code>components/common/ActionButton.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>components/common/Badge.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>tsconfig.json</code></td><td>3 nodes</td></tr>
+<tr><td><code>vite.config.ts</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x72, imports x12, imports x9. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 3. CLI & Skill Installers ====== -->
+<h2 id="cli-skills">3. CLI &amp; Skill Installers</h2>
+<p>CLI &amp; Skill Installers groups implementation around components, common, modals, headertsx, mostly in components/common/Header.tsx, components/common/ModalShell.tsx, components/modals/RunSheetModal.tsx. This section covers 22 nodes and 59 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: CLI &amp; Skill Installers (22 nodes, 59 edges)
+    subgraph cli_skills_components_common_Header_tsx_3db3abae["components/common/Header.tsx"]
+        src_components_common_header_b7df843d("Header.tsx")
+        src_components_common_header_header_61beb74b("Header()<br/><small>components/common/Header.tsx</small>")
+    end
+    subgraph cli_skills_components_common_ModalShell_tsx_f9425ce6["components/common/ModalShell.tsx"]
+        src_components_common_modalshell_modalshell_4bdd5d73("ModalShell()<br/><small>components/common/ModalShell.tsx</small>")
+        src_components_common_modalshell_41beadcd("ModalShell.tsx")
+    end
+    subgraph cli_skills_components_modals_GuestFolioModal_tsx_d3ce4807["components/modals/GuestFolioModal.tsx"]
+        src_components_modals_guestfoliomodal_1ae2f392("GuestFolioModal.tsx")
+        src_components_modals_guestfoliomodal_guestfolio_dd0b6758("GuestFolioModal()<br/><small>components/modals/GuestFolioModal.tsx</small>")
+    end
+    subgraph cli_skills_components_modals_RunSheetModal_tsx_d8a0e19d["components/modals/RunSheetModal.tsx"]
+        src_components_modals_runsheetmodal_e6e285af("RunSheetModal.tsx")
+        src_components_modals_runsheetmodal_runsheetmoda_94212e4d("RunSheetModal()<br/><small>components/modals/RunSheetModal.tsx</small>")
+    end
+    subgraph cli_skills_src_App_tsx_6e733dc5["src/App.tsx"]
+        src_app_46efd68e("App.tsx")
+        src_app_app_f316b20d("App()<br/><small>src/App.tsx</small>")
+    end
+    src_components_common_actionbutton_actionbutton_7d648a4e("ActionButton()<br/><small>components/common/ActionButton.tsx</small>")
+    src_components_common_badge_badge_97d5fb14("Badge()<br/><small>components/common/Badge.tsx</small>")
+    src_components_floor_zonefilter_zonefilter_76f501aa("ZoneFilter()<br/><small>components/floor/ZoneFilter.tsx</small>")
+    ref_lucide_react_d9b8ec11("lucide-react<br/><small>package.json</small>")
+    src_main_3231ff52("main.tsx")
+    src_store_usealertstore_usealertstore_3bb2e39c("useAlertStore<br/><small>src/store/useAlertStore.ts</small>")
+    src_store_usefloorstore_usefloorstore_a39b749b("useFloorStore<br/><small>src/store/useFloorStore.ts</small>")
+    src_styles_motion_tapspring_79575082("tapSpring<br/><small>src/styles/motion.ts</small>")
+    src_app_app_f316b20d -->|calls| src_components_common_badge_badge_97d5fb14
+    src_app_app_f316b20d -->|calls| src_components_modals_guestfoliomodal_guestfolio_dd0b6758
+    src_app_app_f316b20d -->|calls| src_components_modals_runsheetmodal_runsheetmoda_94212e4d
+    src_app_app_f316b20d -->|calls| src_components_common_modalshell_modalshell_4bdd5d73
+    src_app_app_f316b20d -->|calls| src_store_usefloorstore_usefloorstore_a39b749b
+    src_app_app_f316b20d -->|calls| src_store_usealertstore_usealertstore_3bb2e39c
+    src_app_app_f316b20d -->|calls| src_components_common_header_header_61beb74b
+    src_app_app_f316b20d -->|calls| src_components_floor_zonefilter_zonefilter_76f501aa
+    src_components_common_header_header_61beb74b -->|calls| src_components_common_badge_badge_97d5fb14
+    src_components_common_header_header_61beb74b -->|calls| src_store_usealertstore_usealertstore_3bb2e39c
+    src_components_common_header_header_61beb74b -->|calls| src_store_usefloorstore_usefloorstore_a39b749b
+    src_components_modals_guestfoliomodal_guestfolio_dd0b6758 -->|calls| src_components_common_actionbutton_actionbutton_7d648a4e
+    src_components_modals_guestfoliomodal_guestfolio_dd0b6758 -->|calls| src_components_common_modalshell_modalshell_4bdd5d73
+    src_components_modals_guestfoliomodal_guestfolio_dd0b6758 -->|calls| src_components_common_badge_badge_97d5fb14
+    src_components_modals_runsheetmodal_runsheetmoda_94212e4d -->|calls| src_components_common_badge_badge_97d5fb14
+    src_components_modals_runsheetmodal_runsheetmoda_94212e4d -->|calls| src_components_common_actionbutton_actionbutton_7d648a4e
+    src_components_modals_runsheetmodal_runsheetmoda_94212e4d -->|calls| src_components_common_modalshell_modalshell_4bdd5d73
+    src_app_46efd68e -->|imports| src_components_common_modalshell_modalshell_4bdd5d73
+    src_app_46efd68e -->|imports| src_components_floor_zonefilter_zonefilter_76f501aa
+    src_app_46efd68e -->|imports| src_components_modals_guestfoliomodal_guestfolio_dd0b6758
+    src_app_46efd68e -->|imports| src_components_modals_runsheetmodal_runsheetmoda_94212e4d
+    src_app_46efd68e -->|imports| src_store_usefloorstore_usefloorstore_a39b749b
+    src_app_46efd68e -->|imports| src_store_usealertstore_usealertstore_3bb2e39c
+    src_app_46efd68e -->|imports| src_styles_motion_tapspring_79575082
+    %% Omitted for readability: 4 nodes, 26 edges
+    class src_components_common_header_b7df843d ui;
+    class src_components_common_header_header_61beb74b ui;
+    class src_components_common_modalshell_modalshell_4bdd5d73 ui;
+    class src_components_common_modalshell_41beadcd ui;
+    class src_components_modals_guestfoliomodal_1ae2f392 ui;
+    class src_components_modals_guestfoliomodal_guestfolio_dd0b6758 ui;
+    class src_components_modals_runsheetmodal_e6e285af ui;
+    class src_components_modals_runsheetmodal_runsheetmoda_94212e4d ui;
+    class src_app_46efd68e ui;
+    class src_app_app_f316b20d ui;
+    class src_components_common_actionbutton_actionbutton_7d648a4e ui;
+    class src_components_common_badge_badge_97d5fb14 ui;
+    class src_components_floor_zonefilter_zonefilter_76f501aa ui;
+    class ref_lucide_react_d9b8ec11 function;
+    class src_main_3231ff52 ui;
+    class src_store_usealertstore_usealertstore_3bb2e39c ui;
+    class src_store_usefloorstore_usefloorstore_a39b749b ui;
+    class src_styles_motion_tapspring_79575082 function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>HeaderProps</code><br><small style="color:var(--muted)">components/common/Header.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>HeaderProps node in components/common/Header.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>ModalShellProps</code><br><small style="color:var(--muted)">components/common/ModalShell.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ModalShellProps node in components/common/ModalShell.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>RunSheetModalProps</code><br><small style="color:var(--muted)">components/modals/RunSheetModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>RunSheetModalProps node in components/modals/RunSheetModal.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>main.tsx</code><br><small style="color:var(--muted)">src/main.tsx</small></td>
+  <td><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>DispatchBoard()</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small><br><code>FloorGrid()</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small><br>+8 more</td>
+  <td>App() node in src/App.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>ActionButton()</code><br><small style="color:var(--muted)">components/common/ActionButton.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>GuestFolioModal()</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small><br><code>GuestFolioModal.tsx</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small><br><code>RunSheetModal()</code><br><small style="color:var(--muted)">components/modals/RunSheetModal.tsx</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>ActionButton() node in components/common/ActionButton.tsx.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>GuestFolioModal()</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small><br>+11 more</td>
+  <td>No direct outbound edge</td>
+  <td>Badge() node in components/common/Badge.tsx.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>Header()</code><br><small style="color:var(--muted)">components/common/Header.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>useAlertStore</code><br><small style="color:var(--muted)">src/store/useAlertStore.ts</small><br><code>useFloorStore</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
+  <td>Header() node in components/common/Header.tsx.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>ModalShell()</code><br><small style="color:var(--muted)">components/common/ModalShell.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>GuestFolioModal()</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small><br>+3 more</td>
+  <td>No direct outbound edge</td>
+  <td>ModalShell() node in components/common/ModalShell.tsx.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>ZoneFilter()</code><br><small style="color:var(--muted)">components/floor/ZoneFilter.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>ZoneFilter() node in components/floor/ZoneFilter.tsx.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>GuestFolioModal()</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>ActionButton()</code><br><small style="color:var(--muted)">components/common/ActionButton.tsx</small><br><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>ModalShell()</code><br><small style="color:var(--muted)">components/common/ModalShell.tsx</small></td>
+  <td>GuestFolioModal() node in components/modals/GuestFolioModal.tsx.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>RunSheetModal()</code><br><small style="color:var(--muted)">components/modals/RunSheetModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>ActionButton()</code><br><small style="color:var(--muted)">components/common/ActionButton.tsx</small><br><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>ModalShell()</code><br><small style="color:var(--muted)">components/common/ModalShell.tsx</small></td>
+  <td>RunSheetModal() node in components/modals/RunSheetModal.tsx.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>main.tsx</code><br><small style="color:var(--muted)">src/main.tsx</small></td>
+  <td><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>Badge.tsx</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>DiningZone</code><br><small style="color:var(--muted)">src/types/table.ts</small><br>+26 more</td>
+  <td>Module file in src/App.tsx.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>Header.tsx</code><br><small style="color:var(--muted)">components/common/Header.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>Badge.tsx</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>framer-motion</code><br><small style="color:var(--muted)">package.json</small><br>+8 more</td>
+  <td>Module file in components/common/Header.tsx.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>ModalShell.tsx</code><br><small style="color:var(--muted)">components/common/ModalShell.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>GuestFolioModal.tsx</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small><br><code>RunSheetModal.tsx</code><br><small style="color:var(--muted)">components/modals/RunSheetModal.tsx</small></td>
+  <td><code>framer-motion</code><br><small style="color:var(--muted)">package.json</small><br><code>lucide-react</code><br><small style="color:var(--muted)">package.json</small><br><code>modalMotion</code><br><small style="color:var(--muted)">src/styles/motion.ts</small><br>+3 more</td>
+  <td>Module file in components/common/ModalShell.tsx.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>GuestFolioModal.tsx</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>ActionButton()</code><br><small style="color:var(--muted)">components/common/ActionButton.tsx</small><br><code>ActionButton.tsx</code><br><small style="color:var(--muted)">components/common/ActionButton.tsx</small><br><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br>+7 more</td>
+  <td>Module file in components/modals/GuestFolioModal.tsx.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>RunSheetModal.tsx</code><br><small style="color:var(--muted)">components/modals/RunSheetModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>ActionButton()</code><br><small style="color:var(--muted)">components/common/ActionButton.tsx</small><br><code>ActionButton.tsx</code><br><small style="color:var(--muted)">components/common/ActionButton.tsx</small><br><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br>+5 more</td>
+  <td>Module file in components/modals/RunSheetModal.tsx.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>main.tsx</code><br><small style="color:var(--muted)">src/main.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>react</code><br><small style="color:var(--muted)">package.json</small><br>+2 more</td>
+  <td>Module file in src/main.tsx.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>useAlertStore</code><br><small style="color:var(--muted)">src/store/useAlertStore.ts</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>Header()</code><br><small style="color:var(--muted)">components/common/Header.tsx</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>useAlertStore node in src/store/useAlertStore.ts.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>useFloorStore</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>Header()</code><br><small style="color:var(--muted)">components/common/Header.tsx</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>useFloorStore node in src/store/useFloorStore.ts.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>tapSpring</code><br><small style="color:var(--muted)">src/styles/motion.ts</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>ActionButton.tsx</code><br><small style="color:var(--muted)">components/common/ActionButton.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>Header.tsx</code><br><small style="color:var(--muted)">components/common/Header.tsx</small><br>+3 more</td>
+  <td>No direct outbound edge</td>
+  <td>tapSpring node in src/styles/motion.ts.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>lucide-react</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>GuestFolioModal.tsx</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small><br><code>Header.tsx</code><br><small style="color:var(--muted)">components/common/Header.tsx</small><br>+6 more</td>
+  <td>No direct outbound edge</td>
+  <td>lucide-react node in package.json.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>src_styles_fonts</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>main.tsx</code><br><small style="color:var(--muted)">src/main.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>src_styles_fonts node in project.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>components/common/Header.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>components/common/ModalShell.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>components/modals/RunSheetModal.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/App.tsx</code></td><td>2 nodes</td></tr>
+<tr><td><code>components/modals/GuestFolioModal.tsx</code></td><td>2 nodes</td></tr>
+<tr><td><code>package.json</code></td><td>1 nodes</td></tr>
+<tr><td><code>components/common/ActionButton.tsx</code></td><td>1 nodes</td></tr>
+<tr><td><code>components/common/Badge.tsx</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: imports x21, calls x17, imports x13, contains x8. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 4. TableCard.tsx ====== -->
+<h2 id="tablecard-tsx">4. TableCard.tsx</h2>
+<p>TableCard.tsx groups implementation around components, floor, store, tablets, mostly in src/types/table.ts, src/store/useAlertStore.ts, components/floor/FloorGrid.tsx. This section covers 23 nodes and 35 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: TableCard.tsx (23 nodes, 35 edges)
+    subgraph tablecard_tsx_components_floor_FloorGrid_tsx_cfec3c99["components/floor/FloorGrid.tsx"]
+        src_components_floor_floorgrid_9e2fcaa7("FloorGrid.tsx")
+        src_components_floor_floorgrid_floorgrid_f93b28c6("FloorGrid()<br/><small>components/floor/FloorGrid.tsx</small>")
+        src_components_floor_floorgrid_floorgridprops_f9fd670d("FloorGridProps<br/><small>components/floor/FloorGrid.tsx</small>")
+    end
+    subgraph tablecard_tsx_components_floor_TableCard_tsx_4cf65e0c["components/floor/TableCard.tsx"]
+        src_components_floor_tablecard_e4a99f3c("TableCard.tsx")
+        src_components_floor_tablecard_tablecard_70ef2f79("TableCard()<br/><small>components/floor/TableCard.tsx</small>")
+        src_components_floor_tablecard_tablecardprops_3c5d0da2("TableCardProps<br/><small>components/floor/TableCard.tsx</small>")
+    end
+    subgraph tablecard_tsx_components_floor_ZoneFilter_tsx_e556c6a2["components/floor/ZoneFilter.tsx"]
+        src_components_floor_zonefilter_151259ca("ZoneFilter.tsx")
+        src_components_floor_zonefilter_zones_44107f5b("ZONES<br/><small>components/floor/ZoneFilter.tsx</small>")
+        src_components_floor_zonefilter_zonefilterprops_4f71e90e("ZoneFilterProps<br/><small>components/floor/ZoneFilter.tsx</small>")
+    end
+    subgraph tablecard_tsx_src_store_useAlertStore_ts_5ded64b1["src/store/useAlertStore.ts"]
+        src_store_usealertstore_a97f8e00("useAlertStore.ts")
+        src_store_usealertstore_alertstorestate_0a271187("AlertStoreState<br/><small>src/store/useAlertStore.ts</small>")
+        src_store_usealertstore_initial_alerts_07a6cbcd("INITIAL_ALERTS<br/><small>src/store/useAlertStore.ts</small>")
+    end
+    subgraph tablecard_tsx_src_types_table_ts_f92b28fc["src/types/table.ts"]
+        src_types_table_tabledata_73abb7f4("TableData<br/><small>src/types/table.ts</small>")
+        src_types_table_f0da1ed2("table.ts")
+        src_types_table_diningzone_13cff90f("DiningZone<br/><small>src/types/table.ts</small>")
+    end
+    src_components_modals_guestfoliomodal_guestfolio_93ce1ad7("GuestFolioModalProps<br/><small>components/modals/GuestFolioModal.tsx</small>")
+    ref_zustand_a23643de("zustand<br/><small>package.json</small>")
+    src_store_usefloorstore_db8133f4("useFloorStore.ts")
+    src_components_floor_floorgrid_floorgrid_f93b28c6 -->|calls| src_components_floor_tablecard_tablecard_70ef2f79
+    src_components_floor_floorgrid_9e2fcaa7 -->|imports| src_components_floor_tablecard_tablecard_70ef2f79
+    src_components_floor_floorgrid_9e2fcaa7 -->|imports| src_types_table_tabledata_73abb7f4
+    src_components_floor_floorgrid_9e2fcaa7 -->|imports| src_components_floor_tablecard_e4a99f3c
+    src_components_floor_floorgrid_9e2fcaa7 -->|imports| src_types_table_f0da1ed2
+    src_components_floor_tablecard_e4a99f3c -->|imports| src_types_table_tabledata_73abb7f4
+    src_components_floor_tablecard_e4a99f3c -->|imports| src_types_table_f0da1ed2
+    src_components_floor_zonefilter_151259ca -->|imports| src_types_table_diningzone_13cff90f
+    src_components_floor_zonefilter_151259ca -->|imports| src_types_table_f0da1ed2
+    src_store_usealertstore_a97f8e00 -->|imports| ref_zustand_a23643de
+    src_store_usefloorstore_db8133f4 -->|imports| src_types_table_diningzone_13cff90f
+    src_store_usefloorstore_db8133f4 -->|imports| src_types_table_tabledata_73abb7f4
+    src_store_usefloorstore_db8133f4 -->|imports| ref_zustand_a23643de
+    src_store_usefloorstore_db8133f4 -->|imports| src_types_table_f0da1ed2
+    %% Omitted for readability: 5 nodes, 0 edges
+    class src_components_floor_floorgrid_9e2fcaa7 ui;
+    class src_components_floor_floorgrid_floorgrid_f93b28c6 ui;
+    class src_components_floor_floorgrid_floorgridprops_f9fd670d ui;
+    class src_components_floor_tablecard_e4a99f3c ui;
+    class src_components_floor_tablecard_tablecard_70ef2f79 ui;
+    class src_components_floor_tablecard_tablecardprops_3c5d0da2 ui;
+    class src_components_floor_zonefilter_151259ca ui;
+    class src_components_floor_zonefilter_zones_44107f5b ui;
+    class src_components_floor_zonefilter_zonefilterprops_4f71e90e ui;
+    class src_store_usealertstore_a97f8e00 ui;
+    class src_store_usealertstore_alertstorestate_0a271187 ui;
+    class src_store_usealertstore_initial_alerts_07a6cbcd klass;
+    class src_types_table_tabledata_73abb7f4 klass;
+    class src_types_table_f0da1ed2 module;
+    class src_types_table_diningzone_13cff90f klass;
+    class src_components_modals_guestfoliomodal_guestfolio_93ce1ad7 ui;
+    class ref_zustand_a23643de function;
+    class src_store_usefloorstore_db8133f4 ui;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>FloorGridProps</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>FloorGridProps node in components/floor/FloorGrid.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>TableCardProps</code><br><small style="color:var(--muted)">components/floor/TableCard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>TableCardProps node in components/floor/TableCard.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>ZoneFilterProps</code><br><small style="color:var(--muted)">components/floor/ZoneFilter.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ZoneFilterProps node in components/floor/ZoneFilter.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>GuestFolioModalProps</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>GuestFolioModalProps node in components/modals/GuestFolioModal.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>AlertStoreState</code><br><small style="color:var(--muted)">src/store/useAlertStore.ts</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>AlertStoreState node in src/store/useAlertStore.ts.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>ServiceAlert</code><br><small style="color:var(--muted)">src/store/useAlertStore.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ServiceAlert node in src/store/useAlertStore.ts.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>FloorStoreState</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>FloorStoreState node in src/store/useFloorStore.ts.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>DiningZone</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>useFloorStore.ts</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small><br><code>ZoneFilter.tsx</code><br><small style="color:var(--muted)">components/floor/ZoneFilter.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>DiningZone node in src/types/table.ts.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>GuestProfile</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>GuestProfile node in src/types/table.ts.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>TableData</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>FloorGrid.tsx</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small><br><code>GuestFolioModal.tsx</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small><br><code>TableCard.tsx</code><br><small style="color:var(--muted)">components/floor/TableCard.tsx</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>TableData node in src/types/table.ts.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>TableStatus</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>TableStatus node in src/types/table.ts.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>FloorGrid()</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>TableCard()</code><br><small style="color:var(--muted)">components/floor/TableCard.tsx</small></td>
+  <td>FloorGrid() node in components/floor/FloorGrid.tsx.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>TableCard()</code><br><small style="color:var(--muted)">components/floor/TableCard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>FloorGrid()</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small><br><code>FloorGrid.tsx</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small></td>
+  <td><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small></td>
+  <td>TableCard() node in components/floor/TableCard.tsx.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>FloorGrid.tsx</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>react</code><br><small style="color:var(--muted)">package.json</small><br><code>table.ts</code><br><small style="color:var(--muted)">src/types/table.ts</small><br><code>TableCard()</code><br><small style="color:var(--muted)">components/floor/TableCard.tsx</small><br>+2 more</td>
+  <td>Module file in components/floor/FloorGrid.tsx.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>TableCard.tsx</code><br><small style="color:var(--muted)">components/floor/TableCard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>FloorGrid.tsx</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small></td>
+  <td><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>Badge.tsx</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>BadgeVariant</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br>+7 more</td>
+  <td>Module file in components/floor/TableCard.tsx.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>ZoneFilter.tsx</code><br><small style="color:var(--muted)">components/floor/ZoneFilter.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>DiningZone</code><br><small style="color:var(--muted)">src/types/table.ts</small><br><code>framer-motion</code><br><small style="color:var(--muted)">package.json</small><br><code>motion.ts</code><br><small style="color:var(--muted)">src/styles/motion.ts</small><br>+3 more</td>
+  <td>Module file in components/floor/ZoneFilter.tsx.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>ZONES</code><br><small style="color:var(--muted)">components/floor/ZoneFilter.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ZONES node in components/floor/ZoneFilter.tsx.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>useAlertStore.ts</code><br><small style="color:var(--muted)">src/store/useAlertStore.ts</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>Header.tsx</code><br><small style="color:var(--muted)">components/common/Header.tsx</small></td>
+  <td><code>zustand</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>Module file in src/store/useAlertStore.ts.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>INITIAL_ALERTS</code><br><small style="color:var(--muted)">src/store/useAlertStore.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>INITIAL_ALERTS node in src/store/useAlertStore.ts.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>useFloorStore.ts</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>Header.tsx</code><br><small style="color:var(--muted)">components/common/Header.tsx</small></td>
+  <td><code>DiningZone</code><br><small style="color:var(--muted)">src/types/table.ts</small><br><code>table.ts</code><br><small style="color:var(--muted)">src/types/table.ts</small><br><code>TableData</code><br><small style="color:var(--muted)">src/types/table.ts</small><br>+1 more</td>
+  <td>Module file in src/store/useFloorStore.ts.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>INITIAL_TABLES</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>INITIAL_TABLES node in src/store/useFloorStore.ts.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>table.ts</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>FloorGrid.tsx</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small><br><code>GuestFolioModal.tsx</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small><br>+3 more</td>
+  <td>No direct outbound edge</td>
+  <td>Module file in src/types/table.ts.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>zustand</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small><br><code>useAlertStore.ts</code><br><small style="color:var(--muted)">src/store/useAlertStore.ts</small><br><code>useFloorStore.ts</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
+  <td>No direct outbound edge</td>
+  <td>zustand node in package.json.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/types/table.ts</code></td><td>5 nodes</td></tr>
+<tr><td><code>src/store/useAlertStore.ts</code></td><td>4 nodes</td></tr>
+<tr><td><code>components/floor/FloorGrid.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>components/floor/TableCard.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>components/floor/ZoneFilter.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>src/store/useFloorStore.ts</code></td><td>3 nodes</td></tr>
+<tr><td><code>package.json</code></td><td>1 nodes</td></tr>
+<tr><td><code>components/modals/GuestFolioModal.tsx</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x15, imports x7, references x6, imports x6. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 5. OrderCard.tsx ====== -->
+<h2 id="ordercard-tsx">5. OrderCard.tsx</h2>
+<p>OrderCard.tsx groups implementation around components, dispatch, dispatchboardtsx, orderts, mostly in components/dispatch/DispatchBoard.tsx, src/types/order.ts, components/dispatch/OrderCard.tsx. This section covers 11 nodes and 17 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: OrderCard.tsx (11 nodes, 17 edges)
+    subgraph ordercard_tsx_components_dispatch_DispatchBoard_a0b17b47["components/dispatch/DispatchBoard.tsx"]
+        src_components_dispatch_dispatchboard_6afa3773("DispatchBoard.tsx")
+        src_components_dispatch_dispatchboard_dispatchbo_94cf42da("DispatchBoard()<br/><small>components/dispatch/DispatchBoard.tsx</small>")
+        src_components_dispatch_dispatchboard_dispatchbo_81508c0e("DispatchBoardProps<br/><small>components/dispatch/DispatchBoard.tsx</small>")
+        src_components_dispatch_dispatchboard_sample_ord_3a2483bf("SAMPLE_ORDERS<br/><small>components/dispatch/DispatchBoard.tsx</small>")
+    end
+    subgraph ordercard_tsx_src_types_order_ts_a8098ea3["src/types/order.ts"]
+        src_types_order_diningorder_430c2b8e("DiningOrder<br/><small>src/types/order.ts</small>")
+        src_types_order_a7346a89("order.ts")
+        src_types_order_orderitem_53b50a74("OrderItem<br/><small>src/types/order.ts</small>")
+        src_types_order_orderstatus_8b3725ee("OrderStatus<br/><small>src/types/order.ts</small>")
+    end
+    subgraph ordercard_tsx_components_dispatch_OrderCard_tsx_3426f469["components/dispatch/OrderCard.tsx"]
+        src_components_dispatch_ordercard_cb462cb0("OrderCard.tsx")
+        src_components_dispatch_ordercard_ordercard_5673d733("OrderCard()<br/><small>components/dispatch/OrderCard.tsx</small>")
+        src_components_dispatch_ordercard_ordercardprops_008fa2e8("OrderCardProps<br/><small>components/dispatch/OrderCard.tsx</small>")
+    end
+    src_components_dispatch_dispatchboard_dispatchbo_94cf42da -->|calls| src_components_dispatch_ordercard_ordercard_5673d733
+    src_components_dispatch_dispatchboard_6afa3773 -->|imports| src_components_dispatch_ordercard_ordercard_5673d733
+    src_components_dispatch_dispatchboard_6afa3773 -->|imports| src_types_order_diningorder_430c2b8e
+    src_components_dispatch_dispatchboard_6afa3773 -->|imports| src_components_dispatch_ordercard_cb462cb0
+    src_components_dispatch_dispatchboard_6afa3773 -->|imports| src_types_order_a7346a89
+    src_components_dispatch_ordercard_cb462cb0 -->|imports| src_types_order_diningorder_430c2b8e
+    src_components_dispatch_ordercard_cb462cb0 -->|imports| src_types_order_a7346a89
+    class src_components_dispatch_dispatchboard_6afa3773 ui;
+    class src_components_dispatch_dispatchboard_dispatchbo_94cf42da ui;
+    class src_components_dispatch_dispatchboard_dispatchbo_81508c0e ui;
+    class src_components_dispatch_dispatchboard_sample_ord_3a2483bf ui;
+    class src_types_order_diningorder_430c2b8e klass;
+    class src_types_order_a7346a89 module;
+    class src_types_order_orderitem_53b50a74 klass;
+    class src_types_order_orderstatus_8b3725ee klass;
+    class src_components_dispatch_ordercard_cb462cb0 ui;
+    class src_components_dispatch_ordercard_ordercard_5673d733 ui;
+    class src_components_dispatch_ordercard_ordercardprops_008fa2e8 ui;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>DispatchBoardProps</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>DispatchBoardProps node in components/dispatch/DispatchBoard.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>OrderCardProps</code><br><small style="color:var(--muted)">components/dispatch/OrderCard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>OrderCardProps node in components/dispatch/OrderCard.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>DiningOrder</code><br><small style="color:var(--muted)">src/types/order.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>DispatchBoard.tsx</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small><br><code>OrderCard.tsx</code><br><small style="color:var(--muted)">components/dispatch/OrderCard.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>DiningOrder node in src/types/order.ts.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>OrderItem</code><br><small style="color:var(--muted)">src/types/order.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>OrderItem node in src/types/order.ts.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>OrderStatus</code><br><small style="color:var(--muted)">src/types/order.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>OrderStatus node in src/types/order.ts.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>DispatchBoard()</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>OrderCard()</code><br><small style="color:var(--muted)">components/dispatch/OrderCard.tsx</small></td>
+  <td>DispatchBoard() node in components/dispatch/DispatchBoard.tsx.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>OrderCard()</code><br><small style="color:var(--muted)">components/dispatch/OrderCard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>DispatchBoard()</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small><br><code>DispatchBoard.tsx</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small></td>
+  <td><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small></td>
+  <td>OrderCard() node in components/dispatch/OrderCard.tsx.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>DispatchBoard.tsx</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>DiningOrder</code><br><small style="color:var(--muted)">src/types/order.ts</small><br><code>order.ts</code><br><small style="color:var(--muted)">src/types/order.ts</small><br><code>OrderCard()</code><br><small style="color:var(--muted)">components/dispatch/OrderCard.tsx</small><br>+2 more</td>
+  <td>Module file in components/dispatch/DispatchBoard.tsx.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>SAMPLE_ORDERS</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>SAMPLE_ORDERS node in components/dispatch/DispatchBoard.tsx.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>OrderCard.tsx</code><br><small style="color:var(--muted)">components/dispatch/OrderCard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>DispatchBoard.tsx</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small></td>
+  <td><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>Badge.tsx</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>DiningOrder</code><br><small style="color:var(--muted)">src/types/order.ts</small><br>+6 more</td>
+  <td>Module file in components/dispatch/OrderCard.tsx.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>order.ts</code><br><small style="color:var(--muted)">src/types/order.ts</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>DispatchBoard.tsx</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small><br><code>OrderCard.tsx</code><br><small style="color:var(--muted)">components/dispatch/OrderCard.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>Module file in src/types/order.ts.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>components/dispatch/DispatchBoard.tsx</code></td><td>4 nodes</td></tr>
+<tr><td><code>src/types/order.ts</code></td><td>4 nodes</td></tr>
+<tr><td><code>components/dispatch/OrderCard.tsx</code></td><td>3 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x8, imports x3, imports x3, references x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 6. react ====== -->
+<h2 id="react">6. react</h2>
+<p>react groups implementation around components, cellar, stockrowtsx, stockledgertsx, mostly in components/cellar/StockRow.tsx, components/cellar/StockLedger.tsx, package.json. This section covers 8 nodes and 11 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: react (8 nodes, 11 edges)
+    subgraph react_components_cellar_StockRow_tsx_44572443["components/cellar/StockRow.tsx"]
+        src_components_cellar_stockrow_2727f534("StockRow.tsx")
+        src_components_cellar_stockrow_stockrow_8ac85502("StockRow()<br/><small>components/cellar/StockRow.tsx</small>")
+        src_components_cellar_stockrow_wineitem_389657b9("WineItem<br/><small>components/cellar/StockRow.tsx</small>")
+        src_components_cellar_stockrow_stockrowprops_0cd783a4("StockRowProps<br/><small>components/cellar/StockRow.tsx</small>")
+    end
+    subgraph react_components_cellar_StockLedger_tsx_7f285547["components/cellar/StockLedger.tsx"]
+        src_components_cellar_stockledger_0c086a69("StockLedger.tsx")
+        src_components_cellar_stockledger_stockledger_981116b5("StockLedger()<br/><small>components/cellar/StockLedger.tsx</small>")
+        src_components_cellar_stockledger_wine_inventory_ac36e5c9("WINE_INVENTORY<br/><small>components/cellar/StockLedger.tsx</small>")
+    end
+    ref_react_47bfb9fb("react<br/><small>package.json</small>")
+    src_components_cellar_stockledger_stockledger_981116b5 -->|calls| src_components_cellar_stockrow_stockrow_8ac85502
+    src_components_cellar_stockledger_0c086a69 -->|imports| src_components_cellar_stockrow_stockrow_8ac85502
+    src_components_cellar_stockledger_0c086a69 -->|imports| src_components_cellar_stockrow_wineitem_389657b9
+    src_components_cellar_stockledger_0c086a69 -->|imports| ref_react_47bfb9fb
+    src_components_cellar_stockledger_0c086a69 -->|imports| src_components_cellar_stockrow_2727f534
+    src_components_cellar_stockrow_2727f534 -->|imports| ref_react_47bfb9fb
+    class src_components_cellar_stockrow_2727f534 ui;
+    class src_components_cellar_stockrow_stockrow_8ac85502 ui;
+    class src_components_cellar_stockrow_wineitem_389657b9 ui;
+    class src_components_cellar_stockrow_stockrowprops_0cd783a4 ui;
+    class src_components_cellar_stockledger_0c086a69 ui;
+    class src_components_cellar_stockledger_stockledger_981116b5 ui;
+    class src_components_cellar_stockledger_wine_inventory_ac36e5c9 ui;
+    class ref_react_47bfb9fb function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>StockRowProps</code><br><small style="color:var(--muted)">components/cellar/StockRow.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>StockRowProps node in components/cellar/StockRow.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>WineItem</code><br><small style="color:var(--muted)">components/cellar/StockRow.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>StockLedger.tsx</code><br><small style="color:var(--muted)">components/cellar/StockLedger.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>WineItem node in components/cellar/StockRow.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>StockLedger()</code><br><small style="color:var(--muted)">components/cellar/StockLedger.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>StockRow()</code><br><small style="color:var(--muted)">components/cellar/StockRow.tsx</small></td>
+  <td>StockLedger() node in components/cellar/StockLedger.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>StockRow()</code><br><small style="color:var(--muted)">components/cellar/StockRow.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>StockLedger()</code><br><small style="color:var(--muted)">components/cellar/StockLedger.tsx</small><br><code>StockLedger.tsx</code><br><small style="color:var(--muted)">components/cellar/StockLedger.tsx</small></td>
+  <td><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small></td>
+  <td>StockRow() node in components/cellar/StockRow.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>StockLedger.tsx</code><br><small style="color:var(--muted)">components/cellar/StockLedger.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>react</code><br><small style="color:var(--muted)">package.json</small><br><code>StockRow()</code><br><small style="color:var(--muted)">components/cellar/StockRow.tsx</small><br><code>StockRow.tsx</code><br><small style="color:var(--muted)">components/cellar/StockRow.tsx</small><br>+1 more</td>
+  <td>Module file in components/cellar/StockLedger.tsx.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>WINE_INVENTORY</code><br><small style="color:var(--muted)">components/cellar/StockLedger.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>WINE_INVENTORY node in components/cellar/StockLedger.tsx.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>StockRow.tsx</code><br><small style="color:var(--muted)">components/cellar/StockRow.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>StockLedger.tsx</code><br><small style="color:var(--muted)">components/cellar/StockLedger.tsx</small></td>
+  <td><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>Badge.tsx</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>lucide-react</code><br><small style="color:var(--muted)">package.json</small><br>+1 more</td>
+  <td>Module file in components/cellar/StockRow.tsx.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>react</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>ActionButton.tsx</code><br><small style="color:var(--muted)">components/common/ActionButton.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>Badge.tsx</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br>+13 more</td>
+  <td>No direct outbound edge</td>
+  <td>react node in package.json.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>components/cellar/StockRow.tsx</code></td><td>4 nodes</td></tr>
+<tr><td><code>components/cellar/StockLedger.tsx</code></td><td>3 nodes</td></tr>
+<tr><td><code>package.json</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x5, imports x3, imports x2, calls x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 7. reservation.ts ====== -->
+<h2 id="reservation-ts">7. reservation.ts</h2>
+<p>reservation.ts groups implementation around reservationts, types, reservation, mostly in src/types/reservation.ts. This section covers 2 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: reservation.ts (2 nodes, 1 edges)
+    src_types_reservation_d6ad483a("reservation.ts")
+    src_types_reservation_reservation_7a4c0bfc("Reservation<br/><small>src/types/reservation.ts</small>")
+    src_types_reservation_d6ad483a -->|contains| src_types_reservation_reservation_7a4c0bfc
+    class src_types_reservation_d6ad483a module;
+    class src_types_reservation_reservation_7a4c0bfc klass;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>Reservation</code><br><small style="color:var(--muted)">src/types/reservation.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Reservation node in src/types/reservation.ts.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>reservation.ts</code><br><small style="color:var(--muted)">src/types/reservation.ts</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Module file in src/types/reservation.ts.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/types/reservation.ts</code></td><td>2 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 8. tailwind.config.js ====== -->
+<h2 id="tailwind-config-js">8. tailwind.config.js</h2>
+<p>tailwind.config.js groups implementation around tailwindcss, tailwindconfigjs, mostly in tailwindcss, tailwind.config.js. This section covers 2 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: tailwind.config.js (2 nodes, 1 edges)
+    tailwind_config_2024816e("tailwind.config.js")
+    tailwindcss_34a67857("tailwindcss")
+    tailwind_config_2024816e -->|dynamic import| tailwindcss_34a67857
+    class tailwind_config_2024816e module;
+    class tailwindcss_34a67857 function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>tailwindcss</code><br><small style="color:var(--muted)">tailwindcss</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>tailwindcss node in tailwindcss.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>tailwind.config.js</code><br><small style="color:var(--muted)">tailwind.config.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Reads, resolves, or persists project configuration.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>tailwind.config.js</code></td><td>1 nodes</td></tr>
+<tr><td><code>tailwindcss</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: dynamic import x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 9. postcss.config.js ====== -->
+<h2 id="postcss-config-js">9. postcss.config.js</h2>
+<p>postcss.config.js groups implementation around postcssconfigjs, mostly in postcss.config.js. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: postcss.config.js (1 nodes, 0 edges)
+    postcss_config_bfe60bb8("postcss.config.js")
+    class postcss_config_bfe60bb8 module;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>postcss.config.js</code><br><small style="color:var(--muted)">postcss.config.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Reads, resolves, or persists project configuration.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>postcss.config.js</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: No high-confidence call edges detected. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 10. vite-env.d.ts ====== -->
+<h2 id="vite-env-d-ts">10. vite-env.d.ts</h2>
+<p>vite-env.d.ts groups implementation around vite, envdts, mostly in src/vite-env.d.ts. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: vite-env.d.ts (1 nodes, 0 edges)
+    src_vite_env_d_695f3f8f("vite-env.d.ts")
+    class src_vite_env_d_695f3f8f module;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>vite-env.d.ts</code><br><small style="color:var(--muted)">src/vite-env.d.ts</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Module file in src/vite-env.d.ts.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>src/vite-env.d.ts</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: No high-confidence call edges detected. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<h2 id="stats">Project Statistics</h2>
+
+<div class="grid">
+  <div class="card">
+    <h4>Graph</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><td>Nodes</td><td>162</td></tr>
+      <tr><td>Edges</td><td>295</td></tr>
+      <tr><td>Hyperedges</td><td>0</td></tr>
+      <tr><td>Communities</td><td>15</td></tr>
+      <tr><td>Documented Sections</td><td>9</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Edge Confidence</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><td>EXTRACTED</td><td>295</td></tr>
+      <tr><td>INFERRED</td><td>0</td></tr>
+      <tr><td>AMBIGUOUS</td><td>0</td></tr>
+    </table>
+  </div>
+</div>
+
+<div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
+  <p>amex-waiter — Architecture Documentation</p>
+  <p>Generated: 2026-09-30 21:00 UTC · graphify callflow-html</p>
+</div>
+
+</div><!-- .container -->
+
+<script>
+(function () {
+  const mermaidConfig = {
+    startOnLoad: false,
+    theme: 'dark',
+    securityLevel: 'loose',
+    flowchart: { htmlLabels: true, useMaxWidth: true },
+    themeVariables: {
+      primaryColor: '#1e293b',
+      primaryTextColor: '#e2e8f0',
+      primaryBorderColor: '#38bdf8',
+      secondaryColor: '#0f172a',
+      tertiaryColor: '#334155',
+      lineColor: '#64748b',
+      textColor: '#e2e8f0',
+    }
+  };
+
+  mermaid.initialize(mermaidConfig);
+
+  function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+  }
+
+  function enhanceMermaidDiagrams() {
+    document.querySelectorAll('.mermaid').forEach((container) => {
+      if (container.dataset.zoomReady === 'true') return;
+      const svg = container.querySelector('svg');
+      if (!svg) return;
+
+      container.dataset.zoomReady = 'true';
+      container.classList.add('is-enhanced');
+
+      const viewport = document.createElement('div');
+      viewport.className = 'mermaid-viewport';
+      svg.parentNode.insertBefore(viewport, svg);
+      viewport.appendChild(svg);
+
+      const toolbar = document.createElement('div');
+      toolbar.className = 'mermaid-toolbar';
+      toolbar.innerHTML = [
+        '<button type="button" data-action="zoom-out" title="Zoom out">-</button>',
+        '<span class="zoom-level" data-role="level">100%</span>',
+        '<button type="button" data-action="zoom-in" title="Zoom in">+</button>',
+        '<button type="button" data-action="fit" title="Fit width">Fit</button>',
+        '<button type="button" data-action="reset" title="Reset view">Reset</button>'
+      ].join('');
+      container.insertBefore(toolbar, viewport);
+
+      const state = { scale: 1, x: 0, y: 0, dragging: false, startX: 0, startY: 0, originX: 0, originY: 0 };
+      const level = toolbar.querySelector('[data-role="level"]');
+
+      function applyTransform() {
+        svg.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`;
+        level.textContent = `${Math.round(state.scale * 100)}%`;
+      }
+
+      function zoomBy(delta) {
+        state.scale = clamp(state.scale + delta, 0.25, 3);
+        applyTransform();
+      }
+
+      function reset() {
+        state.scale = 1;
+        state.x = 0;
+        state.y = 0;
+        applyTransform();
+      }
+
+      function fitWidth() {
+        const rawWidth = svg.viewBox && svg.viewBox.baseVal && svg.viewBox.baseVal.width
+          ? svg.viewBox.baseVal.width
+          : svg.getBoundingClientRect().width / state.scale;
+        if (!rawWidth) {
+          reset();
+          return;
+        }
+        state.scale = clamp((viewport.clientWidth - 48) / rawWidth, 0.25, 1.4);
+        state.x = 0;
+        state.y = 0;
+        applyTransform();
+      }
+
+      toolbar.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-action]');
+        if (!button) return;
+        const action = button.dataset.action;
+        if (action === 'zoom-in') zoomBy(0.15);
+        if (action === 'zoom-out') zoomBy(-0.15);
+        if (action === 'fit') fitWidth();
+        if (action === 'reset') reset();
+      });
+
+      viewport.addEventListener('wheel', (event) => {
+        if (!event.ctrlKey && !event.metaKey) return;
+        event.preventDefault();
+        zoomBy(event.deltaY < 0 ? 0.1 : -0.1);
+      }, { passive: false });
+
+      viewport.addEventListener('pointerdown', (event) => {
+        if (event.button !== 0) return;
+        state.dragging = true;
+        state.startX = event.clientX;
+        state.startY = event.clientY;
+        state.originX = state.x;
+        state.originY = state.y;
+        viewport.classList.add('is-dragging');
+        viewport.setPointerCapture(event.pointerId);
+      });
+
+      viewport.addEventListener('pointermove', (event) => {
+        if (!state.dragging) return;
+        state.x = state.originX + event.clientX - state.startX;
+        state.y = state.originY + event.clientY - state.startY;
+        applyTransform();
+      });
+
+      function endDrag(event) {
+        if (!state.dragging) return;
+        state.dragging = false;
+        viewport.classList.remove('is-dragging');
+        if (viewport.hasPointerCapture(event.pointerId)) {
+          viewport.releasePointerCapture(event.pointerId);
+        }
+      }
+
+      viewport.addEventListener('pointerup', endDrag);
+      viewport.addEventListener('pointercancel', endDrag);
+      applyTransform();
+    });
+  }
+
+  function renderMermaid() {
+    const result = mermaid.run
+      ? mermaid.run({ querySelector: '.mermaid' })
+      : Promise.resolve();
+    Promise.resolve(result)
+      .then(enhanceMermaidDiagrams)
+      .catch((error) => {
+        console.error('Mermaid render failed:', error);
+        enhanceMermaidDiagrams();
+      });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderMermaid);
+  } else {
+    renderMermaid();
+  }
+})();
+</script>
+
+</body>
+</html>

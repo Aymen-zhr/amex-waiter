@@ -23,6 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-# Graphify cache
+# Graphify cache & backups
 graphify-out/cache/
 graphify-out/.graphify_*
+graphify-out/20*/

@@ -1,6 +1,18 @@
-export type TableStatus = 'available' | 'seated' | 'alert' | 'pacing' | 'reserved' | 'turnover';
+export type TableZone = 'ALL' | 'MAIN_DINING' | 'VERANDA' | 'PRIVATE_SALON';
 
-export type DiningZone = 'all' | 'main-dining' | 'terrace' | 'private-salon' | 'cellar-vault';
+export type TableStatus = 'AVAILABLE' | 'DINING' | 'WAITING' | 'REQUEST';
+
+export interface ServiceRequest {
+  type: 'WATER_REFILL' | 'CALL_SERVER' | 'SOMMELIER' | 'BILL_REQUEST';
+  label: string;
+  pendingSinceMinutes: number;
+}
+
+export interface NextReservation {
+  time: string;
+  partyName: string;
+  guestCount: number;
+}
 
 export interface GuestProfile {
   name: string;
@@ -12,17 +24,22 @@ export interface GuestProfile {
   sommelierNotes?: string;
 }
 
-export interface TableData {
+export interface TableItem {
   id: string;
-  tableNumber: string;
-  zone: 'main-dining' | 'terrace' | 'private-salon' | 'cellar-vault';
-  capacity: number;
+  tableNumber: string; // e.g. "01", "02", "15"
+  zone: TableZone;
   status: TableStatus;
+  capacity: number;
+  guestCount?: number;
+  activeCourse?: string; // e.g. "Course 3 of 5 • Plat Principal"
+  seatedMinutes?: number;
+  serviceRequest?: ServiceRequest;
+  nextReservation?: NextReservation;
   guest?: GuestProfile;
-  seatedTime?: string;
-  currentCourse?: 'Amuse' | 'Premier Cru' | 'Principal' | 'Grand Dessert' | 'Digestif';
-  courseStartTime?: string;
-  activeAlert?: string;
-  serverName: string;
+  serverName?: string;
   totalBill?: string;
 }
+
+// Backward-compatibility aliases
+export type TableData = TableItem;
+export type DiningZone = TableZone;

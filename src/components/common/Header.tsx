@@ -24,10 +24,13 @@ export const Header: React.FC<HeaderProps> = ({
   const alerts = useAlertStore((state) => state.alerts);
   const tables = useFloorStore((state) => state.tables);
 
-  const unreadAlerts = alerts.filter((a) => !a.isRead).length;
+  // Active requests from tables + unread alerts
+  const tableRequests = tables.filter((t) => t.status === 'REQUEST').length;
+  const unreadAlerts = alerts.filter((a) => !a.isRead).length + tableRequests;
+
   const activeCovers = tables
-    .filter((t) => t.status === 'seated' || t.status === 'alert' || t.status === 'pacing')
-    .reduce((acc, t) => acc + (t.guest?.covers || 0), 0);
+    .filter((t) => t.status === 'DINING' || t.status === 'WAITING' || t.status === 'REQUEST')
+    .reduce((acc, t) => acc + (t.guestCount || t.guest?.covers || 0), 0);
 
   useEffect(() => {
     const update = () => {
@@ -140,7 +143,7 @@ export const Header: React.FC<HeaderProps> = ({
         >
           <Bell className="w-4 h-4 text-lumiere-textPrimary" />
           {unreadAlerts > 0 && (
-            <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-lumiere-terracotta text-white font-mono text-[10px] flex items-center justify-center ring-2 ring-white font-bold">
+            <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-lumiere-amber text-white font-mono text-[10px] flex items-center justify-center ring-2 ring-white font-bold animate-pulse">
               {unreadAlerts}
             </span>
           )}

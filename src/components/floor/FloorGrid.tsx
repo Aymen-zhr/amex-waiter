@@ -1,37 +1,42 @@
 import React from 'react';
 import { TableCard } from './TableCard';
-import type { TableData } from '../../types/table';
+import type { TableItem } from '../../types/table';
 
 interface FloorGridProps {
-  tables: TableData[];
+  tables: TableItem[];
   selectedTableId: string | null;
-  onSelectTable: (table: TableData) => void;
+  onSelectTable: (table: TableItem) => void;
+  onAcknowledgeTable?: (tableId: string) => void;
 }
 
 export const FloorGrid: React.FC<FloorGridProps> = ({
   tables,
   selectedTableId,
   onSelectTable,
+  onAcknowledgeTable,
 }) => {
   if (tables.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center p-16 bg-white/50 rounded-2xl border border-dashed border-lumiere-border text-center">
-        <p className="font-serif text-xl text-lumiere-textPrimary">No tables located</p>
+      <div className="flex flex-col items-center justify-center p-16 bg-white/60 rounded-3xl border border-dashed border-lumiere-border text-center shadow-sm">
+        <p className="font-serif text-2xl font-medium text-lumiere-textPrimary">
+          No Tables Located
+        </p>
         <p className="text-xs text-lumiere-textMuted mt-1">
-          Adjust the quarter filter above to inspect other dining areas.
+          Adjust the room filter above to view other quarters.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 max-w-[1680px] mx-auto w-full">
       {tables.map((table) => (
         <TableCard
           key={table.id}
           table={table}
           isSelected={table.id === selectedTableId}
           onSelect={onSelectTable}
+          onAcknowledge={onAcknowledgeTable}
         />
       ))}
     </div>

@@ -1,149 +1,234 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Clock, Users, AlertTriangle, Crown, Utensils } from 'lucide-react';
-import { Badge, type BadgeVariant } from '../common/Badge';
+import {
+  UtensilsCrossed,
+  Utensils,
+  Wine,
+  Bell,
+  Droplets,
+  Clock,
+  ChevronRight,
+} from 'lucide-react';
 import { tapSpring } from '../../styles/motion';
-import type { TableData } from '../../types/table';
+import type { TableItem, TableStatus } from '../../types/table';
 
 interface TableCardProps {
-  table: TableData;
+  table: TableItem;
   isSelected?: boolean;
-  onSelect: (table: TableData) => void;
+  onSelect: (table: TableItem) => void;
+  onAcknowledge?: (tableId: string) => void;
 }
 
 export const TableCard: React.FC<TableCardProps> = ({
   table,
   isSelected,
   onSelect,
+  onAcknowledge,
 }) => {
-  const statusBadgeConfig: Record<
-    TableData['status'],
-    { label: string; variant: BadgeVariant; dot: boolean }
-  > = {
-    seated: { label: 'Seated', variant: 'emerald', dot: true },
-    alert: { label: 'Attention', variant: 'amber', dot: true },
-    pacing: { label: 'Coursing', variant: 'brass', dot: true },
-    available: { label: 'Available', variant: 'neutral', dot: false },
-    reserved: { label: 'Reserved', variant: 'neutral', dot: false },
-    turnover: { label: 'Turnover', variant: 'terracotta', dot: true },
+  // Format zone name for display capsule (e.g. MAIN_DINING -> MAIN DINING)
+  const formattedZone = table.zone.replace('_', ' ');
+
+  // Status pill configuration for Zone 1 Top Header Row
+  const renderStatusPill = (status: TableStatus) => {
+    switch (status) {
+      case 'AVAILABLE':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-lumiere-surface text-lumiere-textMuted border border-lumiere-borderLight font-mono text-[10px] font-semibold tracking-wider">
+            <span className="w-1.5 h-1.5 rounded-full bg-lumiere-textCaption" />
+            EMPTY
+          </span>
+        );
+      case 'DINING':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-lumiere-emeraldLight text-lumiere-emerald border border-lumiere-emeraldBorder font-mono text-[10px] font-semibold tracking-wider">
+            <span className="w-1.5 h-1.5 rounded-full bg-lumiere-emerald" />
+            DINING
+          </span>
+        );
+      case 'WAITING':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-lumiere-brassLight text-lumiere-brass border border-lumiere-border font-mono text-[10px] font-semibold tracking-wider">
+            <span className="w-1.5 h-1.5 rounded-full bg-lumiere-brass" />
+            PACING
+          </span>
+        );
+      case 'REQUEST':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-lumiere-amberLight text-lumiere-amber border border-lumiere-amberBorder font-mono text-[10px] font-semibold tracking-wider animate-pulse">
+            <span className="w-1.5 h-1.5 rounded-full bg-lumiere-amber" />
+            SERVICE
+          </span>
+        );
+    }
   };
 
-  const currentBadge = statusBadgeConfig[table.status];
-  const isOccupied = table.status !== 'available' && table.status !== 'reserved';
+  // Leading Icon for Zone 2 Inner Inset Capsule
+  const renderIcon = () => {
+    if (table.status === 'AVAILABLE') {
+      return <UtensilsCrossed className="w-5 h-5 text-lumiere-textMuted" />;
+    }
+    if (table.status === 'REQUEST') {
+      if (table.serviceRequest?.type === 'WATER_REFILL') {
+        return <Droplets className="w-5 h-5 text-lumiere-amber" />;
+      }
+      if (table.serviceRequest?.type === 'SOMMELIER') {
+        return <Wine className="w-5 h-5 text-lumiere-brass" />;
+      }
+      return <Bell className="w-5 h-5 text-lumiere-amber animate-bounce" />;
+    }
+    if (table.status === 'WAITING') {
+      return <Clock className="w-5 h-5 text-lumiere-brass" />;
+    }
+    // DINING
+    return <Utensils className="w-5 h-5 text-lumiere-emerald" />;
+  };
+
+  // Center typography derivation
+  const getCenterTitle = () => {
+    if (table.status === 'AVAILABLE') {
+      return 'Available';
+    }
+    if (table.status === 'REQUEST' && table.serviceRequest) {
+      return table.serviceRequest.label;
+    }
+    if (table.guest?.name) {
+      const parts = table.guest.name.split(' ');
+      const lastName = parts.length > 1 ? parts[parts.length - 1] : parts[0];
+      return `${lastName} Party (${table.guestCount || table.capacity}G)`;
+    }
+    return `Table ${table.tableNumber} (${table.guestCount || table.capacity}G)`;
+  };
+
+  const getCenterSubtitle = () => {
+    if (table.status === 'AVAILABLE') {
+      return `Capacity: ${table.capacity} Guests • Open`;
+    }
+    if (table.status === 'REQUEST' && table.serviceRequest) {
+      const course = table.activeCourse ? table.activeCourse.split('•')[0].trim() : 'Seated';
+      return `Pending ${table.serviceRequest.pendingSinceMinutes}m • ${course}`;
+    }
+    if (table.activeCourse) {
+      return `${table.activeCourse} • Seated ${table.seatedMinutes || 0}m`;
+    }
+    return `Seated ${table.seatedMinutes || 0}m • Capacity: ${table.capacity}`;
+  };
+
+  // Bottom footer caption derivation
+  const getFooterCaption = () => {
+    if (table.nextReservation) {
+      return `• Next: ${table.nextReservation.time} • ${table.nextReservation.partyName} (${table.nextReservation.guestCount}G)`;
+    }
+    if (table.seatedMinutes) {
+      return `• Seated: ${table.seatedMinutes}m ago`;
+    }
+    return `• Open table for service`;
+  };
 
   return (
     <motion.div
       whileTap={tapSpring.whileTap}
       transition={tapSpring.transition}
       onClick={() => onSelect(table)}
-      className={`group relative p-5 bg-white rounded-2xl border transition-all duration-150 cursor-pointer flex flex-col justify-between min-h-[210px] shadow-luxury ${
+      className={`group relative bg-lumiere-card border rounded-3xl p-4 shadow-luxury flex flex-col justify-between transition-all duration-150 cursor-pointer ${
         isSelected
           ? 'border-lumiere-textPrimary ring-2 ring-lumiere-textPrimary/10'
           : 'border-lumiere-border hover:border-lumiere-brass/50 hover:shadow-md'
       }`}
     >
-      {/* Top Bar: Table Number & Status */}
-      <div className="flex items-start justify-between">
-        <div>
-          <div className="flex items-baseline gap-2">
-            <span className="font-serif text-3xl font-medium tracking-tight text-lumiere-textPrimary">
-              Table {table.tableNumber}
+      {/* =========================================
+          ZONE 1: TOP HEADER ROW
+          ========================================= */}
+      <div>
+        <div className="flex items-center justify-between pb-2.5 border-b border-lumiere-borderLight">
+          {/* Left: TABLE XX + Micro Room Tag */}
+          <div className="flex items-center gap-2.5">
+            <span className="font-serif text-xl font-bold tracking-wide text-lumiere-textPrimary">
+              TABLE {table.tableNumber}
             </span>
-            <span className="text-xs text-lumiere-textCaption uppercase tracking-wider font-mono">
-              Cap. {table.capacity}
+            <span className="font-mono text-[10px] uppercase text-lumiere-textMuted bg-lumiere-surface border border-lumiere-border px-2 py-0.5 rounded-full tracking-wider">
+              {formattedZone}
             </span>
           </div>
-          <span className="text-[11px] text-lumiere-textMuted tracking-wide capitalize">
-            {table.zone.replace('-', ' ')}
-          </span>
+
+          {/* Right: Live Status Pill */}
+          <div>{renderStatusPill(table.status)}</div>
         </div>
 
-        <Badge variant={currentBadge.variant} dot={currentBadge.dot} size="sm">
-          {currentBadge.label}
-        </Badge>
-      </div>
-
-      {/* Middle: Guest Details or Vacant State */}
-      <div className="my-3 space-y-2">
-        {isOccupied && table.guest ? (
-          <div>
-            <div className="flex items-center gap-1.5">
-              {table.guest.vipTier === 'AMEX Centurion' && (
-                <Crown className="w-3.5 h-3.5 text-lumiere-brass shrink-0" />
-              )}
-              {table.guest.vipTier === 'AMEX Platinum' && (
-                <Crown className="w-3.5 h-3.5 text-lumiere-textMuted shrink-0" />
-              )}
-              <h4 className="text-sm font-semibold text-lumiere-textPrimary truncate">
-                {table.guest.name}
-              </h4>
-            </div>
-
-            {/* VIP Centurion / Platinum Banner */}
-            {table.guest.vipTier && table.guest.vipTier !== 'Standard' && (
-              <span className="inline-block mt-0.5 text-[10px] uppercase font-mono tracking-widest text-lumiere-brass font-medium">
-                {table.guest.vipTier}
-              </span>
-            )}
-
-            {/* Dietary Allergies Warning */}
-            {table.guest.dietaryAllergies && table.guest.dietaryAllergies.length > 0 && (
-              <div className="flex items-center gap-1 mt-1.5">
-                <span className="px-2 py-0.5 rounded bg-lumiere-terracottaLight text-lumiere-terracotta border border-lumiere-terracottaBorder text-[10px] font-mono font-medium flex items-center gap-1">
-                  <AlertTriangle className="w-3 h-3" />
-                  {table.guest.dietaryAllergies.join(', ')}
-                </span>
-              </div>
-            )}
+        {/* =========================================
+            ZONE 2: INNER INSET CAPSULE (CARD BODY)
+            ========================================= */}
+        <div className="rounded-2xl bg-lumiere-canvas border border-lumiere-border p-3.5 flex items-center justify-between gap-3 mt-3">
+          {/* Leading Icon Tile (42x42px square-rounded) */}
+          <div className="w-[42px] h-[42px] rounded-xl bg-white border border-lumiere-border flex items-center justify-center shrink-0 shadow-sm">
+            {renderIcon()}
           </div>
-        ) : table.status === 'reserved' && table.guest ? (
-          <div>
-            <span className="text-xs font-medium text-lumiere-textPrimary">
-              Res: {table.guest.name}
-            </span>
-            <p className="text-[11px] text-lumiere-textMuted">
-              {table.guest.notes || 'Arriving shortly'}
+
+          {/* Center Typography */}
+          <div className="flex-1 min-w-0">
+            <h4 className="text-sm font-semibold text-lumiere-textPrimary truncate">
+              {getCenterTitle()}
+            </h4>
+            <p className="text-[11px] font-mono text-lumiere-textCaption truncate mt-0.5 tabular-nums">
+              {getCenterSubtitle()}
             </p>
           </div>
-        ) : (
-          <div className="py-2 text-center text-xs text-lumiere-textCaption italic">
-            Table ready for seating
+
+          {/* Trailing Action / Status Chip */}
+          <div className="shrink-0">
+            {table.status === 'AVAILABLE' && (
+              <span className="text-lumiere-emerald bg-lumiere-emeraldLight font-mono text-[11px] font-semibold px-2.5 py-1 rounded-md border border-lumiere-emeraldBorder inline-block">
+                READY
+              </span>
+            )}
+
+            {table.status === 'REQUEST' && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onAcknowledge?.(table.id);
+                }}
+                className="bg-lumiere-amber hover:bg-amber-700 active:scale-95 text-white font-mono text-xs px-3 py-1.5 rounded-full font-semibold shadow-sm transition-all cursor-pointer"
+                title="Acknowledge and clear service request"
+              >
+                Acknowledge
+              </button>
+            )}
+
+            {table.status === 'DINING' && (
+              <span className="font-mono text-[10px] text-lumiere-emerald bg-white/90 border border-lumiere-emeraldBorder/60 px-2 py-0.5 rounded-md font-semibold tracking-wider">
+                ACTIVE
+              </span>
+            )}
+
+            {table.status === 'WAITING' && (
+              <span className="font-mono text-[10px] text-lumiere-brass bg-white/90 border border-lumiere-border px-2 py-0.5 rounded-md font-semibold tracking-wider">
+                PACING
+              </span>
+            )}
           </div>
-        )}
+        </div>
       </div>
 
-      {/* Active Service Alert */}
-      {table.activeAlert && (
-        <div className="mb-2 px-2.5 py-1.5 rounded-lg bg-lumiere-amberLight border border-lumiere-amberBorder flex items-center gap-1.5 text-xs text-lumiere-amber font-medium">
-          <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
-          <span className="truncate">{table.activeAlert}</span>
-        </div>
-      )}
+      {/* =========================================
+          ZONE 3: BOTTOM FOOTER ROW
+          ========================================= */}
+      <div className="border-t border-lumiere-borderLight mt-3 pt-2.5 flex items-center justify-between">
+        {/* Left Caption: Next reservation or seating duration */}
+        <span className="text-xs font-mono text-lumiere-textMuted truncate mr-2 tabular-nums">
+          {getFooterCaption()}
+        </span>
 
-      {/* Bottom Pacing & Metadata */}
-      <div className="pt-2.5 border-t border-lumiere-borderLight flex items-center justify-between text-xs text-lumiere-textMuted">
-        {isOccupied ? (
-          <>
-            <div className="flex items-center gap-1.5 font-mono text-[11px]">
-              <Utensils className="w-3 h-3 text-lumiere-brass" />
-              <span className="text-lumiere-textPrimary font-medium">
-                {table.currentCourse || 'Amuse'}
-              </span>
-            </div>
-            <div className="flex items-center gap-1 font-mono text-[11px] text-lumiere-textCaption tabular-nums">
-              <Clock className="w-3 h-3" />
-              <span>{table.courseStartTime || table.seatedTime}</span>
-            </div>
-          </>
-        ) : (
-          <>
-            <span className="text-[11px] text-lumiere-textCaption">Assigned: {table.serverName}</span>
-            <div className="flex items-center gap-1 text-[11px] text-lumiere-textCaption">
-              <Users className="w-3 h-3" />
-              <span>{table.capacity}p</span>
-            </div>
-          </>
-        )}
+        {/* Right Action Link */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelect(table);
+          }}
+          className="text-xs font-mono font-semibold text-lumiere-textPrimary hover:underline flex items-center gap-1 shrink-0 cursor-pointer"
+        >
+          <span>Actions</span>
+          <ChevronRight className="w-3.5 h-3.5 text-lumiere-brass" />
+        </button>
       </div>
     </motion.div>
   );

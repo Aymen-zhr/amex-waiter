@@ -6,6 +6,7 @@ import {
   AlertTriangle,
   Check,
   CheckCircle2,
+  Calendar,
 } from 'lucide-react';
 import { ModalShell } from '../common/ModalShell';
 import { tapSpring } from '../../styles/motion';
@@ -15,41 +16,60 @@ interface GuestFolioModalProps {
   isOpen: boolean;
   onClose: () => void;
   table: TableItem | null;
+  onOpenRunSheet?: (tableId: string) => void;
 }
 
 export const GuestFolioModal: React.FC<GuestFolioModalProps> = ({
   isOpen,
   onClose,
   table,
+  onOpenRunSheet,
 }) => {
   const [isPrinted, setIsPrinted] = useState(false);
 
   if (!table) return null;
 
   const tableNum = table.tableNumber;
-  const couverts = table.guestCount || table.capacity;
-  const seatedMin = table.seatedMinutes || 45;
+  const couverts = table.guestCount || table.capacity || 2;
+  const seatedMin = table.seatedMinutes ?? 45;
   const server = table.serverName || 'Marcus';
-  const ticketNumber = `#40${80 + parseInt(tableNum, 10) || 86}`;
+  const parsedTableNum = parseInt(tableNum, 10);
+  const ticketNumber = `#40${80 + (isNaN(parsedTableNum) ? 86 : parsedTableNum)}`;
 
   // Degustation Course progression calculation
-  const degustationCourses = [
-    { num: 1, name: 'Amuse-Bouche', status: 'completed' },
-    { num: 2, name: 'Premier Cru', status: 'completed' },
-    { num: 3, name: 'Plat Principal', status: 'active' },
-    { num: 4, name: 'Fromages de France', status: 'pending' },
-    { num: 5, name: 'Grand Dessert', status: 'pending' },
+  const defaultCourses = [
+    { num: 1, name: 'Amuse-Bouche' },
+    { num: 2, name: 'Premier Cru' },
+    { num: 3, name: 'Plat Principal' },
+    { num: 4, name: 'Fromages de France' },
+    { num: 5, name: 'Grand Dessert' },
   ];
 
-  // Adjust active course based on table activeCourse string if present
-  let activeCourseIndex = 2; // Default Course 3
+  let currentCourseNum = 3;
+  let totalCourses = 5;
+  let currentCourseName = 'Plat Principal';
+
   if (table.activeCourse) {
-    if (table.activeCourse.includes('Course 1')) activeCourseIndex = 0;
-    else if (table.activeCourse.includes('Course 2')) activeCourseIndex = 1;
-    else if (table.activeCourse.includes('Course 3')) activeCourseIndex = 2;
-    else if (table.activeCourse.includes('Course 4')) activeCourseIndex = 3;
-    else if (table.activeCourse.includes('Course 5') || table.activeCourse.includes('Course 6')) activeCourseIndex = 4;
+    const match = table.activeCourse.match(/Course\s+(\d+)\s+of\s+(\d+)\s*•?\s*(.*)/i);
+    if (match) {
+      currentCourseNum = parseInt(match[1], 10);
+      totalCourses = parseInt(match[2], 10);
+      if (match[3]?.trim()) {
+        currentCourseName = match[3].trim();
+      }
+    }
   }
+
+  const coursesList = Array.from({ length: totalCourses }, (_, i) => {
+    const num = i + 1;
+    const defaultName = defaultCourses[i]?.name || `Course ${num}`;
+    const name = num === currentCourseNum ? currentCourseName : defaultName;
+    return {
+      num,
+      name,
+      status: num < currentCourseNum ? 'completed' : num === currentCourseNum ? 'active' : 'pending',
+    };
+  });
 
   // Financial line items
   const menuPriceEach = 185.0;
@@ -75,28 +95,46 @@ export const GuestFolioModal: React.FC<GuestFolioModalProps> = ({
     >
       <div className="p-6 lg:p-8 bg-lumiere-card flex flex-col gap-6">
         {/* =========================================
-            1. HEADER ROW (TABLE XX â€¢ X COUVERTS)
+            1. HEADER ROW (TABLE XX • X COUVERTS)
             ========================================= */}
         <div className="flex items-start justify-between pb-5 border-b border-lumiere-borderLight">
           <div className="space-y-1">
             <h2 className="font-serif text-2xl lg:text-3xl font-bold tracking-tight text-lumiere-textPrimary">
-              TABLE {tableNum} â€¢ {couverts} COUVERTS
+              TABLE {tableNum} • {couverts} COUVERTS
             </h2>
             <p className="font-mono text-xs text-lumiere-textMuted tabular-nums">
-              Ticket {ticketNumber} â€¢ Seated {seatedMin}m â€¢ Server: {server}
+              Ticket {ticketNumber} • Seated {seatedMin}m • Server: {server}
             </p>
           </div>
 
-          {/* Top-right Circular 44x44px Hit Target */}
-          <motion.button
-            whileTap={tapSpring.whileTap}
-            transition={tapSpring.transition}
-            onClick={onClose}
-            className="w-11 h-11 rounded-full bg-lumiere-surface border border-lumiere-border flex items-center justify-center text-lumiere-textPrimary hover:bg-lumiere-borderLight transition-colors cursor-pointer shrink-0"
-            aria-label="Close Folio"
-          >
-            <X className="w-5 h-5" />
-          </motion.button>
+          <div className="flex items-center gap-2">
+            {onOpenRunSheet && (
+              <motion.button
+                whileTap={tapSpring.whileTap}
+                transition={tapSpring.transition}
+                onClick={() => {
+                  onClose();
+                  onOpenRunSheet(table.id);
+                }}
+                className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-full border border-lumiere-border bg-white text-xs font-mono text-lumiere-textMuted hover:text-lumiere-textPrimary hover:bg-lumiere-surface transition-colors cursor-pointer"
+                title="View Table Run-Sheet"
+              >
+                <Calendar className="w-3.5 h-3.5 text-lumiere-brass" />
+                <span>Run-Sheet</span>
+              </motion.button>
+            )}
+
+            {/* Top-right Circular 44x44px Hit Target */}
+            <motion.button
+              whileTap={tapSpring.whileTap}
+              transition={tapSpring.transition}
+              onClick={onClose}
+              className="w-11 h-11 rounded-full bg-lumiere-surface border border-lumiere-border flex items-center justify-center text-lumiere-textPrimary hover:bg-lumiere-borderLight transition-colors cursor-pointer shrink-0"
+              aria-label="Close Folio"
+            >
+              <X className="w-5 h-5" />
+            </motion.button>
+          </div>
         </div>
 
         {/* =========================================
@@ -108,7 +146,7 @@ export const GuestFolioModal: React.FC<GuestFolioModalProps> = ({
               Degustation Pacing Timeline
             </span>
             <span className="font-mono text-xs text-lumiere-brass font-medium">
-              Course {activeCourseIndex + 1} of 5
+              Course {currentCourseNum} of {totalCourses}
             </span>
           </div>
 
@@ -116,16 +154,19 @@ export const GuestFolioModal: React.FC<GuestFolioModalProps> = ({
             {/* Hairline Connecting Rule behind dots */}
             <div className="absolute top-1/2 left-4 right-4 h-px bg-lumiere-border -translate-y-1/2 z-0" />
 
-            {degustationCourses.map((c, idx) => {
-              const isCompleted = idx < activeCourseIndex;
-              const isActive = idx === activeCourseIndex;
-              const isPending = idx > activeCourseIndex;
+            {coursesList.map((c) => {
+              const isCompleted = c.status === 'completed';
+              const isActive = c.status === 'active';
+              const isPending = c.status === 'pending';
 
               return (
                 <div key={c.num} className="relative z-10 flex flex-col items-center">
                   {isCompleted && (
-                    <div className="w-6 h-6 rounded-full bg-lumiere-surface border border-lumiere-border flex items-center justify-center text-lumiere-textMuted shadow-xs">
-                      <Check className="w-3.5 h-3.5" />
+                    <div
+                      className="w-6 h-6 rounded-full bg-lumiere-surface border border-lumiere-border flex items-center justify-center text-lumiere-textMuted shadow-xs"
+                      title={`${c.name} (Completed)`}
+                    >
+                      <Check className="w-3.5 h-3.5 text-lumiere-emerald" />
                     </div>
                   )}
 
@@ -133,13 +174,16 @@ export const GuestFolioModal: React.FC<GuestFolioModalProps> = ({
                     <div className="px-3 py-1 rounded-full bg-lumiere-emeraldLight text-lumiere-emerald border border-lumiere-emeraldBorder font-mono text-xs font-semibold flex items-center gap-1.5 shadow-sm">
                       <span className="w-1.5 h-1.5 rounded-full bg-lumiere-emerald animate-pulse" />
                       <span>
-                        Course {c.num} of 5 â€¢ {c.name}
+                        Course {c.num} of {totalCourses} • {c.name}
                       </span>
                     </div>
                   )}
 
                   {isPending && (
-                    <div className="w-6 h-6 rounded-full bg-white border border-lumiere-borderLight flex items-center justify-center font-mono text-[11px] text-lumiere-textCaption">
+                    <div
+                      className="w-6 h-6 rounded-full bg-white border border-lumiere-borderLight flex items-center justify-center font-mono text-[11px] text-lumiere-textCaption"
+                      title={`${c.name} (Pending)`}
+                    >
                       {c.num}
                     </div>
                   )}
@@ -162,10 +206,10 @@ export const GuestFolioModal: React.FC<GuestFolioModalProps> = ({
             <div className="p-4 flex flex-col gap-1.5 bg-white">
               <div className="flex items-center justify-between text-sm font-medium">
                 <span className="text-lumiere-textPrimary">
-                  {couverts}Ã— Signature Degustation Menu
+                  {couverts}× Signature Degustation Menu
                 </span>
                 <span className="font-mono text-lumiere-textPrimary tabular-nums">
-                  (${menuPriceEach.toFixed(2)} ea â†’ ${menuTotal.toFixed(2)})
+                  (${menuPriceEach.toFixed(2)} ea → ${menuTotal.toFixed(2)})
                 </span>
               </div>
 
@@ -173,7 +217,7 @@ export const GuestFolioModal: React.FC<GuestFolioModalProps> = ({
               <div className="flex flex-wrap items-center gap-2 mt-1">
                 <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-lumiere-amberLight text-lumiere-amber border border-lumiere-amberBorder text-[11px] font-mono font-medium">
                   <AlertTriangle className="w-3 h-3 shrink-0" />
-                  âš ï¸ Strict Nut Allergy â€¢ Seat 3
+                  Strict Nut Allergy • Seat 3
                 </span>
                 {table.guest?.dietaryAllergies &&
                   table.guest.dietaryAllergies.map((allergy, i) => (
@@ -192,10 +236,10 @@ export const GuestFolioModal: React.FC<GuestFolioModalProps> = ({
             <div className="p-4 flex items-center justify-between text-sm bg-white">
               <div>
                 <span className="font-medium text-lumiere-textPrimary block">
-                  1Ã— 2018 Domaine de la RomanÃ©e-Conti
+                  1× 2018 Domaine de la Romanée-Conti
                 </span>
                 <span className="text-xs text-lumiere-textMuted font-mono">
-                  Cellar Vault Bin #A-04 â€¢ Sommelier Poured
+                  Cellar Vault Bin #A-04 • Sommelier Poured
                 </span>
               </div>
               <span className="font-mono font-medium text-lumiere-textPrimary tabular-nums">
@@ -206,7 +250,7 @@ export const GuestFolioModal: React.FC<GuestFolioModalProps> = ({
             {/* Item 3: Mineral Water Selection */}
             <div className="p-4 flex items-center justify-between text-sm bg-white">
               <span className="text-lumiere-textPrimary">
-                3Ã— ChÃ¢teldon 1650 Sparkling Mineral Water (750ml)
+                3× Châteldon 1650 Sparkling Mineral Water (750ml)
               </span>
               <span className="font-mono font-medium text-lumiere-textPrimary tabular-nums">
                 (${waterPrice.toFixed(2)})

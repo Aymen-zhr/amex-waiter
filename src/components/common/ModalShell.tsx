@@ -46,24 +46,26 @@ export const ModalShell: React.FC<ModalShellProps> = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Backdrop with 40% darkness and blur */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={onClose}
-            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4"
-          />
-
+        <motion.div
+          key="modal-shell-backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          onClick={onClose}
+          className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 select-none"
+        >
           {/* Modal Card Container */}
           <motion.div
+            key="modal-shell-card"
             initial={modalMotion.initial}
             animate={modalMotion.animate}
             exit={modalMotion.exit}
             transition={modalMotion.transition}
-            className={`relative z-50 w-full ${maxWidth} bg-lumiere-card rounded-3xl shadow-modal border border-lumiere-border overflow-hidden flex flex-col max-h-[92vh]`}
+            onClick={(e) => e.stopPropagation()}
+            className={`relative w-full ${maxWidth} bg-lumiere-card rounded-3xl shadow-modal border border-lumiere-border overflow-hidden flex flex-col max-h-[92vh]`}
+            role="dialog"
+            aria-modal="true"
           >
             {/* Optional Default Header */}
             {showDefaultHeader && (title || subtitle) && (
@@ -97,7 +99,7 @@ export const ModalShell: React.FC<ModalShellProps> = ({
             {/* Modal Body Content */}
             <div className="overflow-y-auto no-scrollbar">{children}</div>
           </motion.div>
-        </div>
+        </motion.div>
       )}
     </AnimatePresence>
   );

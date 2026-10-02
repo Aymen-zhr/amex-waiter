@@ -48,10 +48,10 @@
     "semantic_hash": "880a6000c39e63d35b6afab7a4e4a62b"
   },
   "src/components/common/ModalShell.tsx": {
-    "mtime": 1790808366.6048,
-    "seen": 1790809951.4496481,
-    "ast_hash": "30dbf9398c092d86e2f15350aa75e338",
-    "semantic_hash": "30dbf9398c092d86e2f15350aa75e338"
+    "mtime": 1790941596.0380769,
+    "seen": 1790942550.5269296,
+    "ast_hash": "7625bd9df3627f47668650a155538100",
+    "semantic_hash": ""
   },
   "src/components/dispatch/DispatchBoard.tsx": {
     "mtime": 1790800166.0355196,
@@ -84,16 +84,16 @@
     "semantic_hash": "7608b19f9db1183de640f8fb84297cf8"
   },
   "src/components/modals/GuestFolioModal.tsx": {
-    "mtime": 1790809769.8601727,
-    "seen": 1790809951.4500575,
-    "ast_hash": "e88a0b2dfa36f02099bd53edb5e937c1",
-    "semantic_hash": "e88a0b2dfa36f02099bd53edb5e937c1"
+    "mtime": 1790941611.9753802,
+    "seen": 1790942550.5269365,
+    "ast_hash": "6476c05ce8a0f242a0cf38d3fec2d675",
+    "semantic_hash": ""
   },
   "src/components/modals/RunSheetModal.tsx": {
-    "mtime": 1790809769.8616767,
-    "seen": 1790809951.4500585,
-    "ast_hash": "50d54852ba9e94ec1a454f4d30d2519b",
-    "semantic_hash": "50d54852ba9e94ec1a454f4d30d2519b"
+    "mtime": 1790941623.5759692,
+    "seen": 1790942550.526938,
+    "ast_hash": "227f071005a01d449e52ba6fa59b4c33",
+    "semantic_hash": ""
   },
   "src/main.tsx": {
     "mtime": 1790800166.0213196,
@@ -178,5 +178,131 @@
     "seen": 1790809951.4503026,
     "ast_hash": "e6089a3db1b0236e2c0c6ca8892585ef",
     "semantic_hash": "e6089a3db1b0236e2c0c6ca8892585ef"
+  },
+  ".agents/rules/graphify.md": {
+    "mtime": 1790801802.495867,
+    "seen": 1790942550.5269532,
+    "ast_hash": "a0e4d192b9e2e17256124dbfc8e24e6a",
+    "semantic_hash": ""
+  },
+  ".agents/workflows/graphify.md": {
+    "mtime": 1790801802.495867,
+    "seen": 1790942550.526954,
+    "ast_hash": "a831cf3669f1e6ab85d8a80ebe655f99",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1790797861.5824516,
+    "seen": 1790942550.526955,
+    "ast_hash": "c52aa6108f0e771892ee08f2e4ba582b",
+    "semantic_hash": ""
+  },
+  "doc/interactive-modals-folio-and-run-sheet.md": {
+    "mtime": 1790942799.4416049,
+    "seen": 1790942819.3589878,
+    "ast_hash": "4ccad4d990e8758ecc2fe5d1c9342d48",
+    "semantic_hash": ""
+  },
+  "doc/maintenance/phase-01-architecture-map.md": {
+    "mtime": 1790802164.4673536,
+    "seen": 1790942550.5269563,
+    "ast_hash": "1b5c64f77b68ca4118d40238d203d407",
+    "semantic_hash": ""
+  },
+  "doc/maintenance/phase-01-callflow-map.html": {
+    "mtime": 1790802002.2658386,
+    "seen": 1790942550.5269573,
+    "ast_hash": "d472e6f72b1723d5d9ef904b529b7f26",
+    "semantic_hash": ""
+  },
+  "doc/maintenance/phase-01-dependency-graph.html": {
+    "mtime": 1790801994.8113475,
+    "seen": 1790942550.526958,
+    "ast_hash": "c4508266e06aad379ca86708b0253539",
+    "semantic_hash": ""
+  },
+  "doc/maintenance/phase-01-directory-tree.html": {
+    "mtime": 1790802002.6597097,
+    "seen": 1790942550.5269587,
+    "ast_hash": "25e49519b8b0321a08ead112c7a0d684",
+    "semantic_hash": ""
+  },
+  "doc/maintenance/phase-02-architecture-map.md": {
+    "mtime": 1790808044.3101432,
+    "seen": 1790942550.5269594,
+    "ast_hash": "f5524f83ac1591e166206a7904ac6c83",
+    "semantic_hash": ""
+  },
+  "doc/maintenance/phase-02-callflow-map.html": {
+    "mtime": 1790805822.1223404,
+    "seen": 1790942550.5269601,
+    "ast_hash": "1c633630ddfdf0d0bfac6533ec234e05",
+    "semantic_hash": ""
+  },
+  "doc/maintenance/phase-02-dependency-graph.html": {
+    "mtime": 1790805821.6663053,
+    "seen": 1790942550.526961,
+    "ast_hash": "305134aa737a10b52a9f1d6070b509b6",
+    "semantic_hash": ""
+  },
+  "doc/maintenance/phase-02-directory-tree.html": {
+    "mtime": 1790805822.4862943,
+    "seen": 1790942550.5269618,
+    "ast_hash": "7f7f8aa9e6823ebd4f9984906d8dcb74",
+    "semantic_hash": ""
+  },
+  "doc/maintenance/phase-03-architecture-map.md": {
+    "mtime": 1790810219.0154815,
+    "seen": 1790942550.5269625,
+    "ast_hash": "6124be123ffe0ead4f637ae077a55847",
+    "semantic_hash": ""
+  },
+  "doc/maintenance/phase-03-callflow-map.html": {
+    "mtime": 1790809952.6970682,
+    "seen": 1790942550.5269637,
+    "ast_hash": "bf0881109903deb4c7bc634fecbd382c",
+    "semantic_hash": ""
+  },
+  "doc/maintenance/phase-03-dependency-graph.html": {
+    "mtime": 1790809952.1752653,
+    "seen": 1790942550.5269644,
+    "ast_hash": "e6b22f38316943663a031142484a3ced",
+    "semantic_hash": ""
+  },
+  "doc/maintenance/phase-03-directory-tree.html": {
+    "mtime": 1790809953.1284485,
+    "seen": 1790942550.5269651,
+    "ast_hash": "a2b4c191156342021ad8bce9fc893ee9",
+    "semantic_hash": ""
+  },
+  "doc/restore-three-zone-table-cards-and-floor-grid.md": {
+    "mtime": 1790801770.389765,
+    "seen": 1790942550.526966,
+    "ast_hash": "0838980fedb78a187d6f7709b62e0dc6",
+    "semantic_hash": ""
+  },
+  "doc/scaffold-tokens-and-motion-engine.md.md": {
+    "mtime": 1790801256.9862406,
+    "seen": 1790942550.5269668,
+    "ast_hash": "61944157ddabb4ebd49994128bc682b3",
+    "semantic_hash": ""
+  },
+  "index.html": {
+    "mtime": 1790798408.1453388,
+    "seen": 1790942550.5269675,
+    "ast_hash": "a47ea9567897c44d2e3f6c471c700eea",
+    "semantic_hash": ""
+  },
+  "updates/planned_updates/approved/major/03-interactive-modals-folio-and-run-sheet.md": {
+    "mtime": 1790941585.0703218,
+    "seen": 1790942550.5269682,
+    "ast_hash": "4ccad4d990e8758ecc2fe5d1c9342d48",
+    "semantic_hash": ""
+  },
+  "src/assets/branding/lumiere-crest.svg": {
+    "mtime": 1790800166.0247607,
+    "seen": 1790942550.5269692,
+    "ast_hash": "363a62aa4c7e3e8a513817dd905a791c",
+    "semantic_hash": ""
   }
 }

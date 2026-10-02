@@ -60,18 +60,24 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>amex-waiter — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 169 nodes, 303 edges, 15 communities. Commit: 79f9a8e</p>
+<p class="subtitle">Generated from graphify knowledge graph: 236 nodes, 381 edges, 21 communities. Commit: 366cd3f</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
     <a href="#build-graph">Graph Build</a>
-    <a href="#table-ts">table.ts</a>
-    <a href="#ordercard-tsx">OrderCard.tsx</a>
-    <a href="#usealertstore-ts">useAlertStore.ts</a>
+    <a href="#outputs-docs">Outputs &amp; Docs</a>
+    <a href="#phase-03-interactive-modals-guest-folio-ledger-t">Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet</a>
+    <a href="#phase-03-interactive-modals-guest-folio-ledger-t-4b4ad1">Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet</a>
+    <a href="#header-tsx">Header.tsx</a>
+    <a href="#phase-01-project-scaffold-luxury-design-tokens-m">Phase 01: Project Scaffold, Luxury Design Tokens &amp; Motion Engine</a>
+    <a href="#restore-three-zone-table-cards-and-floor-grid-md">restore-three-zone-table-cards-and-floor-grid.md</a>
     <a href="#reservation-ts">reservation.ts</a>
+    <a href="#tailwind-config-js">tailwind.config.js</a>
+    <a href="#rules-graphify-md">rules/graphify.md</a>
+    <a href="#workflows-graphify-md">workflows/graphify.md</a>
     <a href="#postcss-config-js">postcss.config.js</a>
     <a href="#vite-env-d-ts">vite-env.d.ts</a>
-    <a href="#tailwind-config-js">tailwind.config.js</a>
+    <a href="#readme-md">README.md</a>
 </div>
 
 <!-- ====== Architecture Overview ====== -->
@@ -81,29 +87,36 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    BUILD_GRAPH_321CBB04("Graph Build<br/><small>131 nodes</small>")
+    BUILD_GRAPH_321CBB04("Graph Build<br/><small>163 nodes</small>")
     class BUILD_GRAPH_321CBB04 module;
-    TABLE_TS_EF001E50("table.ts<br/><small>14 nodes</small>")
-    class TABLE_TS_EF001E50 module;
-    ORDERCARD_TSX_87783993("OrderCard.tsx<br/><small>11 nodes</small>")
-    class ORDERCARD_TSX_87783993 module;
-    USEALERTSTORE_TS_821E1968("useAlertStore.ts<br/><small>8 nodes</small>")
-    class USEALERTSTORE_TS_821E1968 module;
+    OUTPUTS_DOCS_ED82387C("Outputs &amp; Docs<br/><small>5 nodes</small>")
+    class OUTPUTS_DOCS_ED82387C module;
+    PHASE_03_INTERACTIVE_MODALS_GUEST_FOLIO_LEDGER_T_D3BEDCB1("Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet<br/><small>17 nodes</small>")
+    class PHASE_03_INTERACTIVE_MODALS_GUEST_FOLIO_LEDGER_T_D3BEDCB1 module;
+    PHASE_03_INTERACTIVE_MODALS_GUEST_FOLIO_LEDGER_T_C8178580("Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet<br/><small>17 nodes</small>")
+    class PHASE_03_INTERACTIVE_MODALS_GUEST_FOLIO_LEDGER_T_C8178580 module;
+    HEADER_TSX_D0D11A56("Header.tsx<br/><small>14 nodes</small>")
+    class HEADER_TSX_D0D11A56 module;
+    PHASE_01_PROJECT_SCAFFOLD_LUXURY_DESIGN_TOKENS_M_EB9AB179("Phase 01: Project Scaffold, Luxury Design Tokens &amp; Motion Engine<br/><small>5 nodes</small>")
+    class PHASE_01_PROJECT_SCAFFOLD_LUXURY_DESIGN_TOKENS_M_EB9AB179 module;
+    RESTORE_THREE_ZONE_TABLE_CARDS_AND_FLOOR_GRID_MD_82447485("restore-three-zone-table-cards-and-floor-grid.md<br/><small>4 nodes</small>")
+    class RESTORE_THREE_ZONE_TABLE_CARDS_AND_FLOOR_GRID_MD_82447485 module;
     RESERVATION_TS_87AB39AA("reservation.ts<br/><small>2 nodes</small>")
     class RESERVATION_TS_87AB39AA module;
+    TAILWIND_CONFIG_JS_3BF2B486("tailwind.config.js<br/><small>2 nodes</small>")
+    class TAILWIND_CONFIG_JS_3BF2B486 module;
+    RULES_GRAPHIFY_MD_3459230E("rules/graphify.md<br/><small>2 nodes</small>")
+    class RULES_GRAPHIFY_MD_3459230E module;
+    WORKFLOWS_GRAPHIFY_MD_C6A40BAC("workflows/graphify.md<br/><small>2 nodes</small>")
+    class WORKFLOWS_GRAPHIFY_MD_C6A40BAC module;
     POSTCSS_CONFIG_JS_F78865D3("postcss.config.js<br/><small>1 nodes</small>")
     class POSTCSS_CONFIG_JS_F78865D3 module;
     VITE_ENV_D_TS_23591423("vite-env.d.ts<br/><small>1 nodes</small>")
     class VITE_ENV_D_TS_23591423 module;
-    TAILWIND_CONFIG_JS_3BF2B486("tailwind.config.js<br/><small>1 nodes</small>")
-    class TAILWIND_CONFIG_JS_3BF2B486 module;
-    BUILD_GRAPH_321CBB04 -->|imports x10| TABLE_TS_EF001E50
-    TABLE_TS_EF001E50 -->|imports x9| BUILD_GRAPH_321CBB04
-    ORDERCARD_TSX_87783993 -->|imports x9| BUILD_GRAPH_321CBB04
-    BUILD_GRAPH_321CBB04 -->|imports x4| USEALERTSTORE_TS_821E1968
-    BUILD_GRAPH_321CBB04 -->|calls x3| ORDERCARD_TSX_87783993
-    USEALERTSTORE_TS_821E1968 -->|contains x2| BUILD_GRAPH_321CBB04
-    TABLE_TS_EF001E50 -->|imports| USEALERTSTORE_TS_821E1968
+    README_MD_6F88C4CB("README.md<br/><small>1 nodes</small>")
+    class README_MD_6F88C4CB module;
+    BUILD_GRAPH_321CBB04 -->|imports x15| HEADER_TSX_D0D11A56
+    HEADER_TSX_D0D11A56 -->|imports x9| BUILD_GRAPH_321CBB04
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -120,39 +133,39 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Graph Build</td><td>131</td><td><code>0, 1, 2, 3, 4, 6, 8, 10</code></td></tr><tr><td>table.ts</td><td>14</td><td><code>5</code></td></tr><tr><td>OrderCard.tsx</td><td>11</td><td><code>7</code></td></tr><tr><td>useAlertStore.ts</td><td>8</td><td><code>9</code></td></tr><tr><td>reservation.ts</td><td>2</td><td><code>11</code></td></tr><tr><td>postcss.config.js</td><td>1</td><td><code>12</code></td></tr><tr><td>vite-env.d.ts</td><td>1</td><td><code>13</code></td></tr><tr><td>tailwind.config.js</td><td>1</td><td><code>14</code></td></tr>
+      <tr><td>Graph Build</td><td>163</td><td><code>5, 0, 1, 2, 3, 4, 8, 10</code></td></tr><tr><td>Outputs &amp; Docs</td><td>5</td><td><code>15</code></td></tr><tr><td>Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet</td><td>17</td><td><code>6</code></td></tr><tr><td>Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet</td><td>17</td><td><code>9</code></td></tr><tr><td>Header.tsx</td><td>14</td><td><code>7</code></td></tr><tr><td>Phase 01: Project Scaffold, Luxury Design Tokens &amp; Motion Engine</td><td>5</td><td><code>16</code></td></tr><tr><td>restore-three-zone-table-cards-and-floor-grid.md</td><td>4</td><td><code>17</code></td></tr><tr><td>reservation.ts</td><td>2</td><td><code>11</code></td></tr><tr><td>tailwind.config.js</td><td>2</td><td><code>14</code></td></tr><tr><td>rules/graphify.md</td><td>2</td><td><code>18</code></td></tr><tr><td>workflows/graphify.md</td><td>2</td><td><code>19</code></td></tr><tr><td>postcss.config.js</td><td>1</td><td><code>12</code></td></tr><tr><td>vite-env.d.ts</td><td>1</td><td><code>13</code></td></tr><tr><td>README.md</td><td>1</td><td><code>20</code></td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Core Flow</h4>
-    <div class="arrow-chain">reservation.ts -&gt; Graph Build -&gt; table.ts -&gt; useAlertStore.ts -&gt; OrderCard.tsx -&gt; postcss.config.js -&gt; vite-env.d.ts</div>
+    <div class="arrow-chain">Outputs &amp; Docs -&gt; Graph Build -&gt; Header.tsx -&gt; Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet -&gt; Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet -&gt; Phase 01: Project Scaffold, Luxury Design Tokens &amp; Motion Engine -&gt; restore-three-zone-table-cards-and-floor-grid.md</div>
   </div>
 </div>
 <div class="grid">
   <div class="card">
     <h4>Graph Report Highlights</h4>
     <ul>
-      <li>169 nodes · 303 edges · 15 communities (10 shown, 5 thin omitted)</li>
-      <li>Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS</li>
+      <li>236 nodes · 381 edges · 21 communities (13 shown, 8 thin omitted)</li>
+      <li>Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 21 edges (avg confidence: 0.95)</li>
       <li>Token cost: 0 input · 0 output</li>
       <li>1. `compilerOptions` - 18 edges</li>
-      <li>2. `compilerOptions` - 16 edges</li>
-      <li>3. `react` - 16 edges</li>
+      <li>2. `react` - 16 edges</li>
+      <li>3. `App()` - 16 edges</li>
     </ul>
   </div>
 </div>
 <hr>
 <!-- ====== 2. Graph Build ====== -->
 <h2 id="build-graph">2. Graph Build</h2>
-<p>Graph Build groups implementation around packagejson, components, tsconfigappjson, tsconfignodejson, mostly in package.json, tsconfig.app.json, tsconfig.node.json. This section covers 131 nodes and 219 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Graph Build groups implementation around packagejson, components, tsconfigappjson, tsconfignodejson, mostly in package.json, tsconfig.app.json, tsconfig.node.json. This section covers 163 nodes and 294 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Graph Build (131 nodes, 219 edges)
-    subgraph build_graph_components_common_Header_tsx_33e05964["components/common/Header.tsx"]
-        src_components_common_header_b7df843d("Header.tsx")
-        src_components_common_header_header_61beb74b("Header()<br/><small>components/common/Header.tsx</small>")
+    %% Section: Graph Build (163 nodes, 294 edges)
+    subgraph build_graph_components_dispatch_OrderCard_tsx_e4a80a33["components/dispatch/OrderCard.tsx"]
+        src_components_dispatch_ordercard_cb462cb0("OrderCard.tsx")
+        src_components_dispatch_ordercard_ordercard_5673d733("OrderCard()<br/><small>components/dispatch/OrderCard.tsx</small>")
     end
     subgraph build_graph_components_modals_GuestFolioModal_ts_5c6a55a8["components/modals/GuestFolioModal.tsx"]
         src_components_modals_guestfoliomodal_1ae2f392("GuestFolioModal.tsx")
@@ -162,6 +175,10 @@ flowchart LR
         src_components_modals_runsheetmodal_e6e285af("RunSheetModal.tsx")
         src_components_modals_runsheetmodal_runsheetmoda_94212e4d("RunSheetModal()<br/><small>components/modals/RunSheetModal.tsx</small>")
     end
+    subgraph build_graph_package_json_4e40bfbd["package.json"]
+        package_582681c2("package.json")
+        ref_types_react_1bb250f2("@types/react<br/><small>package.json</small>")
+    end
     subgraph build_graph_src_App_tsx_5c96481a["src/App.tsx"]
         src_app_46efd68e("App.tsx")
         src_app_app_f316b20d("App()<br/><small>src/App.tsx</small>")
@@ -170,55 +187,53 @@ flowchart LR
     src_components_cellar_stockrow_stockrow_8ac85502("StockRow()<br/><small>components/cellar/StockRow.tsx</small>")
     src_components_common_badge_badge_97d5fb14("Badge()<br/><small>components/common/Badge.tsx</small>")
     src_components_common_modalshell_modalshell_4bdd5d73("ModalShell()<br/><small>components/common/ModalShell.tsx</small>")
+    src_components_dispatch_dispatchboard_dispatchbo_94cf42da("DispatchBoard()<br/><small>components/dispatch/DispatchBoard.tsx</small>")
     src_components_floor_floorgrid_floorgrid_f93b28c6("FloorGrid()<br/><small>components/floor/FloorGrid.tsx</small>")
+    src_components_floor_tablecard_tablecard_70ef2f79("TableCard()<br/><small>components/floor/TableCard.tsx</small>")
     src_components_floor_zonefilter_zonefilter_76f501aa("ZoneFilter()<br/><small>components/floor/ZoneFilter.tsx</small>")
-    package_582681c2("package.json")
-    src_store_usealertstore_usealertstore_3bb2e39c("useAlertStore<br/><small>src/store/useAlertStore.ts</small>")
-    src_store_usefloorstore_usefloorstore_a39b749b("useFloorStore<br/><small>src/store/useFloorStore.ts</small>")
-    src_store_usemodalstore_usemodalstore_dba8d164("useModalStore<br/><small>src/store/useModalStore.ts</small>")
     src_app_app_f316b20d -->|calls| src_components_floor_zonefilter_zonefilter_76f501aa
     src_app_app_f316b20d -->|calls| src_components_floor_floorgrid_floorgrid_f93b28c6
     src_app_app_f316b20d -->|calls| src_components_common_badge_badge_97d5fb14
+    src_app_app_f316b20d -->|calls| src_components_dispatch_dispatchboard_dispatchbo_94cf42da
     src_app_app_f316b20d -->|calls| src_components_cellar_stockledger_stockledger_981116b5
     src_app_app_f316b20d -->|calls| src_components_modals_guestfoliomodal_guestfolio_dd0b6758
     src_app_app_f316b20d -->|calls| src_components_modals_runsheetmodal_runsheetmoda_94212e4d
     src_app_app_f316b20d -->|calls| src_components_common_modalshell_modalshell_4bdd5d73
-    src_app_app_f316b20d -->|calls| src_store_usefloorstore_usefloorstore_a39b749b
-    src_app_app_f316b20d -->|calls| src_store_usealertstore_usealertstore_3bb2e39c
-    src_app_app_f316b20d -->|calls| src_store_usemodalstore_usemodalstore_dba8d164
-    src_app_app_f316b20d -->|calls| src_components_common_header_header_61beb74b
-    src_components_common_header_header_61beb74b -->|calls| src_components_common_badge_badge_97d5fb14
-    src_components_common_header_header_61beb74b -->|calls| src_store_usealertstore_usealertstore_3bb2e39c
-    src_components_common_header_header_61beb74b -->|calls| src_store_usefloorstore_usefloorstore_a39b749b
-    src_components_modals_guestfoliomodal_guestfolio_dd0b6758 -->|calls| src_components_common_modalshell_modalshell_4bdd5d73
-    src_components_modals_runsheetmodal_runsheetmoda_94212e4d -->|calls| src_components_common_modalshell_modalshell_4bdd5d73
     src_components_cellar_stockledger_stockledger_981116b5 -->|calls| src_components_cellar_stockrow_stockrow_8ac85502
     src_components_cellar_stockrow_stockrow_8ac85502 -->|calls| src_components_common_badge_badge_97d5fb14
+    src_components_dispatch_dispatchboard_dispatchbo_94cf42da -->|calls| src_components_dispatch_ordercard_ordercard_5673d733
+    src_components_dispatch_ordercard_ordercard_5673d733 -->|calls| src_components_common_badge_badge_97d5fb14
+    src_components_modals_guestfoliomodal_guestfolio_dd0b6758 -->|calls| src_components_common_modalshell_modalshell_4bdd5d73
+    src_components_modals_runsheetmodal_runsheetmoda_94212e4d -->|calls| src_components_common_modalshell_modalshell_4bdd5d73
+    src_components_floor_floorgrid_floorgrid_f93b28c6 -->|calls| src_components_floor_tablecard_tablecard_70ef2f79
+    package_582681c2 -->|imports| ref_types_react_1bb250f2
+    src_components_dispatch_ordercard_cb462cb0 -->|imports| src_components_common_badge_badge_97d5fb14
     src_app_46efd68e -->|imports| src_components_common_modalshell_modalshell_4bdd5d73
     src_app_46efd68e -->|imports| src_components_floor_zonefilter_zonefilter_76f501aa
     src_app_46efd68e -->|imports| src_components_floor_floorgrid_floorgrid_f93b28c6
+    src_app_46efd68e -->|imports| src_components_dispatch_dispatchboard_dispatchbo_94cf42da
     src_app_46efd68e -->|imports| src_components_cellar_stockledger_stockledger_981116b5
     src_app_46efd68e -->|imports| src_components_modals_guestfoliomodal_guestfolio_dd0b6758
     src_app_46efd68e -->|imports| src_components_modals_runsheetmodal_runsheetmoda_94212e4d
-    %% Omitted for readability: 113 nodes, 13 edges
-    class src_components_common_header_b7df843d ui;
-    class src_components_common_header_header_61beb74b ui;
+    %% Omitted for readability: 145 nodes, 5 edges
+    class src_components_dispatch_ordercard_cb462cb0 ui;
+    class src_components_dispatch_ordercard_ordercard_5673d733 ui;
     class src_components_modals_guestfoliomodal_1ae2f392 ui;
     class src_components_modals_guestfoliomodal_guestfolio_dd0b6758 ui;
     class src_components_modals_runsheetmodal_e6e285af ui;
     class src_components_modals_runsheetmodal_runsheetmoda_94212e4d ui;
+    class package_582681c2 function;
+    class ref_types_react_1bb250f2 function;
     class src_app_46efd68e ui;
     class src_app_app_f316b20d ui;
     class src_components_cellar_stockledger_stockledger_981116b5 ui;
     class src_components_cellar_stockrow_stockrow_8ac85502 ui;
     class src_components_common_badge_badge_97d5fb14 ui;
     class src_components_common_modalshell_modalshell_4bdd5d73 ui;
+    class src_components_dispatch_dispatchboard_dispatchbo_94cf42da ui;
     class src_components_floor_floorgrid_floorgrid_f93b28c6 ui;
+    class src_components_floor_tablecard_tablecard_70ef2f79 ui;
     class src_components_floor_zonefilter_zonefilter_76f501aa ui;
-    class package_582681c2 function;
-    class src_store_usealertstore_usealertstore_3bb2e39c ui;
-    class src_store_usefloorstore_usefloorstore_a39b749b ui;
-    class src_store_usemodalstore_usemodalstore_dba8d164 ui;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -242,243 +257,243 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>@types/react</code><br><small style="color:var(--muted)">package.json</small><br><code>@types/react-dom</code><br><small style="color:var(--muted)">package.json</small><br><code>@vitejs/plugin-react</code><br><small style="color:var(--muted)">package.json</small><br>+12 more</td>
-  <td>package.json node in package.json.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>devDependencies</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>devDependencies node in package.json.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>autoprefixer</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>autoprefixer node in package.json.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>postcss</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>postcss node in package.json.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>tailwindcss</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>tailwindcss node in package.json.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>@types/react</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>@types/react node in package.json.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>@types/react-dom</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>@types/react-dom node in package.json.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>typescript</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>typescript node in package.json.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>vite</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>vite node in package.json.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>@vitejs/plugin-react</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>@vitejs/plugin-react node in package.json.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>name</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>name node in package.json.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>private</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>private node in package.json.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>scripts</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>scripts node in package.json.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>build</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>build node in package.json.</td>
-</tr>
-<tr>
-  <td>15</td>
-  <td><code>dev</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>dev node in package.json.</td>
-</tr>
-<tr>
-  <td>16</td>
-  <td><code>lint</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>lint node in package.json.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>preview</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>preview node in package.json.</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>type</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>type node in package.json.</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>version</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>version node in package.json.</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>vite.config.ts</code><br><small style="color:var(--muted)">vite.config.ts</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>@vitejs/plugin-react</code><br><small style="color:var(--muted)">package.json</small><br><code>vite</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td>Module file in vite.config.ts.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>autoprefixer</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td>No direct outbound edge</td>
-  <td>autoprefixer node in package.json.</td>
-</tr>
-<tr>
-  <td>22</td>
-  <td><code>postcss</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td>No direct outbound edge</td>
-  <td>postcss node in package.json.</td>
-</tr>
-<tr>
-  <td>23</td>
-  <td><code>tailwindcss</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td>No direct outbound edge</td>
-  <td>tailwindcss node in package.json.</td>
-</tr>
-<tr>
-  <td>24</td>
-  <td><code>@types/react</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td>No direct outbound edge</td>
-  <td>@types/react node in package.json.</td>
-</tr>
-<tr>
-  <td>25</td>
-  <td><code>@types/react-dom</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td>No direct outbound edge</td>
-  <td>@types/react-dom node in package.json.</td>
-</tr>
-<tr>
-  <td>26</td>
-  <td><code>typescript</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td>No direct outbound edge</td>
-  <td>typescript node in package.json.</td>
-</tr>
-<tr>
-  <td>27</td>
-  <td><code>vite</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small><br><code>vite.config.ts</code><br><small style="color:var(--muted)">vite.config.ts</small></td>
-  <td>No direct outbound edge</td>
-  <td>vite node in package.json.</td>
-</tr>
-<tr>
-  <td>28</td>
-  <td><code>@vitejs/plugin-react</code><br><small style="color:var(--muted)">package.json</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small><br><code>vite.config.ts</code><br><small style="color:var(--muted)">vite.config.ts</small></td>
-  <td>No direct outbound edge</td>
-  <td>@vitejs/plugin-react node in package.json.</td>
-</tr>
-<tr>
-  <td>29</td>
-  <td><code>HeaderProps</code><br><small style="color:var(--muted)">components/common/Header.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>HeaderProps node in components/common/Header.tsx.</td>
-</tr>
-<tr>
-  <td>30</td>
   <td><code>ModalShellProps</code><br><small style="color:var(--muted)">components/common/ModalShell.tsx</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
   <td>ModalShellProps node in components/common/ModalShell.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>FloorGridProps</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>FloorGridProps node in components/floor/FloorGrid.tsx.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>TableCardProps</code><br><small style="color:var(--muted)">components/floor/TableCard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>TableCardProps node in components/floor/TableCard.tsx.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>ZoneFilterProps</code><br><small style="color:var(--muted)">components/floor/ZoneFilter.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ZoneFilterProps node in components/floor/ZoneFilter.tsx.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>GuestFolioModalProps</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>GuestFolioModalProps node in components/modals/GuestFolioModal.tsx.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>RunSheetModalProps</code><br><small style="color:var(--muted)">components/modals/RunSheetModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>RunSheetModalProps node in components/modals/RunSheetModal.tsx.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>FloorStoreState</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>FloorStoreState node in src/store/useFloorStore.ts.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>DiningZone</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>DiningZone node in src/types/table.ts.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>GuestProfile</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>GuestProfile node in src/types/table.ts.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>NextReservation</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>NextReservation node in src/types/table.ts.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>ServiceRequest</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>useFloorStore.ts</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
+  <td>No direct outbound edge</td>
+  <td>ServiceRequest node in src/types/table.ts.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>TableItem</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>FloorGrid.tsx</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small><br><code>GuestFolioModal.tsx</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small><br><code>RunSheetModal.tsx</code><br><small style="color:var(--muted)">components/modals/RunSheetModal.tsx</small><br>+2 more</td>
+  <td>No direct outbound edge</td>
+  <td>TableItem node in src/types/table.ts.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>TableStatus</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>TableCard.tsx</code><br><small style="color:var(--muted)">components/floor/TableCard.tsx</small><br><code>useFloorStore.ts</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
+  <td>No direct outbound edge</td>
+  <td>TableStatus node in src/types/table.ts.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>TableZone</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>useFloorStore.ts</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small><br><code>ZoneFilter.tsx</code><br><small style="color:var(--muted)">components/floor/ZoneFilter.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>TableZone node in src/types/table.ts.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>FloorGrid()</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>TableCard()</code><br><small style="color:var(--muted)">components/floor/TableCard.tsx</small></td>
+  <td>FloorGrid() node in components/floor/FloorGrid.tsx.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>TableCard()</code><br><small style="color:var(--muted)">components/floor/TableCard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>FloorGrid()</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small><br><code>FloorGrid.tsx</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>TableCard() node in components/floor/TableCard.tsx.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>main.tsx</code><br><small style="color:var(--muted)">src/main.tsx</small></td>
+  <td><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>Badge.tsx</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>DispatchBoard()</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small><br>+28 more</td>
+  <td>Module file in src/App.tsx.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>ModalShell.tsx</code><br><small style="color:var(--muted)">components/common/ModalShell.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>GuestFolioModal.tsx</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small><br><code>RunSheetModal.tsx</code><br><small style="color:var(--muted)">components/modals/RunSheetModal.tsx</small></td>
+  <td><code>framer-motion</code><br><small style="color:var(--muted)">package.json</small><br><code>lucide-react</code><br><small style="color:var(--muted)">package.json</small><br><code>modalMotion</code><br><small style="color:var(--muted)">src/styles/motion.ts</small><br>+3 more</td>
+  <td>Module file in components/common/ModalShell.tsx.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>FloorGrid.tsx</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>react</code><br><small style="color:var(--muted)">package.json</small><br><code>table.ts</code><br><small style="color:var(--muted)">src/types/table.ts</small><br><code>TableCard()</code><br><small style="color:var(--muted)">components/floor/TableCard.tsx</small><br>+2 more</td>
+  <td>Module file in components/floor/FloorGrid.tsx.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>TableCard.tsx</code><br><small style="color:var(--muted)">components/floor/TableCard.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>FloorGrid.tsx</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small></td>
+  <td><code>framer-motion</code><br><small style="color:var(--muted)">package.json</small><br><code>lucide-react</code><br><small style="color:var(--muted)">package.json</small><br><code>motion.ts</code><br><small style="color:var(--muted)">src/styles/motion.ts</small><br>+5 more</td>
+  <td>Module file in components/floor/TableCard.tsx.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>ZoneFilter.tsx</code><br><small style="color:var(--muted)">components/floor/ZoneFilter.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>framer-motion</code><br><small style="color:var(--muted)">package.json</small><br><code>motion.ts</code><br><small style="color:var(--muted)">src/styles/motion.ts</small><br><code>react</code><br><small style="color:var(--muted)">package.json</small><br>+3 more</td>
+  <td>Module file in components/floor/ZoneFilter.tsx.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>ZONES</code><br><small style="color:var(--muted)">components/floor/ZoneFilter.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ZONES node in components/floor/ZoneFilter.tsx.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>GuestFolioModal.tsx</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>framer-motion</code><br><small style="color:var(--muted)">package.json</small><br><code>lucide-react</code><br><small style="color:var(--muted)">package.json</small><br><code>ModalShell()</code><br><small style="color:var(--muted)">components/common/ModalShell.tsx</small><br>+6 more</td>
+  <td>Module file in components/modals/GuestFolioModal.tsx.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>RunSheetModal.tsx</code><br><small style="color:var(--muted)">components/modals/RunSheetModal.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>framer-motion</code><br><small style="color:var(--muted)">package.json</small><br><code>lucide-react</code><br><small style="color:var(--muted)">package.json</small><br><code>ModalShell()</code><br><small style="color:var(--muted)">components/common/ModalShell.tsx</small><br>+6 more</td>
+  <td>Module file in components/modals/RunSheetModal.tsx.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>useFloorStore.ts</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>Header.tsx</code><br><small style="color:var(--muted)">components/common/Header.tsx</small></td>
+  <td><code>ServiceRequest</code><br><small style="color:var(--muted)">src/types/table.ts</small><br><code>table.ts</code><br><small style="color:var(--muted)">src/types/table.ts</small><br><code>TableItem</code><br><small style="color:var(--muted)">src/types/table.ts</small><br>+3 more</td>
+  <td>Module file in src/store/useFloorStore.ts.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>INITIAL_TABLES</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>INITIAL_TABLES node in src/store/useFloorStore.ts.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>motion.ts</code><br><small style="color:var(--muted)">src/styles/motion.ts</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>ActionButton.tsx</code><br><small style="color:var(--muted)">components/common/ActionButton.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>GuestFolioModal.tsx</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small><br>+6 more</td>
+  <td><code>framer-motion</code><br><small style="color:var(--muted)">package.json</small></td>
+  <td>Module file in src/styles/motion.ts.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>modalMotion</code><br><small style="color:var(--muted)">src/styles/motion.ts</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>ModalShell.tsx</code><br><small style="color:var(--muted)">components/common/ModalShell.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>modalMotion node in src/styles/motion.ts.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>modalTransition</code><br><small style="color:var(--muted)">src/styles/motion.ts</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>modalTransition node in src/styles/motion.ts.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>modalVariants</code><br><small style="color:var(--muted)">src/styles/motion.ts</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>modalVariants node in src/styles/motion.ts.</td>
 </tr>
 </table>
 
@@ -490,68 +505,42 @@ flowchart LR
       <tr><td><code>package.json</code></td><td>41 nodes</td></tr>
 <tr><td><code>tsconfig.app.json</code></td><td>20 nodes</td></tr>
 <tr><td><code>tsconfig.node.json</code></td><td>18 nodes</td></tr>
+<tr><td><code>src/types/table.ts</code></td><td>9 nodes</td></tr>
+<tr><td><code>doc/maintenance/phase-01-architecture-map.md</code></td><td>8 nodes</td></tr>
 <tr><td><code>src/styles/motion.ts</code></td><td>6 nodes</td></tr>
+<tr><td><code>doc/maintenance/phase-03-architecture-map.md</code></td><td>5 nodes</td></tr>
 <tr><td><code>components/cellar/StockRow.tsx</code></td><td>4 nodes</td></tr>
-<tr><td><code>components/common/ActionButton.tsx</code></td><td>4 nodes</td></tr>
-<tr><td><code>components/common/Badge.tsx</code></td><td>4 nodes</td></tr>
-<tr><td><code>components/cellar/StockLedger.tsx</code></td><td>3 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x93, imports x56, imports x47, calls x19. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x123, imports x72, imports x53, references x31. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
-<!-- ====== 3. table.ts ====== -->
-<h2 id="table-ts">3. table.ts</h2>
-<p>table.ts groups implementation around tablets, types, zonefiltertsx, usefloorstorets, mostly in src/types/table.ts, components/floor/ZoneFilter.tsx, src/store/useFloorStore.ts. This section covers 14 nodes and 21 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 3. Outputs & Docs ====== -->
+<h2 id="outputs-docs">3. Outputs &amp; Docs</h2>
+<p>Outputs &amp; Docs groups implementation around phase, architecture, mapmd, doc, mostly in doc/maintenance/phase-02-architecture-map.md. This section covers 5 nodes and 4 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: table.ts (14 nodes, 21 edges)
-    subgraph table_ts_src_types_table_ts_8b75c151["src/types/table.ts"]
-        src_types_table_tablezone_d33c9326("TableZone<br/><small>src/types/table.ts</small>")
-        src_types_table_f0da1ed2("table.ts")
-        src_types_table_servicerequest_77a005f5("ServiceRequest<br/><small>src/types/table.ts</small>")
-        src_types_table_tablestatus_beff57ca("TableStatus<br/><small>src/types/table.ts</small>")
-        src_types_table_diningzone_13cff90f("DiningZone<br/><small>src/types/table.ts</small>")
-        src_types_table_guestprofile_8501d80e("GuestProfile<br/><small>src/types/table.ts</small>")
-        src_types_table_nextreservation_fd473905("NextReservation<br/><small>src/types/table.ts</small>")
-        src_types_table_tabledata_73abb7f4("TableData<br/><small>src/types/table.ts</small>")
-    end
-    subgraph table_ts_components_floor_ZoneFilter_tsx_05403d40["components/floor/ZoneFilter.tsx"]
-        src_components_floor_zonefilter_151259ca("ZoneFilter.tsx")
-        src_components_floor_zonefilter_zones_44107f5b("ZONES<br/><small>components/floor/ZoneFilter.tsx</small>")
-        src_components_floor_zonefilter_zonefilterprops_4f71e90e("ZoneFilterProps<br/><small>components/floor/ZoneFilter.tsx</small>")
-    end
-    subgraph table_ts_src_store_useFloorStore_ts_799ef333["src/store/useFloorStore.ts"]
-        src_store_usefloorstore_db8133f4("useFloorStore.ts")
-        src_store_usefloorstore_floorstorestate_11e67b93("FloorStoreState<br/><small>src/store/useFloorStore.ts</small>")
-        src_store_usefloorstore_initial_tables_f60ff153("INITIAL_TABLES<br/><small>src/store/useFloorStore.ts</small>")
-    end
-    src_components_floor_zonefilter_151259ca -->|imports| src_types_table_tablezone_d33c9326
-    src_components_floor_zonefilter_151259ca -->|imports| src_types_table_f0da1ed2
-    src_store_usefloorstore_db8133f4 -->|imports| src_types_table_servicerequest_77a005f5
-    src_store_usefloorstore_db8133f4 -->|imports| src_types_table_tablestatus_beff57ca
-    src_store_usefloorstore_db8133f4 -->|imports| src_types_table_tablezone_d33c9326
-    src_store_usefloorstore_db8133f4 -->|imports| src_types_table_f0da1ed2
-    class src_types_table_tablezone_d33c9326 klass;
-    class src_types_table_f0da1ed2 module;
-    class src_types_table_servicerequest_77a005f5 klass;
-    class src_types_table_tablestatus_beff57ca klass;
-    class src_types_table_diningzone_13cff90f klass;
-    class src_types_table_guestprofile_8501d80e klass;
-    class src_types_table_nextreservation_fd473905 klass;
-    class src_types_table_tabledata_73abb7f4 klass;
-    class src_components_floor_zonefilter_151259ca ui;
-    class src_components_floor_zonefilter_zones_44107f5b ui;
-    class src_components_floor_zonefilter_zonefilterprops_4f71e90e ui;
-    class src_store_usefloorstore_db8133f4 ui;
-    class src_store_usefloorstore_floorstorestate_11e67b93 ui;
-    class src_store_usefloorstore_initial_tables_f60ff153 klass;
+    %% Section: Outputs &amp; Docs (5 nodes, 4 edges)
+    doc_maintenance_phase_02_architecture_map_archit_b611255f("Architecture &amp; Dependency Map — Phase 0...<br/><small>doc/maintenance/phase-02-architecture-map.md</small>")
+    doc_maintenance_phase_02_architecture_map_45c671f9("phase-02-architecture-map.md")
+    doc_maintenance_phase_02_architecture_map_1_phas_bb935e09("1. Phase 02 Architectural Additions<br/><small>doc/maintenance/phase-02-architecture-map.md</small>")
+    doc_maintenance_phase_02_architecture_map_2_upda_0c026804("2. Updated Metrics (Graphify AST)<br/><small>doc/maintenance/phase-02-architecture-map.md</small>")
+    doc_maintenance_phase_02_architecture_map_3_visu_5a07713c("3. Visual Artifacts<br/><small>doc/maintenance/phase-02-architecture-map.md</small>")
+    doc_maintenance_phase_02_architecture_map_45c671f9 -->|contains| doc_maintenance_phase_02_architecture_map_archit_b611255f
+    doc_maintenance_phase_02_architecture_map_archit_b611255f -->|contains| doc_maintenance_phase_02_architecture_map_1_phas_bb935e09
+    doc_maintenance_phase_02_architecture_map_archit_b611255f -->|contains| doc_maintenance_phase_02_architecture_map_2_upda_0c026804
+    doc_maintenance_phase_02_architecture_map_archit_b611255f -->|contains| doc_maintenance_phase_02_architecture_map_3_visu_5a07713c
+    class doc_maintenance_phase_02_architecture_map_archit_b611255f concept;
+    class doc_maintenance_phase_02_architecture_map_45c671f9 concept;
+    class doc_maintenance_phase_02_architecture_map_1_phas_bb935e09 concept;
+    class doc_maintenance_phase_02_architecture_map_2_upda_0c026804 concept;
+    class doc_maintenance_phase_02_architecture_map_3_visu_5a07713c concept;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -575,115 +564,275 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>ZoneFilterProps</code><br><small style="color:var(--muted)">components/floor/ZoneFilter.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>phase-02-architecture-map.md</code><br><small style="color:var(--muted)">doc/maintenance/phase-02-architecture-map.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>ZoneFilterProps node in components/floor/ZoneFilter.tsx.</td>
+  <td>Documentation node describing phase-02-architecture-map.md.</td>
 </tr>
 <tr>
   <td>2</td>
-  <td><code>FloorStoreState</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>1. Phase 02 Architectural Additions</code><br><small style="color:var(--muted)">doc/maintenance/phase-02-architecture-map.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>FloorStoreState node in src/store/useFloorStore.ts.</td>
+  <td>Documentation node describing 1. Phase 02 Architectural Additions.</td>
 </tr>
 <tr>
   <td>3</td>
-  <td><code>DiningZone</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
+  <td><code>2. Updated Metrics (Graphify AST)</code><br><small style="color:var(--muted)">doc/maintenance/phase-02-architecture-map.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>DiningZone node in src/types/table.ts.</td>
+  <td>Documentation node describing 2. Updated Metrics (Graphify AST).</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>GuestProfile</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
+  <td><code>3. Visual Artifacts</code><br><small style="color:var(--muted)">doc/maintenance/phase-02-architecture-map.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>GuestProfile node in src/types/table.ts.</td>
+  <td>Documentation node describing 3. Visual Artifacts.</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>NextReservation</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
+  <td><code>Architecture &amp; Dependency Map — Phase 02: 3-Zone Tactile Table Cards &amp; Floor Canvas</code><br><small style="color:var(--muted)">doc/maintenance/phase-02-architecture-map.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>NextReservation node in src/types/table.ts.</td>
+  <td>Documentation node describing Architecture &amp; Dependency Map — Phase 02: 3-Zone Tactile Table Cards &amp; Floor Canvas.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>doc/maintenance/phase-02-architecture-map.md</code></td><td>5 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x4. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 4. Phase 03: Interactive Modals — Guest Folio Ledger & Table Run-Sheet ====== -->
+<h2 id="phase-03-interactive-modals-guest-folio-ledger-t">4. Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet</h2>
+<p>Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet groups implementation around updates, folio, run, interactive, mostly in approved/major/03-interactive-modals-folio-and-run-sheet.md. This section covers 17 nodes and 16 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet (17 nodes, 16 edges)
+    updates_planned_updates_approved_major_03_intera_be6a4fe8("Phase 03: Interactive Modals — Guest Fo...<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_eab91804("3. Modal 1: Guest Folio &amp; Degustation L...<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_18e7d2be("2. Component Architecture &amp; State Integ...<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_9d91581f("5. Framer Motion Modal Physics<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_459abb50("03-interactive-modals-folio-and-run-she...<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_c5fb488b("4. Modal 2: Table Run-Sheet &amp; Schedule...<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_9ead1711("1. High-Level Objective<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_7cfecee0("6. Verification Criteria<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_1cad195b("Backdrop:<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_9cf23733("Component Breakdown<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_43a71b9f("Degustation Course Stepper<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_757a4acc("Financial Ledger &amp; Actions<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_ed1659ed("Line Items &amp; Dietary Tags<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_04160c0e("Modal Card Container:<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_f92cd73c("Timeline Anatomy<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_4de6c1d3("Visual &amp; Typographic Standards<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_b55a7c8c("Zustand Modal State Interface (src/sto...<br/><small>approved/major/03-interactive-modals-folio-and-run-sheet.md</small>")
+    updates_planned_updates_approved_major_03_intera_459abb50 -->|contains| updates_planned_updates_approved_major_03_intera_be6a4fe8
+    updates_planned_updates_approved_major_03_intera_18e7d2be -->|contains| updates_planned_updates_approved_major_03_intera_9cf23733
+    updates_planned_updates_approved_major_03_intera_18e7d2be -->|contains| updates_planned_updates_approved_major_03_intera_b55a7c8c
+    updates_planned_updates_approved_major_03_intera_eab91804 -->|contains| updates_planned_updates_approved_major_03_intera_4de6c1d3
+    updates_planned_updates_approved_major_03_intera_eab91804 -->|contains| updates_planned_updates_approved_major_03_intera_43a71b9f
+    updates_planned_updates_approved_major_03_intera_eab91804 -->|contains| updates_planned_updates_approved_major_03_intera_ed1659ed
+    updates_planned_updates_approved_major_03_intera_eab91804 -->|contains| updates_planned_updates_approved_major_03_intera_757a4acc
+    updates_planned_updates_approved_major_03_intera_c5fb488b -->|contains| updates_planned_updates_approved_major_03_intera_f92cd73c
+    updates_planned_updates_approved_major_03_intera_9d91581f -->|contains| updates_planned_updates_approved_major_03_intera_1cad195b
+    updates_planned_updates_approved_major_03_intera_9d91581f -->|contains| updates_planned_updates_approved_major_03_intera_04160c0e
+    updates_planned_updates_approved_major_03_intera_be6a4fe8 -->|contains| updates_planned_updates_approved_major_03_intera_9ead1711
+    updates_planned_updates_approved_major_03_intera_be6a4fe8 -->|contains| updates_planned_updates_approved_major_03_intera_eab91804
+    updates_planned_updates_approved_major_03_intera_be6a4fe8 -->|contains| updates_planned_updates_approved_major_03_intera_c5fb488b
+    updates_planned_updates_approved_major_03_intera_be6a4fe8 -->|contains| updates_planned_updates_approved_major_03_intera_9d91581f
+    updates_planned_updates_approved_major_03_intera_be6a4fe8 -->|contains| updates_planned_updates_approved_major_03_intera_18e7d2be
+    updates_planned_updates_approved_major_03_intera_be6a4fe8 -->|contains| updates_planned_updates_approved_major_03_intera_7cfecee0
+    class updates_planned_updates_approved_major_03_intera_be6a4fe8 concept;
+    class updates_planned_updates_approved_major_03_intera_eab91804 concept;
+    class updates_planned_updates_approved_major_03_intera_18e7d2be concept;
+    class updates_planned_updates_approved_major_03_intera_9d91581f concept;
+    class updates_planned_updates_approved_major_03_intera_459abb50 concept;
+    class updates_planned_updates_approved_major_03_intera_c5fb488b concept;
+    class updates_planned_updates_approved_major_03_intera_9ead1711 concept;
+    class updates_planned_updates_approved_major_03_intera_7cfecee0 concept;
+    class updates_planned_updates_approved_major_03_intera_1cad195b concept;
+    class updates_planned_updates_approved_major_03_intera_9cf23733 concept;
+    class updates_planned_updates_approved_major_03_intera_43a71b9f concept;
+    class updates_planned_updates_approved_major_03_intera_757a4acc concept;
+    class updates_planned_updates_approved_major_03_intera_ed1659ed concept;
+    class updates_planned_updates_approved_major_03_intera_04160c0e concept;
+    class updates_planned_updates_approved_major_03_intera_f92cd73c concept;
+    class updates_planned_updates_approved_major_03_intera_4de6c1d3 concept;
+    class updates_planned_updates_approved_major_03_intera_b55a7c8c concept;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>03-interactive-modals-folio-and-run-sheet.md</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing 03-interactive-modals-folio-and-run-sheet.md.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>1. High-Level Objective</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing 1. High-Level Objective.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>2. Component Architecture &amp; State Integration</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing 2. Component Architecture &amp; State Integration.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>3. Modal 1: Guest Folio &amp; Degustation Ledger (`GuestFolioModal.tsx`)</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing 3. Modal 1: Guest Folio &amp; Degustation Ledger (`GuestFolioModal.tsx`).</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>4. Modal 2: Table Run-Sheet &amp; Schedule (`RunSheetModal.tsx`)</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing 4. Modal 2: Table Run-Sheet &amp; Schedule (`RunSheetModal.tsx`).</td>
 </tr>
 <tr>
   <td>6</td>
-  <td><code>ServiceRequest</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>useFloorStore.ts</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
+  <td><code>5. Framer Motion Modal Physics</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>ServiceRequest node in src/types/table.ts.</td>
+  <td>Documentation node describing 5. Framer Motion Modal Physics.</td>
 </tr>
 <tr>
   <td>7</td>
-  <td><code>TableData</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
+  <td><code>6. Verification Criteria</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>TableData node in src/types/table.ts.</td>
+  <td>Documentation node describing 6. Verification Criteria.</td>
 </tr>
 <tr>
   <td>8</td>
-  <td><code>TableStatus</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>TableCard.tsx</code><br><small style="color:var(--muted)">components/floor/TableCard.tsx</small><br><code>useFloorStore.ts</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
+  <td><code>Backdrop:</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>TableStatus node in src/types/table.ts.</td>
+  <td>Documentation node describing Backdrop:.</td>
 </tr>
 <tr>
   <td>9</td>
-  <td><code>TableZone</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>useFloorStore.ts</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small><br><code>ZoneFilter.tsx</code><br><small style="color:var(--muted)">components/floor/ZoneFilter.tsx</small></td>
+  <td><code>Component Breakdown</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>TableZone node in src/types/table.ts.</td>
+  <td>Documentation node describing Component Breakdown.</td>
 </tr>
 <tr>
   <td>10</td>
-  <td><code>ZoneFilter.tsx</code><br><small style="color:var(--muted)">components/floor/ZoneFilter.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
-  <td><code>framer-motion</code><br><small style="color:var(--muted)">package.json</small><br><code>motion.ts</code><br><small style="color:var(--muted)">src/styles/motion.ts</small><br><code>react</code><br><small style="color:var(--muted)">package.json</small><br>+3 more</td>
-  <td>Module file in components/floor/ZoneFilter.tsx.</td>
+  <td><code>Degustation Course Stepper</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Degustation Course Stepper.</td>
 </tr>
 <tr>
   <td>11</td>
-  <td><code>ZONES</code><br><small style="color:var(--muted)">components/floor/ZoneFilter.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>Financial Ledger &amp; Actions</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>ZONES node in components/floor/ZoneFilter.tsx.</td>
+  <td>Documentation node describing Financial Ledger &amp; Actions.</td>
 </tr>
 <tr>
   <td>12</td>
-  <td><code>useFloorStore.ts</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>Header.tsx</code><br><small style="color:var(--muted)">components/common/Header.tsx</small></td>
-  <td><code>ServiceRequest</code><br><small style="color:var(--muted)">src/types/table.ts</small><br><code>table.ts</code><br><small style="color:var(--muted)">src/types/table.ts</small><br><code>TableItem</code><br><small style="color:var(--muted)">src/types/table.ts</small><br>+3 more</td>
-  <td>Module file in src/store/useFloorStore.ts.</td>
+  <td><code>Line Items &amp; Dietary Tags</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Line Items &amp; Dietary Tags.</td>
 </tr>
 <tr>
   <td>13</td>
-  <td><code>INITIAL_TABLES</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
+  <td><code>Modal Card Container:</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>INITIAL_TABLES node in src/store/useFloorStore.ts.</td>
+  <td>Documentation node describing Modal Card Container:.</td>
 </tr>
 <tr>
   <td>14</td>
-  <td><code>table.ts</code><br><small style="color:var(--muted)">src/types/table.ts</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>FloorGrid.tsx</code><br><small style="color:var(--muted)">components/floor/FloorGrid.tsx</small><br><code>GuestFolioModal.tsx</code><br><small style="color:var(--muted)">components/modals/GuestFolioModal.tsx</small><br>+4 more</td>
+  <td><code>Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Module file in src/types/table.ts.</td>
+  <td>Documentation node describing Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>Timeline Anatomy</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Timeline Anatomy.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>Visual &amp; Typographic Standards</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Visual &amp; Typographic Standards.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>Zustand Modal State Interface (`src/store/useModalStore.ts`)</code><br><small style="color:var(--muted)">approved/major/03-interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Zustand Modal State Interface (`src/store/useModalStore.ts`).</td>
 </tr>
 </table>
 
@@ -692,61 +841,74 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/types/table.ts</code></td><td>8 nodes</td></tr>
-<tr><td><code>components/floor/ZoneFilter.tsx</code></td><td>3 nodes</td></tr>
-<tr><td><code>src/store/useFloorStore.ts</code></td><td>3 nodes</td></tr>
+      <tr><td><code>approved/major/03-interactive-modals-folio-and-run-sheet.md</code></td><td>17 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x11, references x4, imports x4, imports x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x16. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
-<!-- ====== 4. OrderCard.tsx ====== -->
-<h2 id="ordercard-tsx">4. OrderCard.tsx</h2>
-<p>OrderCard.tsx groups implementation around components, dispatch, dispatchboardtsx, orderts, mostly in components/dispatch/DispatchBoard.tsx, src/types/order.ts, components/dispatch/OrderCard.tsx. This section covers 11 nodes and 17 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 5. Phase 03: Interactive Modals — Guest Folio Ledger & Table Run-Sheet ====== -->
+<h2 id="phase-03-interactive-modals-guest-folio-ledger-t-4b4ad1">5. Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet</h2>
+<p>Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet groups implementation around folio, run, interactive, modals, mostly in doc/interactive-modals-folio-and-run-sheet.md. This section covers 17 nodes and 16 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: OrderCard.tsx (11 nodes, 17 edges)
-    subgraph ordercard_tsx_components_dispatch_DispatchBoard_a0b17b47["components/dispatch/DispatchBoard.tsx"]
-        src_components_dispatch_dispatchboard_6afa3773("DispatchBoard.tsx")
-        src_components_dispatch_dispatchboard_dispatchbo_94cf42da("DispatchBoard()<br/><small>components/dispatch/DispatchBoard.tsx</small>")
-        src_components_dispatch_dispatchboard_dispatchbo_81508c0e("DispatchBoardProps<br/><small>components/dispatch/DispatchBoard.tsx</small>")
-        src_components_dispatch_dispatchboard_sample_ord_3a2483bf("SAMPLE_ORDERS<br/><small>components/dispatch/DispatchBoard.tsx</small>")
-    end
-    subgraph ordercard_tsx_src_types_order_ts_a8098ea3["src/types/order.ts"]
-        src_types_order_diningorder_430c2b8e("DiningOrder<br/><small>src/types/order.ts</small>")
-        src_types_order_a7346a89("order.ts")
-        src_types_order_orderitem_53b50a74("OrderItem<br/><small>src/types/order.ts</small>")
-        src_types_order_orderstatus_8b3725ee("OrderStatus<br/><small>src/types/order.ts</small>")
-    end
-    subgraph ordercard_tsx_components_dispatch_OrderCard_tsx_3426f469["components/dispatch/OrderCard.tsx"]
-        src_components_dispatch_ordercard_cb462cb0("OrderCard.tsx")
-        src_components_dispatch_ordercard_ordercard_5673d733("OrderCard()<br/><small>components/dispatch/OrderCard.tsx</small>")
-        src_components_dispatch_ordercard_ordercardprops_008fa2e8("OrderCardProps<br/><small>components/dispatch/OrderCard.tsx</small>")
-    end
-    src_components_dispatch_dispatchboard_dispatchbo_94cf42da -->|calls| src_components_dispatch_ordercard_ordercard_5673d733
-    src_components_dispatch_dispatchboard_6afa3773 -->|imports| src_components_dispatch_ordercard_ordercard_5673d733
-    src_components_dispatch_dispatchboard_6afa3773 -->|imports| src_types_order_diningorder_430c2b8e
-    src_components_dispatch_dispatchboard_6afa3773 -->|imports| src_components_dispatch_ordercard_cb462cb0
-    src_components_dispatch_dispatchboard_6afa3773 -->|imports| src_types_order_a7346a89
-    src_components_dispatch_ordercard_cb462cb0 -->|imports| src_types_order_diningorder_430c2b8e
-    src_components_dispatch_ordercard_cb462cb0 -->|imports| src_types_order_a7346a89
-    class src_components_dispatch_dispatchboard_6afa3773 ui;
-    class src_components_dispatch_dispatchboard_dispatchbo_94cf42da ui;
-    class src_components_dispatch_dispatchboard_dispatchbo_81508c0e ui;
-    class src_components_dispatch_dispatchboard_sample_ord_3a2483bf ui;
-    class src_types_order_diningorder_430c2b8e klass;
-    class src_types_order_a7346a89 module;
-    class src_types_order_orderitem_53b50a74 klass;
-    class src_types_order_orderstatus_8b3725ee klass;
-    class src_components_dispatch_ordercard_cb462cb0 ui;
-    class src_components_dispatch_ordercard_ordercard_5673d733 ui;
-    class src_components_dispatch_ordercard_ordercardprops_008fa2e8 ui;
+    %% Section: Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet (17 nodes, 16 edges)
+    doc_interactive_modals_folio_and_run_sheet_phase_e1a83188("Phase 03: Interactive Modals — Guest Fo...<br/><small>doc/interactive-modals-folio-and-run-sheet.md</small>")
+    doc_interactive_modals_folio_and_run_sheet_3_mod_07c71ec4("3. Modal 1: Guest Folio &amp; Degustation L...<br/><small>doc/interactive-modals-folio-and-run-sheet.md</small>")
+    doc_interactive_modals_folio_and_run_sheet_2_com_483e8284("2. Component Architecture &amp; State Integ...<br/><small>doc/interactive-modals-folio-and-run-sheet.md</small>")
+    doc_interactive_modals_folio_and_run_sheet_5_fra_d3d40900("5. Framer Motion Modal Physics<br/><small>doc/interactive-modals-folio-and-run-sheet.md</small>")
+    doc_interactive_modals_folio_and_run_sheet_9621d120("interactive-modals-folio-and-run-sheet.md")
+    doc_interactive_modals_folio_and_run_sheet_4_mod_fc333909("4. Modal 2: Table Run-Sheet &amp; Schedule...<br/><small>doc/interactive-modals-folio-and-run-sheet.md</small>")
+    doc_interactive_modals_folio_and_run_sheet_1_hig_90d825fa("1. High-Level Objective<br/><small>doc/interactive-modals-folio-and-run-sheet.md</small>")
+    doc_interactive_modals_folio_and_run_sheet_6_ver_62ddaf67("6. Verification Criteria<br/><small>doc/interactive-modals-folio-and-run-sheet.md</small>")
+    doc_interactive_modals_folio_and_run_sheet_backd_9b7d5ccb("Backdrop:<br/><small>doc/interactive-modals-folio-and-run-sheet.md</small>")
+    doc_interactive_modals_folio_and_run_sheet_compo_28cfeba2("Component Breakdown<br/><small>doc/interactive-modals-folio-and-run-sheet.md</small>")
+    doc_interactive_modals_folio_and_run_sheet_degus_3cc24b6c("Degustation Course Stepper<br/><small>doc/interactive-modals-folio-and-run-sheet.md</small>")
+    doc_interactive_modals_folio_and_run_sheet_finan_17065958("Financial Ledger &amp; Actions<br/><small>doc/interactive-modals-folio-and-run-sheet.md</small>")
+    doc_interactive_modals_folio_and_run_sheet_line_0947ecc1("Line Items &amp; Dietary Tags<br/><small>doc/interactive-modals-folio-and-run-sheet.md</small>")
+    doc_interactive_modals_folio_and_run_sheet_modal_4c584a95("Modal Card Container:<br/><small>doc/interactive-modals-folio-and-run-sheet.md</small>")
+    doc_interactive_modals_folio_and_run_sheet_timel_7e1b9bb7("Timeline Anatomy<br/><small>doc/interactive-modals-folio-and-run-sheet.md</small>")
+    doc_interactive_modals_folio_and_run_sheet_visua_d9a2668c("Visual &amp; Typographic Standards<br/><small>doc/interactive-modals-folio-and-run-sheet.md</small>")
+    doc_interactive_modals_folio_and_run_sheet_zusta_8b84ae82("Zustand Modal State Interface (src/sto...<br/><small>doc/interactive-modals-folio-and-run-sheet.md</small>")
+    doc_interactive_modals_folio_and_run_sheet_9621d120 -->|contains| doc_interactive_modals_folio_and_run_sheet_phase_e1a83188
+    doc_interactive_modals_folio_and_run_sheet_2_com_483e8284 -->|contains| doc_interactive_modals_folio_and_run_sheet_compo_28cfeba2
+    doc_interactive_modals_folio_and_run_sheet_2_com_483e8284 -->|contains| doc_interactive_modals_folio_and_run_sheet_zusta_8b84ae82
+    doc_interactive_modals_folio_and_run_sheet_3_mod_07c71ec4 -->|contains| doc_interactive_modals_folio_and_run_sheet_visua_d9a2668c
+    doc_interactive_modals_folio_and_run_sheet_3_mod_07c71ec4 -->|contains| doc_interactive_modals_folio_and_run_sheet_degus_3cc24b6c
+    doc_interactive_modals_folio_and_run_sheet_3_mod_07c71ec4 -->|contains| doc_interactive_modals_folio_and_run_sheet_line_0947ecc1
+    doc_interactive_modals_folio_and_run_sheet_3_mod_07c71ec4 -->|contains| doc_interactive_modals_folio_and_run_sheet_finan_17065958
+    doc_interactive_modals_folio_and_run_sheet_4_mod_fc333909 -->|contains| doc_interactive_modals_folio_and_run_sheet_timel_7e1b9bb7
+    doc_interactive_modals_folio_and_run_sheet_5_fra_d3d40900 -->|contains| doc_interactive_modals_folio_and_run_sheet_backd_9b7d5ccb
+    doc_interactive_modals_folio_and_run_sheet_5_fra_d3d40900 -->|contains| doc_interactive_modals_folio_and_run_sheet_modal_4c584a95
+    doc_interactive_modals_folio_and_run_sheet_phase_e1a83188 -->|contains| doc_interactive_modals_folio_and_run_sheet_1_hig_90d825fa
+    doc_interactive_modals_folio_and_run_sheet_phase_e1a83188 -->|contains| doc_interactive_modals_folio_and_run_sheet_3_mod_07c71ec4
+    doc_interactive_modals_folio_and_run_sheet_phase_e1a83188 -->|contains| doc_interactive_modals_folio_and_run_sheet_4_mod_fc333909
+    doc_interactive_modals_folio_and_run_sheet_phase_e1a83188 -->|contains| doc_interactive_modals_folio_and_run_sheet_5_fra_d3d40900
+    doc_interactive_modals_folio_and_run_sheet_phase_e1a83188 -->|contains| doc_interactive_modals_folio_and_run_sheet_2_com_483e8284
+    doc_interactive_modals_folio_and_run_sheet_phase_e1a83188 -->|contains| doc_interactive_modals_folio_and_run_sheet_6_ver_62ddaf67
+    class doc_interactive_modals_folio_and_run_sheet_phase_e1a83188 concept;
+    class doc_interactive_modals_folio_and_run_sheet_3_mod_07c71ec4 concept;
+    class doc_interactive_modals_folio_and_run_sheet_2_com_483e8284 concept;
+    class doc_interactive_modals_folio_and_run_sheet_5_fra_d3d40900 concept;
+    class doc_interactive_modals_folio_and_run_sheet_9621d120 concept;
+    class doc_interactive_modals_folio_and_run_sheet_4_mod_fc333909 concept;
+    class doc_interactive_modals_folio_and_run_sheet_1_hig_90d825fa concept;
+    class doc_interactive_modals_folio_and_run_sheet_6_ver_62ddaf67 concept;
+    class doc_interactive_modals_folio_and_run_sheet_backd_9b7d5ccb concept;
+    class doc_interactive_modals_folio_and_run_sheet_compo_28cfeba2 concept;
+    class doc_interactive_modals_folio_and_run_sheet_degus_3cc24b6c concept;
+    class doc_interactive_modals_folio_and_run_sheet_finan_17065958 concept;
+    class doc_interactive_modals_folio_and_run_sheet_line_0947ecc1 concept;
+    class doc_interactive_modals_folio_and_run_sheet_modal_4c584a95 concept;
+    class doc_interactive_modals_folio_and_run_sheet_timel_7e1b9bb7 concept;
+    class doc_interactive_modals_folio_and_run_sheet_visua_d9a2668c concept;
+    class doc_interactive_modals_folio_and_run_sheet_zusta_8b84ae82 concept;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -770,91 +932,139 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>DispatchBoardProps</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>interactive-modals-folio-and-run-sheet.md</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>DispatchBoardProps node in components/dispatch/DispatchBoard.tsx.</td>
+  <td>Documentation node describing interactive-modals-folio-and-run-sheet.md.</td>
 </tr>
 <tr>
   <td>2</td>
-  <td><code>OrderCardProps</code><br><small style="color:var(--muted)">components/dispatch/OrderCard.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>1. High-Level Objective</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>OrderCardProps node in components/dispatch/OrderCard.tsx.</td>
+  <td>Documentation node describing 1. High-Level Objective.</td>
 </tr>
 <tr>
   <td>3</td>
-  <td><code>DiningOrder</code><br><small style="color:var(--muted)">src/types/order.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>DispatchBoard.tsx</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small><br><code>OrderCard.tsx</code><br><small style="color:var(--muted)">components/dispatch/OrderCard.tsx</small></td>
+  <td><code>2. Component Architecture &amp; State Integration</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>DiningOrder node in src/types/order.ts.</td>
+  <td>Documentation node describing 2. Component Architecture &amp; State Integration.</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>OrderItem</code><br><small style="color:var(--muted)">src/types/order.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
+  <td><code>3. Modal 1: Guest Folio &amp; Degustation Ledger (`GuestFolioModal.tsx`)</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>OrderItem node in src/types/order.ts.</td>
+  <td>Documentation node describing 3. Modal 1: Guest Folio &amp; Degustation Ledger (`GuestFolioModal.tsx`).</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>OrderStatus</code><br><small style="color:var(--muted)">src/types/order.ts</small></td>
-  <td><span class="tag tag-class">Class</span></td>
+  <td><code>4. Modal 2: Table Run-Sheet &amp; Schedule (`RunSheetModal.tsx`)</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>OrderStatus node in src/types/order.ts.</td>
+  <td>Documentation node describing 4. Modal 2: Table Run-Sheet &amp; Schedule (`RunSheetModal.tsx`).</td>
 </tr>
 <tr>
   <td>6</td>
-  <td><code>DispatchBoard()</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
-  <td><code>OrderCard()</code><br><small style="color:var(--muted)">components/dispatch/OrderCard.tsx</small></td>
-  <td>DispatchBoard() node in components/dispatch/DispatchBoard.tsx.</td>
+  <td><code>5. Framer Motion Modal Physics</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing 5. Framer Motion Modal Physics.</td>
 </tr>
 <tr>
   <td>7</td>
-  <td><code>OrderCard()</code><br><small style="color:var(--muted)">components/dispatch/OrderCard.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td><code>DispatchBoard()</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small><br><code>DispatchBoard.tsx</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small></td>
-  <td><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small></td>
-  <td>OrderCard() node in components/dispatch/OrderCard.tsx.</td>
+  <td><code>6. Verification Criteria</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing 6. Verification Criteria.</td>
 </tr>
 <tr>
   <td>8</td>
-  <td><code>DispatchBoard.tsx</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
-  <td><code>DiningOrder</code><br><small style="color:var(--muted)">src/types/order.ts</small><br><code>order.ts</code><br><small style="color:var(--muted)">src/types/order.ts</small><br><code>OrderCard()</code><br><small style="color:var(--muted)">components/dispatch/OrderCard.tsx</small><br>+2 more</td>
-  <td>Module file in components/dispatch/DispatchBoard.tsx.</td>
+  <td><code>Backdrop:</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Backdrop:.</td>
 </tr>
 <tr>
   <td>9</td>
-  <td><code>SAMPLE_ORDERS</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>Component Breakdown</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>SAMPLE_ORDERS node in components/dispatch/DispatchBoard.tsx.</td>
+  <td>Documentation node describing Component Breakdown.</td>
 </tr>
 <tr>
   <td>10</td>
-  <td><code>OrderCard.tsx</code><br><small style="color:var(--muted)">components/dispatch/OrderCard.tsx</small></td>
-  <td><span class="tag tag-hook">UI</span></td>
-  <td><code>DispatchBoard.tsx</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small></td>
-  <td><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>Badge.tsx</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>DiningOrder</code><br><small style="color:var(--muted)">src/types/order.ts</small><br>+6 more</td>
-  <td>Module file in components/dispatch/OrderCard.tsx.</td>
+  <td><code>Degustation Course Stepper</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Degustation Course Stepper.</td>
 </tr>
 <tr>
   <td>11</td>
-  <td><code>order.ts</code><br><small style="color:var(--muted)">src/types/order.ts</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>DispatchBoard.tsx</code><br><small style="color:var(--muted)">components/dispatch/DispatchBoard.tsx</small><br><code>OrderCard.tsx</code><br><small style="color:var(--muted)">components/dispatch/OrderCard.tsx</small></td>
+  <td><code>Financial Ledger &amp; Actions</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Module file in src/types/order.ts.</td>
+  <td>Documentation node describing Financial Ledger &amp; Actions.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>Line Items &amp; Dietary Tags</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Line Items &amp; Dietary Tags.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>Modal Card Container:</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Modal Card Container:.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Phase 03: Interactive Modals — Guest Folio Ledger &amp; Table Run-Sheet.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>Timeline Anatomy</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Timeline Anatomy.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>Visual &amp; Typographic Standards</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Visual &amp; Typographic Standards.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>Zustand Modal State Interface (`src/store/useModalStore.ts`)</code><br><small style="color:var(--muted)">doc/interactive-modals-folio-and-run-sheet.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Zustand Modal State Interface (`src/store/useModalStore.ts`).</td>
 </tr>
 </table>
 
@@ -863,48 +1073,65 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>components/dispatch/DispatchBoard.tsx</code></td><td>4 nodes</td></tr>
-<tr><td><code>src/types/order.ts</code></td><td>4 nodes</td></tr>
-<tr><td><code>components/dispatch/OrderCard.tsx</code></td><td>3 nodes</td></tr>
+      <tr><td><code>doc/interactive-modals-folio-and-run-sheet.md</code></td><td>17 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x8, imports x3, imports x3, references x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x16. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
-<!-- ====== 5. useAlertStore.ts ====== -->
-<h2 id="usealertstore-ts">5. useAlertStore.ts</h2>
-<p>useAlertStore.ts groups implementation around store, usealertstorets, usemodalstorets, alertstorestate, mostly in src/store/useAlertStore.ts, src/store/useModalStore.ts, package.json. This section covers 8 nodes and 7 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 6. Header.tsx ====== -->
+<h2 id="header-tsx">6. Header.tsx</h2>
+<p>Header.tsx groups implementation around store, usealertstorets, usemodalstorets, headertsx, mostly in src/store/useAlertStore.ts, src/store/useModalStore.ts, components/common/Header.tsx. This section covers 14 nodes and 16 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: useAlertStore.ts (8 nodes, 7 edges)
-    subgraph usealertstore_ts_src_store_useAlertStore_ts_b1672b28["src/store/useAlertStore.ts"]
+    %% Section: Header.tsx (14 nodes, 16 edges)
+    subgraph header_tsx_src_store_useAlertStore_ts_031bd13b["src/store/useAlertStore.ts"]
         src_store_usealertstore_a97f8e00("useAlertStore.ts")
+        src_store_usealertstore_usealertstore_3bb2e39c("useAlertStore<br/><small>src/store/useAlertStore.ts</small>")
         src_store_usealertstore_alertstorestate_0a271187("AlertStoreState<br/><small>src/store/useAlertStore.ts</small>")
         src_store_usealertstore_initial_alerts_07a6cbcd("INITIAL_ALERTS<br/><small>src/store/useAlertStore.ts</small>")
         src_store_usealertstore_servicealert_2fed947a("ServiceAlert<br/><small>src/store/useAlertStore.ts</small>")
     end
-    subgraph usealertstore_ts_src_store_useModalStore_ts_7d683407["src/store/useModalStore.ts"]
+    subgraph header_tsx_src_store_useModalStore_ts_eadb3e24["src/store/useModalStore.ts"]
         src_store_usemodalstore_7513c8c8("useModalStore.ts")
         src_store_usemodalstore_activemodaltype_01a7a0c1("ActiveModalType<br/><small>src/store/useModalStore.ts</small>")
         src_store_usemodalstore_modalstate_57a2b85d("ModalState<br/><small>src/store/useModalStore.ts</small>")
+        src_store_usemodalstore_usemodalstore_dba8d164("useModalStore<br/><small>src/store/useModalStore.ts</small>")
+    end
+    subgraph header_tsx_components_common_Header_tsx_f19e89bd["components/common/Header.tsx"]
+        src_components_common_header_b7df843d("Header.tsx")
+        src_components_common_header_header_61beb74b("Header()<br/><small>components/common/Header.tsx</small>")
+        src_components_common_header_headerprops_10836d74("HeaderProps<br/><small>components/common/Header.tsx</small>")
     end
     ref_zustand_a23643de("zustand<br/><small>package.json</small>")
+    src_store_usefloorstore_usefloorstore_a39b749b("useFloorStore<br/><small>src/store/useFloorStore.ts</small>")
+    src_components_common_header_header_61beb74b -->|calls| src_store_usealertstore_usealertstore_3bb2e39c
+    src_components_common_header_header_61beb74b -->|calls| src_store_usefloorstore_usefloorstore_a39b749b
+    src_components_common_header_b7df843d -->|imports| src_store_usealertstore_usealertstore_3bb2e39c
+    src_components_common_header_b7df843d -->|imports| src_store_usefloorstore_usefloorstore_a39b749b
+    src_components_common_header_b7df843d -->|imports| src_store_usealertstore_a97f8e00
     src_store_usealertstore_a97f8e00 -->|imports| ref_zustand_a23643de
     src_store_usemodalstore_7513c8c8 -->|imports| ref_zustand_a23643de
     class src_store_usealertstore_a97f8e00 ui;
+    class src_store_usealertstore_usealertstore_3bb2e39c ui;
     class src_store_usealertstore_alertstorestate_0a271187 ui;
     class src_store_usealertstore_initial_alerts_07a6cbcd klass;
     class src_store_usealertstore_servicealert_2fed947a klass;
     class src_store_usemodalstore_7513c8c8 ui;
     class src_store_usemodalstore_activemodaltype_01a7a0c1 klass;
     class src_store_usemodalstore_modalstate_57a2b85d klass;
+    class src_store_usemodalstore_usemodalstore_dba8d164 ui;
+    class src_components_common_header_b7df843d ui;
+    class src_components_common_header_header_61beb74b ui;
+    class src_components_common_header_headerprops_10836d74 ui;
     class ref_zustand_a23643de function;
+    class src_store_usefloorstore_usefloorstore_a39b749b ui;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -928,6 +1155,14 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
+  <td><code>HeaderProps</code><br><small style="color:var(--muted)">components/common/Header.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>HeaderProps node in components/common/Header.tsx.</td>
+</tr>
+<tr>
+  <td>2</td>
   <td><code>AlertStoreState</code><br><small style="color:var(--muted)">src/store/useAlertStore.ts</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td>External entry / no inbound edge</td>
@@ -935,7 +1170,7 @@ flowchart LR
   <td>AlertStoreState node in src/store/useAlertStore.ts.</td>
 </tr>
 <tr>
-  <td>2</td>
+  <td>3</td>
   <td><code>ServiceAlert</code><br><small style="color:var(--muted)">src/store/useAlertStore.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -943,7 +1178,7 @@ flowchart LR
   <td>ServiceAlert node in src/store/useAlertStore.ts.</td>
 </tr>
 <tr>
-  <td>3</td>
+  <td>4</td>
   <td><code>ActiveModalType</code><br><small style="color:var(--muted)">src/store/useModalStore.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -951,7 +1186,7 @@ flowchart LR
   <td>ActiveModalType node in src/store/useModalStore.ts.</td>
 </tr>
 <tr>
-  <td>4</td>
+  <td>5</td>
   <td><code>ModalState</code><br><small style="color:var(--muted)">src/store/useModalStore.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -959,7 +1194,23 @@ flowchart LR
   <td>ModalState node in src/store/useModalStore.ts.</td>
 </tr>
 <tr>
-  <td>5</td>
+  <td>6</td>
+  <td><code>Header()</code><br><small style="color:var(--muted)">components/common/Header.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>useAlertStore</code><br><small style="color:var(--muted)">src/store/useAlertStore.ts</small><br><code>useFloorStore</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
+  <td>Header() node in components/common/Header.tsx.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>Header.tsx</code><br><small style="color:var(--muted)">components/common/Header.tsx</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td><code>Badge()</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>Badge.tsx</code><br><small style="color:var(--muted)">components/common/Badge.tsx</small><br><code>framer-motion</code><br><small style="color:var(--muted)">package.json</small><br>+8 more</td>
+  <td>Module file in components/common/Header.tsx.</td>
+</tr>
+<tr>
+  <td>8</td>
   <td><code>useAlertStore.ts</code><br><small style="color:var(--muted)">src/store/useAlertStore.ts</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>Header.tsx</code><br><small style="color:var(--muted)">components/common/Header.tsx</small></td>
@@ -967,7 +1218,7 @@ flowchart LR
   <td>Module file in src/store/useAlertStore.ts.</td>
 </tr>
 <tr>
-  <td>6</td>
+  <td>9</td>
   <td><code>INITIAL_ALERTS</code><br><small style="color:var(--muted)">src/store/useAlertStore.ts</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -975,7 +1226,23 @@ flowchart LR
   <td>INITIAL_ALERTS node in src/store/useAlertStore.ts.</td>
 </tr>
 <tr>
-  <td>7</td>
+  <td>10</td>
+  <td><code>useAlertStore</code><br><small style="color:var(--muted)">src/store/useAlertStore.ts</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>Header()</code><br><small style="color:var(--muted)">components/common/Header.tsx</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>useAlertStore node in src/store/useAlertStore.ts.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>useFloorStore</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>Header()</code><br><small style="color:var(--muted)">components/common/Header.tsx</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>useFloorStore node in src/store/useFloorStore.ts.</td>
+</tr>
+<tr>
+  <td>12</td>
   <td><code>useModalStore.ts</code><br><small style="color:var(--muted)">src/store/useModalStore.ts</small></td>
   <td><span class="tag tag-hook">UI</span></td>
   <td><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
@@ -983,7 +1250,15 @@ flowchart LR
   <td>Module file in src/store/useModalStore.ts.</td>
 </tr>
 <tr>
-  <td>8</td>
+  <td>13</td>
+  <td><code>useModalStore</code><br><small style="color:var(--muted)">src/store/useModalStore.ts</small></td>
+  <td><span class="tag tag-hook">UI</span></td>
+  <td><code>App()</code><br><small style="color:var(--muted)">src/App.tsx</small><br><code>App.tsx</code><br><small style="color:var(--muted)">src/App.tsx</small></td>
+  <td>No direct outbound edge</td>
+  <td>useModalStore node in src/store/useModalStore.ts.</td>
+</tr>
+<tr>
+  <td>14</td>
   <td><code>zustand</code><br><small style="color:var(--muted)">package.json</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>package.json</code><br><small style="color:var(--muted)">package.json</small><br><code>useAlertStore.ts</code><br><small style="color:var(--muted)">src/store/useAlertStore.ts</small><br><code>useFloorStore.ts</code><br><small style="color:var(--muted)">src/store/useFloorStore.ts</small><br>+1 more</td>
@@ -997,20 +1272,211 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>src/store/useAlertStore.ts</code></td><td>4 nodes</td></tr>
-<tr><td><code>src/store/useModalStore.ts</code></td><td>3 nodes</td></tr>
+      <tr><td><code>src/store/useAlertStore.ts</code></td><td>5 nodes</td></tr>
+<tr><td><code>src/store/useModalStore.ts</code></td><td>4 nodes</td></tr>
+<tr><td><code>components/common/Header.tsx</code></td><td>3 nodes</td></tr>
 <tr><td><code>package.json</code></td><td>1 nodes</td></tr>
+<tr><td><code>src/store/useFloorStore.ts</code></td><td>1 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x5, imports x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x9, imports x3, calls x2, imports x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
-<!-- ====== 6. reservation.ts ====== -->
-<h2 id="reservation-ts">6. reservation.ts</h2>
+<!-- ====== 7. Phase 01: Project Scaffold, Luxury Design Tokens & Motion Engine ====== -->
+<h2 id="phase-01-project-scaffold-luxury-design-tokens-m">7. Phase 01: Project Scaffold, Luxury Design Tokens &amp; Motion Engine</h2>
+<p>Phase 01: Project Scaffold, Luxury Design Tokens &amp; Motion Engine groups implementation around scaffold, tokens, motion, enginemdmd, mostly in doc/scaffold-tokens-and-motion-engine.md.md. This section covers 5 nodes and 4 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Phase 01: Project Scaffold, Luxury Design Tokens &amp; Motion Engine (5 nodes, 4 edges)
+    doc_scaffold_tokens_and_motion_engine_md_phase_0_f1481dab("Phase 01: Project Scaffold, Luxury Desi...<br/><small>doc/scaffold-tokens-and-motion-engine.md.md</small>")
+    doc_scaffold_tokens_and_motion_engine_md_638ac6ae("scaffold-tokens-and-motion-engine.md.md")
+    doc_scaffold_tokens_and_motion_engine_md_3_direc_5abc4c0c("3. Directory Layout Specification<br/><small>doc/scaffold-tokens-and-motion-engine.md.md</small>")
+    doc_scaffold_tokens_and_motion_engine_md_1_high_647031f9("1. High-Level Objective<br/><small>doc/scaffold-tokens-and-motion-engine.md.md</small>")
+    doc_scaffold_tokens_and_motion_engine_md_2_techn_4338af8b("2. Technical Stack &amp; Setup<br/><small>doc/scaffold-tokens-and-motion-engine.md.md</small>")
+    doc_scaffold_tokens_and_motion_engine_md_638ac6ae -->|contains| doc_scaffold_tokens_and_motion_engine_md_phase_0_f1481dab
+    doc_scaffold_tokens_and_motion_engine_md_phase_0_f1481dab -->|contains| doc_scaffold_tokens_and_motion_engine_md_3_direc_5abc4c0c
+    doc_scaffold_tokens_and_motion_engine_md_phase_0_f1481dab -->|contains| doc_scaffold_tokens_and_motion_engine_md_1_high_647031f9
+    doc_scaffold_tokens_and_motion_engine_md_phase_0_f1481dab -->|contains| doc_scaffold_tokens_and_motion_engine_md_2_techn_4338af8b
+    class doc_scaffold_tokens_and_motion_engine_md_phase_0_f1481dab concept;
+    class doc_scaffold_tokens_and_motion_engine_md_638ac6ae concept;
+    class doc_scaffold_tokens_and_motion_engine_md_3_direc_5abc4c0c concept;
+    class doc_scaffold_tokens_and_motion_engine_md_1_high_647031f9 concept;
+    class doc_scaffold_tokens_and_motion_engine_md_2_techn_4338af8b concept;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>scaffold-tokens-and-motion-engine.md.md</code><br><small style="color:var(--muted)">doc/scaffold-tokens-and-motion-engine.md.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing scaffold-tokens-and-motion-engine.md.md.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>1. High-Level Objective</code><br><small style="color:var(--muted)">doc/scaffold-tokens-and-motion-engine.md.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing 1. High-Level Objective.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>2. Technical Stack &amp; Setup</code><br><small style="color:var(--muted)">doc/scaffold-tokens-and-motion-engine.md.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing 2. Technical Stack &amp; Setup.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>3. Directory Layout Specification</code><br><small style="color:var(--muted)">doc/scaffold-tokens-and-motion-engine.md.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing 3. Directory Layout Specification.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>Phase 01: Project Scaffold, Luxury Design Tokens &amp; Motion Engine</code><br><small style="color:var(--muted)">doc/scaffold-tokens-and-motion-engine.md.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Phase 01: Project Scaffold, Luxury Design Tokens &amp; Motion Engine.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>doc/scaffold-tokens-and-motion-engine.md.md</code></td><td>5 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x4. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 8. restore-three-zone-table-cards-and-floor-grid.md ====== -->
+<h2 id="restore-three-zone-table-cards-and-floor-grid-md">8. restore-three-zone-table-cards-and-floor-grid.md</h2>
+<p>restore-three-zone-table-cards-and-floor-grid.md groups implementation around restore, three, zone, table, mostly in doc/restore-three-zone-table-cards-and-floor-grid.md. This section covers 4 nodes and 3 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: restore-three-zone-table-cards-and-floor-grid.md (4 nodes, 3 edges)
+    doc_restore_three_zone_table_cards_and_floor_gri_632ad89e("restore-three-zone-table-cards-and-floo...<br/><small>doc/restore-three-zone-table-cards-and-floor-grid.md</small>")
+    doc_restore_three_zone_table_cards_and_floor_gri_be99226b("2. Component Architecture &amp; Data Model<br/><small>doc/restore-three-zone-table-cards-and-floor-grid.md</small>")
+    doc_restore_three_zone_table_cards_and_floor_gri_a20380a3("1. High-Level Objective<br/><small>doc/restore-three-zone-table-cards-and-floor-grid.md</small>")
+    doc_restore_three_zone_table_cards_and_floor_gri_02d5efa5("Data Contract (src/types/table.ts)<br/><small>doc/restore-three-zone-table-cards-and-floor-grid.md</small>")
+    doc_restore_three_zone_table_cards_and_floor_gri_632ad89e -->|contains| doc_restore_three_zone_table_cards_and_floor_gri_a20380a3
+    doc_restore_three_zone_table_cards_and_floor_gri_632ad89e -->|contains| doc_restore_three_zone_table_cards_and_floor_gri_be99226b
+    doc_restore_three_zone_table_cards_and_floor_gri_be99226b -->|contains| doc_restore_three_zone_table_cards_and_floor_gri_02d5efa5
+    class doc_restore_three_zone_table_cards_and_floor_gri_632ad89e concept;
+    class doc_restore_three_zone_table_cards_and_floor_gri_be99226b concept;
+    class doc_restore_three_zone_table_cards_and_floor_gri_a20380a3 concept;
+    class doc_restore_three_zone_table_cards_and_floor_gri_02d5efa5 concept;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>restore-three-zone-table-cards-and-floor-grid.md</code><br><small style="color:var(--muted)">doc/restore-three-zone-table-cards-and-floor-grid.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing restore-three-zone-table-cards-and-floor-grid.md.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>1. High-Level Objective</code><br><small style="color:var(--muted)">doc/restore-three-zone-table-cards-and-floor-grid.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing 1. High-Level Objective.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>2. Component Architecture &amp; Data Model</code><br><small style="color:var(--muted)">doc/restore-three-zone-table-cards-and-floor-grid.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing 2. Component Architecture &amp; Data Model.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>Data Contract (`src/types/table.ts`)</code><br><small style="color:var(--muted)">doc/restore-three-zone-table-cards-and-floor-grid.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Data Contract (`src/types/table.ts`).</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>doc/restore-three-zone-table-cards-and-floor-grid.md</code></td><td>4 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x3. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 9. reservation.ts ====== -->
+<h2 id="reservation-ts">9. reservation.ts</h2>
 <p>reservation.ts groups implementation around reservationts, types, reservation, mostly in src/types/reservation.ts. This section covers 2 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -1076,8 +1542,210 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 7. postcss.config.js ====== -->
-<h2 id="postcss-config-js">7. postcss.config.js</h2>
+<!-- ====== 10. tailwind.config.js ====== -->
+<h2 id="tailwind-config-js">10. tailwind.config.js</h2>
+<p>tailwind.config.js groups implementation around tailwindcss, tailwindconfigjs, mostly in tailwindcss, tailwind.config.js. This section covers 2 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: tailwind.config.js (2 nodes, 1 edges)
+    tailwind_config_2024816e("tailwind.config.js")
+    tailwindcss_34a67857("tailwindcss")
+    tailwind_config_2024816e -->|dynamic import| tailwindcss_34a67857
+    class tailwind_config_2024816e module;
+    class tailwindcss_34a67857 function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>tailwindcss</code><br><small style="color:var(--muted)">tailwindcss</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>tailwindcss node in tailwindcss.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>tailwind.config.js</code><br><small style="color:var(--muted)">tailwind.config.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Reads, resolves, or persists project configuration.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>tailwind.config.js</code></td><td>1 nodes</td></tr>
+<tr><td><code>tailwindcss</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: dynamic import x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 11. rules/graphify.md ====== -->
+<h2 id="rules-graphify-md">11. rules/graphify.md</h2>
+<p>rules/graphify.md groups implementation around rules, graphifymd, agents, graphify, mostly in .agents/rules/graphify.md. This section covers 2 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: rules/graphify.md (2 nodes, 1 edges)
+    agents_rules_graphify_8193478b("rules/graphify.md")
+    agents_rules_graphify_graphify_dd1d4f66("graphify<br/><small>.agents/rules/graphify.md</small>")
+    agents_rules_graphify_8193478b -->|contains| agents_rules_graphify_graphify_dd1d4f66
+    class agents_rules_graphify_8193478b concept;
+    class agents_rules_graphify_graphify_dd1d4f66 concept;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>rules/graphify.md</code><br><small style="color:var(--muted)">.agents/rules/graphify.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing rules/graphify.md.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>graphify</code><br><small style="color:var(--muted)">.agents/rules/graphify.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing graphify.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>.agents/rules/graphify.md</code></td><td>2 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 12. workflows/graphify.md ====== -->
+<h2 id="workflows-graphify-md">12. workflows/graphify.md</h2>
+<p>workflows/graphify.md groups implementation around workflows, graphifymd, agents, workflow, mostly in .agents/workflows/graphify.md. This section covers 2 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: workflows/graphify.md (2 nodes, 1 edges)
+    agents_workflows_graphify_08a1cc26("workflows/graphify.md")
+    agents_workflows_graphify_workflow_graphify_87f5fa2b("Workflow: graphify<br/><small>.agents/workflows/graphify.md</small>")
+    agents_workflows_graphify_08a1cc26 -->|contains| agents_workflows_graphify_workflow_graphify_87f5fa2b
+    class agents_workflows_graphify_08a1cc26 concept;
+    class agents_workflows_graphify_workflow_graphify_87f5fa2b concept;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>workflows/graphify.md</code><br><small style="color:var(--muted)">.agents/workflows/graphify.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing workflows/graphify.md.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>Workflow: graphify</code><br><small style="color:var(--muted)">.agents/workflows/graphify.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Workflow: graphify.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>.agents/workflows/graphify.md</code></td><td>2 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 13. postcss.config.js ====== -->
+<h2 id="postcss-config-js">13. postcss.config.js</h2>
 <p>postcss.config.js groups implementation around postcssconfigjs, mostly in postcss.config.js. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -1132,8 +1800,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 8. vite-env.d.ts ====== -->
-<h2 id="vite-env-d-ts">8. vite-env.d.ts</h2>
+<!-- ====== 14. vite-env.d.ts ====== -->
+<h2 id="vite-env-d-ts">14. vite-env.d.ts</h2>
 <p>vite-env.d.ts groups implementation around vite, envdts, mostly in src/vite-env.d.ts. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -1188,16 +1856,16 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 9. tailwind.config.js ====== -->
-<h2 id="tailwind-config-js">9. tailwind.config.js</h2>
-<p>tailwind.config.js groups implementation around tailwindconfigjs, mostly in tailwind.config.js. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 15. README.md ====== -->
+<h2 id="readme-md">15. README.md</h2>
+<p>README.md groups implementation around readmemd, mostly in README.md. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: tailwind.config.js (1 nodes, 0 edges)
-    tailwind_config_2024816e("tailwind.config.js")
-    class tailwind_config_2024816e module;
+    %% Section: README.md (1 nodes, 0 edges)
+    readme_f78a71af("README.md")
+    class readme_f78a71af concept;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -1221,11 +1889,11 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>tailwind.config.js</code><br><small style="color:var(--muted)">tailwind.config.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
+  <td><code>README.md</code><br><small style="color:var(--muted)">README.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Reads, resolves, or persists project configuration.</td>
+  <td>Documentation node describing README.md.</td>
 </tr>
 </table>
 
@@ -1234,7 +1902,7 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>tailwind.config.js</code></td><td>1 nodes</td></tr>
+      <tr><td><code>README.md</code></td><td>1 nodes</td></tr>
     </table>
   </div>
   <div class="card">
@@ -1250,18 +1918,18 @@ flowchart LR
   <div class="card">
     <h4>Graph</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>Nodes</td><td>169</td></tr>
-      <tr><td>Edges</td><td>303</td></tr>
+      <tr><td>Nodes</td><td>236</td></tr>
+      <tr><td>Edges</td><td>381</td></tr>
       <tr><td>Hyperedges</td><td>0</td></tr>
-      <tr><td>Communities</td><td>15</td></tr>
-      <tr><td>Documented Sections</td><td>8</td></tr>
+      <tr><td>Communities</td><td>21</td></tr>
+      <tr><td>Documented Sections</td><td>14</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Edge Confidence</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>EXTRACTED</td><td>303</td></tr>
-      <tr><td>INFERRED</td><td>0</td></tr>
+      <tr><td>EXTRACTED</td><td>360</td></tr>
+      <tr><td>INFERRED</td><td>21</td></tr>
       <tr><td>AMBIGUOUS</td><td>0</td></tr>
     </table>
   </div>
@@ -1269,7 +1937,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>amex-waiter — Architecture Documentation</p>
-  <p>Generated: 2026-09-30 23:12 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-10-02 12:06 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->

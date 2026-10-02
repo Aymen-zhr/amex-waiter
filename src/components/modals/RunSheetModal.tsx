@@ -23,10 +23,18 @@ export const RunSheetModal: React.FC<RunSheetModalProps> = ({
   table,
   onOpenFolio,
 }) => {
-  const tableNum = table?.tableNumber || '02';
-  const tableId = table?.id || 'table-02';
-  const capacity = table?.capacity || 4;
-  const zoneName = table?.zone ? table.zone.replace('_', ' ') : 'MAIN DINING';
+  if (!table) return null;
+
+  const tableNum = table.tableNumber || '02';
+  const tableId = table.id || 'table-02';
+  const capacity = table.capacity || 4;
+  const zoneName = table.zone ? table.zone.replace('_', ' ') : 'MAIN DINING';
+  const server = table.serverName || 'Marcus';
+  const nextRes = table.nextReservation || {
+    time: '21:30',
+    partyName: 'Mme. Laurent',
+    guestCount: 4,
+  };
 
   return (
     <ModalShell
@@ -37,15 +45,15 @@ export const RunSheetModal: React.FC<RunSheetModalProps> = ({
     >
       <div className="p-6 lg:p-8 bg-lumiere-card flex flex-col gap-6">
         {/* =========================================
-            1. HEADER ROW (TABLE XX â€¢ RUN SHEET)
+            1. HEADER ROW (TABLE XX • RUN SHEET)
             ========================================= */}
         <div className="flex items-start justify-between pb-5 border-b border-lumiere-borderLight">
           <div className="space-y-1">
             <h2 className="font-serif text-2xl lg:text-3xl font-bold tracking-tight text-lumiere-textPrimary">
-              TABLE {tableNum} â€¢ RUN-SHEET & SCHEDULE
+              TABLE {tableNum} • RUN-SHEET & SCHEDULE
             </h2>
             <p className="font-mono text-xs text-lumiere-textMuted uppercase tracking-wider">
-              {zoneName} â€¢ {capacity} Couverts â€¢ Service du Soir
+              {zoneName} • {capacity} Couverts • Service du Soir
             </p>
           </div>
 
@@ -74,10 +82,10 @@ export const RunSheetModal: React.FC<RunSheetModalProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-xs font-bold text-lumiere-textCaption px-2 py-0.5 rounded bg-white border border-lumiere-borderLight">
-                  17:30 â€“ 19:15
+                  17:30 – 19:15
                 </span>
                 <span className="font-medium text-xs text-lumiere-textPrimary">
-                  Turn 1 â€¢ M. Dupont (2G)
+                  Turn 1 • M. Dupont (2G)
                 </span>
               </div>
               <span className="font-mono text-[11px] text-lumiere-emerald font-semibold">
@@ -85,7 +93,7 @@ export const RunSheetModal: React.FC<RunSheetModalProps> = ({
               </span>
             </div>
             <p className="text-xs text-lumiere-textMuted font-mono">
-              Folio #4071 â€¢ Settled ($380.00) â€¢ Two-course pre-theatre menu
+              Folio #4071 • Settled ($380.00) • Two-course pre-theatre menu
             </p>
           </div>
 
@@ -94,10 +102,10 @@ export const RunSheetModal: React.FC<RunSheetModalProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <span className="font-mono text-xs font-bold text-white bg-lumiere-emerald px-2.5 py-1 rounded-md">
-                  19:30 â€“ Present
+                  19:30 – Present
                 </span>
                 <span className="font-serif text-lg font-bold text-lumiere-textPrimary">
-                  Active Dining â€¢ Turn 2
+                  Active Dining • Turn 2
                 </span>
               </div>
               <span className="font-mono text-xs font-semibold text-lumiere-emerald bg-lumiere-emeraldLight border border-lumiere-emeraldBorder px-2.5 py-0.5 rounded-full flex items-center gap-1.5">
@@ -110,17 +118,19 @@ export const RunSheetModal: React.FC<RunSheetModalProps> = ({
             <div className="p-3 rounded-xl bg-white border border-lumiere-border space-y-1">
               <div className="flex items-center gap-1.5 text-lumiere-brass font-mono text-[11px] font-semibold">
                 <Crown className="w-3.5 h-3.5" />
-                VIP Regular â€¢ Champagne on arrival â€¢ Anniversary
+                <span>VIP Regular • Champagne on arrival • Anniversary</span>
               </div>
               <p className="text-xs text-lumiere-textPrimary">
-                {table?.guest?.name ? `${table.guest.name} party seated for degustation experience.` : 'Celebrating 25th anniversary. Pre-poured 2012 Dom PÃ©rignon.'}
+                {table.guest?.name
+                  ? `${table.guest.name} party seated for degustation experience.${table.guest.notes ? ` ${table.guest.notes}` : ''}`
+                  : 'Celebrating 25th anniversary. Pre-poured 2012 Dom Pérignon.'}
               </p>
             </div>
 
             {/* Server Attribution & Live Folio Action */}
-            <div className="flex items-center justify-between pt-1 text-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1 text-xs">
               <div className="font-mono text-lumiere-textMuted">
-                Server Lead: <span className="font-semibold text-lumiere-textPrimary">{table?.serverName || 'Marcus'}</span> â€¢ Sommelier: <span className="font-semibold text-lumiere-textPrimary">Elena</span>
+                Server Lead: <span className="font-semibold text-lumiere-textPrimary">{server}</span> • Sommelier: <span className="font-semibold text-lumiere-textPrimary">Elena</span>
               </div>
 
               {/* Quick Action: Open Live Folio Button */}
@@ -131,7 +141,7 @@ export const RunSheetModal: React.FC<RunSheetModalProps> = ({
                   onClose();
                   onOpenFolio?.(tableId);
                 }}
-                className="px-3.5 py-1.5 rounded-xl bg-lumiere-textPrimary text-white font-mono text-xs font-semibold hover:bg-black flex items-center gap-1.5 shadow-sm cursor-pointer"
+                className="px-3.5 py-1.5 rounded-xl bg-lumiere-textPrimary text-white font-mono text-xs font-semibold hover:bg-black flex items-center justify-center gap-1.5 shadow-sm cursor-pointer self-start sm:self-auto"
               >
                 <FileText className="w-3.5 h-3.5" />
                 <span>Open Live Folio</span>
@@ -145,10 +155,10 @@ export const RunSheetModal: React.FC<RunSheetModalProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-xs font-bold text-lumiere-textPrimary px-2 py-0.5 rounded bg-lumiere-surface">
-                  21:30
+                  {nextRes.time}
                 </span>
                 <span className="font-medium text-xs text-lumiere-textPrimary">
-                  Booking: 21:30 â€¢ Mme. Laurent (4G)
+                  Booking: {nextRes.time} • {nextRes.partyName} ({nextRes.guestCount}G)
                 </span>
               </div>
               <span className="font-mono text-[11px] text-lumiere-brass font-medium">
@@ -156,7 +166,7 @@ export const RunSheetModal: React.FC<RunSheetModalProps> = ({
               </span>
             </div>
             <p className="text-xs text-lumiere-textMuted">
-              Requested Window Section â€¢ Amex Concierge reservation â€¢ High-priority pacing
+              Requested Window Section • Amex Concierge reservation • High-priority pacing
             </p>
           </div>
         </div>
